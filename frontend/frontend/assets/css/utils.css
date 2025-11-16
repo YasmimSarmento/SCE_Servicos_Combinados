@@ -1,0 +1,52 @@
+/* utils.css — classes utilitárias pequenas e reutilizáveis */
+
+/* Layout */
+.d-flex { display: flex !important; }
+.d-grid { display: grid !important; }
+.flex-column { flex-direction: column !important; }
+.items-center { align-items: center !important; }
+.justify-center { justify-content: center !important; }
+.gap-1 { gap: 0.5rem !important; }
+.gap-2 { gap: 1rem !important; }
+
+/* Espaçamento */
+.m-0 { margin: 0 !important; }
+.mt-1 { margin-top: .5rem !important; }
+.mt-2 { margin-top: 1rem !important; }
+.mb-1 { margin-bottom: .5rem !important; }
+.mb-2 { margin-bottom: 1rem !important; }
+.p-1 { padding: .5rem !important; }
+.p-2 { padding: 1rem !important; }
+
+/* Tamanhos */
+.w-100 { width: 100% !important; }
+.max-w-900 { max-width: 900px !important; }
+
+/* Texto */
+.text-center { text-align: center !important; }
+.text-muted { color: #6c757d !important; }
+
+/* Botões / interação */
+.btn-ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: .5rem .75rem;
+  cursor: pointer;
+}
+.cursor-pointer { cursor: pointer !important; }
+
+/* Helpers visuais */
+.hidden { display: none !important; }
+.visible { display: block !important; }
+
+/* Pequenas utilidades para cards/formulários */
+.card-shadow {
+  box-shadow: 0 2px 8px rgba(16,24,40,0.06);
+  border-radius: 8px;
+}
+
+/* Responsividade simples */
+@media (max-width: 700px) {
+  .responsive-stack { display: block !important; }
+  .form-grid { grid-template-columns: 1fr !important; }
+}
