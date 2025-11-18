@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vagas - SCE Banco de Talentos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <header class="topo">
+        <img src="img/logo-sce.png" alt="Logo SCE">
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="cadastro.html">Cadastrar Currículo</a>
+        </nav>
+    </header>
+
+    <main class="conteudo">
+        <h1>Vagas Abertas</h1>
+
+        <section class="filtros">
+            <input type="text" id="filtro-palavra" placeholder="Buscar por título ou área">
+            <select id="filtro-local">
+                <option value="">Localidade</option>
+                <option>Belém - PA</option>
+                <option>Ananindeua - PA</option>
+            </select>
+        </section>
+
+        <section id="lista-vagas" class="lista-vagas">
+            <!-- JS vai preencher aqui -->
+        </section>
+    </main>
+
+    <script src="js/vagas.js"></script>
+</body>
+
+</html>
