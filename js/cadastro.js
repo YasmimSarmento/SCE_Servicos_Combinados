@@ -1,31 +1,99 @@
-// Seleciona o formulário e o elemento onde será exibida a mensagem de retorno
-const form = document.getElementById("form-cadastro");
-const mensagem = document.getElementById("mensagem-retorno");
+/* =====================================================================
+   cadastro.js — Envio do formulário de cadastro de currículo
+   Projeto: SCE – Banco de Talentos
+   ===================================================================== */
 
-// Adiciona evento de envio do formulário
-form.addEventListener("submit", function (event) {
-  event.preventDefault(); // Impede o recarregamento da página
+/* ---------------------------------------------------------------------
+   1. Capturar elementos
+--------------------------------------------------------------------- */
+const form = document.getElementById("form-curriculo");
+const msgSucesso = document.getElementById("msg-sucesso");
+const msgErro = document.getElementById("msg-erro");
+const btnEnviar = document.getElementById("btn-enviar");
 
-  // Captura os valores dos campos necessários
-  const nome = document.getElementById("nome").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const linkCv = document.getElementById("link-cv").value.trim();
-  const lgpd = document.getElementById("lgpd").checked;
 
-  // Validação simples: verifica se os campos obrigatórios foram preenchidos
-  if (!nome || !email || !linkCv || !lgpd) {
-    mensagem.textContent =
-      "Por favor, preencha todos os campos obrigatórios e aceite o termo.";
-    mensagem.classList.add("erro");
-    return;
-  }
+/* ---------------------------------------------------------------------
+   2. Validação simples e eficaz
+--------------------------------------------------------------------- */
+function validarFormulario(dados) {
+    if (!dados.nome.trim()) return "Informe seu nome completo.";
+    if (!dados.email.trim() || !dados.email.includes("@")) return "Forneça um e-mail válido.";
+    if (!dados.telefone.trim()) return "Informe um número de telefone para contato.";
+    if (!dados.area.trim()) return "Selecione a área desejada.";
+    if (!dados.experiencia.trim()) return "Descreva brevemente sua experiência.";
 
-  // Aqui futuramente entra a parte que envia os dados para o back-end (ex: fetch)
-  mensagem.textContent =
-    "Currículo enviado com sucesso! Em breve a SCE poderá entrar em contato.";
-  mensagem.classList.remove("erro");
-  mensagem.classList.add("sucesso");
+    return null; // válido
+}
 
-  // Limpa os campos do formulário após o envio
-  form.reset();
-});
+
+/* ---------------------------------------------------------------------
+   3. Simular envio (futuramente vira integração real com API)
+--------------------------------------------------------------------- */
+async function enviarParaServidor(dados) {
+    // Exemplo real futuro:
+    // return fetch("https://api.sce.com/candidatos", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(dados)
+    // });
+
+    return new Promise(resolve => {
+        setTimeout(() => resolve({ ok: true }), 1500); // animação fake bonitinha
+    });
+}
+
+
+/* ---------------------------------------------------------------------
+   4. Função principal de envio
+--------------------------------------------------------------------- */
+async function processarCadastro(event) {
+    event.preventDefault();
+
+    msgErro.textContent = "";
+    msgSucesso.textContent = "";
+
+    const dados = {
+        nome: form.nome.value,
+        email: form.email.value,
+        telefone: form.telefone.value,
+        area: form.area.value,
+        experiencia: form.experiencia.value
+    };
+
+    const erro = validarFormulario(dados);
+
+    if (erro) {
+        msgErro.textContent = erro;
+        msgErro.style.display = "block";
+        return;
+    }
+
+    btnEnviar.disabled = true;
+    btnEnviar.textContent = "Enviando...";
+
+    try {
+        const resposta = await enviarParaServidor(dados);
+
+        if (resposta.ok) {
+            msgSucesso.textContent = "Currículo enviado com sucesso!";
+            msgSucesso.style.display = "block";
+
+            form.reset();
+        } else {
+            msgErro.textContent = "Não foi possível enviar seu cadastro. Tente novamente.";
+            msgErro.style.display = "block";
+        }
+    } catch (e) {
+        msgErro.textContent = "Erro inesperado. Verifique sua conexão.";
+        msgErro.style.display = "block";
+    }
+
+    btnEnviar.disabled = false;
+    btnEnviar.textContent = "Enviar Currículo";
+}
+
+
+/* ---------------------------------------------------------------------
+   5. Eventos
+--------------------------------------------------------------------- */
+form.addEventListener("submit", processarCadastro);
