@@ -3,37 +3,47 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Vagas - SCE Banco de Talentos</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Vagas • SCE Banco de Talentos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <!-- ===== HEADER ===== -->
     <header class="topo">
         <img src="img/logo-sce.png" alt="Logo SCE">
         <nav>
             <a href="index.html">Início</a>
-            <a href="cadastro.html">Cadastrar Currículo</a>
+            <a href="cadastro.html" class="btn">Cadastrar Currículo</a>
         </nav>
     </header>
 
     <main class="conteudo">
         <h1>Vagas Abertas</h1>
 
+        <!-- ===== FILTROS ===== -->
         <section class="filtros">
-            <input type="text" id="filtro-palavra" placeholder="Buscar por título ou área">
-            <select id="filtro-local">
+            <input 
+                type="text" 
+                id="filtro-palavra" 
+                placeholder="Buscar por título ou área"
+                aria-label="Buscar por título ou área"
+            >
+
+            <select id="filtro-local" aria-label="Filtrar por localidade">
                 <option value="">Localidade</option>
-                <option>Belém - PA</option>
-                <option>Ananindeua - PA</option>
+                <option value="Belém - PA">Belém - PA</option>
+                <option value="Ananindeua - PA">Ananindeua - PA</option>
             </select>
         </section>
 
+        <!-- ===== LISTA DE VAGAS ===== -->
         <section id="lista-vagas" class="lista-vagas">
-            <!-- JS vai preencher aqui -->
+            <!-- Preenchido automaticamente via JS -->
         </section>
     </main>
 
+    <!-- ===== JS ===== -->
     <script src="js/vagas.js"></script>
 </body>
 
