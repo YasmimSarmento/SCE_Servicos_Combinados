@@ -1,0 +1,30 @@
+/* ==========================
+   LISTA DE VAGAS
+   ========================== */
+
+.filtros {
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filtros input,
+.filtros select {
+    padding: 0.6rem;
+    border-radius: 4px;
+    border: 1px solid var(--cinza-borda);
+    font-size: 0.95rem;
+}
+
+.lista-vagas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 900px) {
+    .lista-vagas {
+        grid-template-columns: 1fr;
+    }
+}

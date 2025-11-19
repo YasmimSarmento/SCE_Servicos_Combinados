@@ -1,0 +1,105 @@
+/* ==========================
+   COMPONENTES
+   ========================== */
+
+/* Botões */
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    border: none;
+    background-color: var(--azul-medio);
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+    background-color: var(--azul-hover);
+}
+
+.btn-secundario {
+    background-color: #fff;
+    color: var(--azul-medio);
+    border: 1px solid var(--azul-medio);
+}
+
+.btn-secundario:hover {
+    background-color: #e6f3fb;
+}
+
+/* Inputs e selects */
+.campo {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.campo label {
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    padding: 0.6rem;
+    border-radius: 4px;
+    border: 1px solid var(--cinza-borda);
+    font-size: 0.95rem;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: var(--azul-medio);
+}
+
+.grupo {
+    display: flex;
+    gap: 1rem;
+}
+
+.grupo .campo {
+    flex: 1;
+}
+
+/* Cards */
+.card-vaga {
+    background-color: #fff;
+    padding: 1.3rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-vaga h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--azul-medio);
+}
+
+.card-vaga p {
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+}
+
+/* Mensagens */
+.mensagem {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.mensagem.sucesso {
+    color: var(--verde-ok);
+}
+
+.mensagem.erro {
+    color: var(--vermelho-erro);
+}
