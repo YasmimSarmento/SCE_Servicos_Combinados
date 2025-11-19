@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Vaga | SCE - Banco de Talentos</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/vagas.css">
+
+    <style>
+        /* Estilo específico desta página */
+        .vaga-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .vaga-header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .vaga-header p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #6E00FF;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-right: 6px;
+        }
+
+        .sessao {
+            margin-top: 30px;
+        }
+
+        .sessao h2 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            border-left: 4px solid #6E00FF;
+            padding-left: 8px;
+        }
+
+        .sessao p, .sessao ul {
+            font-size: 1rem;
+            color: #444;
+        }
+
+        ul li {
+            margin-bottom: 6px;
+        }
+
+        .btn-candidatar {
+            margin-top: 40px;
+            width: 100%;
+            padding: 14px;
+            font-size: 1.1rem;
+            background: #6E00FF;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-candidatar:hover {
+            opacity: .85;
+        }
+
+        .voltar {
+            margin-top: 20px;
+            display: inline-block;
+            color: #6E00FF;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="topbar">
+        <h1 class="logo">SCE - Banco de Talentos</h1>
+    </header>
+
+    <main>
+        <div class="vaga-container">
+
+            <!-- Cabeçalho da vaga -->
+            <div class="vaga-header">
+                <h1 id="vagaTitulo">Carregando...</h1>
+                <p id="vagaEmpresa"></p>
+
+                <span class="tag" id="vagaTipo"></span>
+                <span class="tag" id="vagaNivel"></span>
+                <span class="tag" id="vagaLocal"></span>
+            </div>
+
+            <!-- Descrição -->
+            <div class="sessao">
+                <h2>Descrição da vaga</h2>
+                <p id="vagaDescricao"></p>
+            </div>
+
+            <!-- Requisitos -->
+            <div class="sessao">
+                <h2>Requisitos</h2>
+                <ul id="vagaRequisitos"></ul>
+            </div>
+
+            <!-- Benefícios -->
+            <div class="sessao">
+                <h2>Benefícios</h2>
+                <ul id="vagaBeneficios"></ul>
+            </div>
+
+            <!-- Salário -->
+            <div class="sessao">
+                <h2>Faixa Salarial</h2>
+                <p id="vagaSalario"></p>
+            </div>
+
+            <!-- Botão para se candidatar -->
+            <button class="btn-candidatar" id="btnCandidatar">
+                Candidatar-se para esta vaga
+            </button>
+
+            <a class="voltar" href="vagas.html">← Voltar para lista de vagas</a>
+        </div>
+    </main>
+
+    <script src="assets/js/detalheVaga.js"></script>
+
+</body>
+</html>
