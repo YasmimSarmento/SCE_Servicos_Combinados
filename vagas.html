@@ -3,47 +3,59 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Vagas • SCE Banco de Talentos</title>
+    <title>Vagas – SCE Banco de Talentos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <!-- ===== HEADER ===== -->
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
     <header class="topo">
-        <img src="img/logo-sce.png" alt="Logo SCE">
+        <img src="img/logo-sce.png" alt="Logo da SCE">
         <nav>
             <a href="index.html">Início</a>
-            <a href="cadastro.html" class="btn">Cadastrar Currículo</a>
+            <a href="cadastro.html">Cadastrar Currículo</a>
         </nav>
     </header>
 
+    <!-- =====================================================
+         LISTAGEM DE VAGAS
+    ===================================================== -->
     <main class="conteudo">
         <h1>Vagas Abertas</h1>
 
-        <!-- ===== FILTROS ===== -->
+        <!-- FILTROS -->
         <section class="filtros">
-            <input 
-                type="text" 
-                id="filtro-palavra" 
-                placeholder="Buscar por título ou área"
-                aria-label="Buscar por título ou área"
-            >
-
-            <select id="filtro-local" aria-label="Filtrar por localidade">
+            <input
+                type="text"
+                id="filtro-palavra"
+                placeholder="Buscar por título ou área">
+            
+            <select id="filtro-local">
                 <option value="">Localidade</option>
-                <option value="Belém - PA">Belém - PA</option>
-                <option value="Ananindeua - PA">Ananindeua - PA</option>
+                <option>Belém - PA</option>
+                <option>Ananindeua - PA</option>
+                <option>Marituba - PA</option>
+            </select>
+
+            <select id="filtro-tipo">
+                <option value="">Tipo de contrato</option>
+                <option>CLT</option>
+                <option>Temporário</option>
+                <option>Estágio</option>
             </select>
         </section>
 
-        <!-- ===== LISTA DE VAGAS ===== -->
+        <!-- LISTA DE VAGAS -->
         <section id="lista-vagas" class="lista-vagas">
-            <!-- Preenchido automaticamente via JS -->
+            <!-- JS vai inserir os cards aqui -->
         </section>
     </main>
 
-    <!-- ===== JS ===== -->
     <script src="js/vagas.js"></script>
 </body>
 

@@ -1,108 +1,107 @@
-/* =====================================================================
-   vagas.js — Sistema de listagem e filtro de vagas (Frontend)
-   Projeto: SCE – Banco de Talentos
-   ===================================================================== */
-
-/* ---------------------------------------------------------------------
-   1. Base de dados (temporária)
-   Em produção, isso vai virar uma chamada API:
-   fetch("https://api.sce.com/vagas")
---------------------------------------------------------------------- */
+// =======================================================
+// LISTA DE VAGAS (SIMULAÇÃO DE BANCO DE DADOS)
+// =======================================================
 const vagas = [
     {
-        id: 1,
-        titulo: "Assistente Administrativo",
-        area: "Administração",
+        titulo: "Auxiliar Administrativo",
         local: "Belém - PA",
-        descricao: "Auxiliar em rotinas administrativas, organização de documentos e atendimento interno."
+        tipo: "CLT",
+        area: "Administrativo",
+        descricao: "Atuação em rotinas administrativas, organização de documentos e suporte ao setor."
     },
     {
-        id: 2,
-        titulo: "Atendente de Loja",
-        area: "Varejo",
+        titulo: "Atendente de Ouvidoria",
+        local: "Belém - PA",
+        tipo: "CLT",
+        area: "Atendimento",
+        descricao: "Responsável por registrar demandas, orientar o público e acompanhar solicitações."
+    },
+    {
+        titulo: "Auxiliar de Serviços Gerais",
         local: "Ananindeua - PA",
-        descricao: "Atendimento ao cliente, organização de estoque e operação de caixa."
+        tipo: "Temporário",
+        area: "Serviços Gerais",
+        descricao: "Responsável pela limpeza e manutenção de ambientes internos."
     },
     {
-        id: 3,
-        titulo: "Auxiliar de Logística",
-        area: "Logística",
-        local: "Belém - PA",
-        descricao: "Separação de pedidos, conferência de cargas e apoio no setor de distribuição."
+        titulo: "Estagiário de Administração",
+        local: "Marituba - PA",
+        tipo: "Estágio",
+        area: "Administrativo",
+        descricao: "Suporte às rotinas administrativas e auxílio no controle de documentos."
     }
 ];
 
 
-/* ---------------------------------------------------------------------
-   2. Elementos do DOM
---------------------------------------------------------------------- */
-const listaVagas = document.getElementById("lista-vagas");
-const inputBusca = document.getElementById("filtro-palavra");
-const selectLocal = document.getElementById("filtro-local");
-
-
-/* ---------------------------------------------------------------------
-   3. Exibir vagas na tela
---------------------------------------------------------------------- */
+// =======================================================
+// FUNÇÃO PARA RENDERIZAR AS VAGAS NA TELA
+// =======================================================
 function renderizarVagas(lista) {
-    listaVagas.innerHTML = "";
+    const container = document.getElementById("lista-vagas");
+    container.innerHTML = "";
 
     if (lista.length === 0) {
-        listaVagas.innerHTML = `
-            <p class="nenhum-resultado">
-                Nenhuma vaga encontrada. Tente alterar os filtros.
-            </p>
-        `;
+        container.innerHTML = "<p>Nenhuma vaga encontrada.</p>";
         return;
     }
 
     lista.forEach(vaga => {
-        const card = document.createElement("div");
-        card.classList.add("vaga-card");
+        const card = document.createElement("article");
+        card.classList.add("card-vaga");
 
         card.innerHTML = `
             <h2>${vaga.titulo}</h2>
             <p><strong>Área:</strong> ${vaga.area}</p>
             <p><strong>Local:</strong> ${vaga.local}</p>
-            <p class="descricao">${vaga.descricao}</p>
-            <button class="btn-candidatar">Candidatar-se</button>
+            <p><strong>Tipo:</strong> ${vaga.tipo}</p>
+            <p>${vaga.descricao}</p>
+            <a href="cadastro.html" class="btn btn-secundario">Candidatar-se</a>
         `;
 
-        listaVagas.appendChild(card);
+        container.appendChild(card);
     });
 }
 
 
-/* ---------------------------------------------------------------------
-   4. Sistema de Filtros
---------------------------------------------------------------------- */
-function filtrarVagas() {
-    const texto = inputBusca.value.toLowerCase().trim();
-    const local = selectLocal.value;
+// =======================================================
+// FILTROS
+// =======================================================
+function aplicarFiltros() {
+    const palavra = document.getElementById("filtro-palavra").value.toLowerCase();
+    const local = document.getElementById("filtro-local").value;
+    const tipo = document.getElementById("filtro-tipo")?.value || "";
 
     const filtradas = vagas.filter(vaga => {
-        const combinaTexto =
-            vaga.titulo.toLowerCase().includes(texto) ||
-            vaga.area.toLowerCase().includes(texto);
+        const matchPalavra =
+            vaga.titulo.toLowerCase().includes(palavra) ||
+            vaga.area.toLowerCase().includes(palavra);
 
-        const combinaLocal =
-            !local || vaga.local === local;
+        const matchLocal = local === "" || vaga.local === local;
+        const matchTipo = tipo === "" || vaga.tipo === tipo;
 
-        return combinaTexto && combinaLocal;
+        return matchPalavra && matchLocal && matchTipo;
     });
 
     renderizarVagas(filtradas);
 }
 
 
-/* ---------------------------------------------------------------------
-   5. Eventos
---------------------------------------------------------------------- */
-inputBusca.addEventListener("input", filtrarVagas);
-selectLocal.addEventListener("change", filtrarVagas);
+// =======================================================
+// EVENTOS DOS FILTROS
+// =======================================================
+document.getElementById("filtro-palavra")
+    .addEventListener("input", aplicarFiltros);
+
+document.getElementById("filtro-local")
+    .addEventListener("change", aplicarFiltros);
+
+if (document.getElementById("filtro-tipo")) {
+    document.getElementById("filtro-tipo")
+        .addEventListener("change", aplicarFiltros);
+}
 
 
-/* ---------------------------------------------------------------------
-   6. Inicialização da página
---------------------------------------------------------------------- */
+// =======================================================
+// INICIALIZAÇÃO
+// =======================================================
 renderizarVagas(vagas);
