@@ -3,50 +3,66 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Currículo - SCE Banco de Talentos</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Cadastrar Currículo – SCE Banco de Talentos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+
+    <!-- ================================================
+         HEADER
+    ================================================= -->
     <header class="topo">
-        <img src="img/logo-sce.png" alt="Logo SCE">
+        <img src="img/logo SCE.png" alt="Logo da SCE">
         <nav>
             <a href="index.html">Início</a>
             <a href="vagas.html">Vagas</a>
         </nav>
     </header>
 
+    <!-- ================================================
+         FORMULÁRIO DE CADASTRO
+    ================================================= -->
     <main class="conteudo">
         <h1>Cadastrar Currículo</h1>
 
         <form id="form-cadastro">
+
+            <!-- Nome -->
             <div class="campo">
                 <label for="nome">Nome completo*</label>
-                <input type="text" id="nome" required>
+                <input type="text" id="nome" required placeholder="Ex.: Maria da Silva">
             </div>
 
+            <!-- Email -->
             <div class="campo">
                 <label for="email">E-mail*</label>
-                <input type="email" id="email" required>
+                <input type="email" id="email" required placeholder="exemplo@email.com">
             </div>
 
+            <!-- Telefone -->
             <div class="campo">
                 <label for="telefone">Telefone / WhatsApp*</label>
-                <input type="tel" id="telefone" required>
+                <input type="tel" id="telefone" required placeholder="(xx) xxxxx-xxxx">
             </div>
 
+            <!-- Cidade + Estado -->
             <div class="grupo">
                 <div class="campo">
                     <label for="cidade">Cidade*</label>
-                    <input type="text" id="cidade" required>
+                    <input type="text" id="cidade" required placeholder="Ex.: Belém">
                 </div>
+
                 <div class="campo">
                     <label for="estado">Estado*</label>
-                    <input type="text" id="estado" maxlength="2" required>
+                    <input type="text" id="estado" maxlength="2" required placeholder="UF">
                 </div>
             </div>
 
+            <!-- Área de Interesse -->
             <div class="campo">
                 <label for="area">Área de interesse*</label>
                 <select id="area" required>
@@ -54,10 +70,12 @@
                     <option>Administrativo</option>
                     <option>Atendimento</option>
                     <option>Serviços Gerais</option>
+                    <option>Operacional</option>
                     <option>Outros</option>
                 </select>
             </div>
 
+            <!-- Tipo de Vaga -->
             <div class="campo">
                 <label for="tipo-vaga">Tipo de vaga desejada</label>
                 <select id="tipo-vaga">
@@ -67,25 +85,30 @@
                 </select>
             </div>
 
+            <!-- Link do Currículo -->
             <div class="campo">
                 <label for="link-cv">Link do currículo (Drive, PDF etc.)*</label>
-                <input type="url" id="link-cv" required>
+                <input type="url" id="link-cv" required placeholder="Cole o link do seu currículo">
             </div>
 
+            <!-- LGPD -->
             <div class="campo check">
                 <input type="checkbox" id="lgpd" required>
                 <label for="lgpd">
-                    Autorizo o uso dos meus dados pela SCE para análise de perfil, contato e participação em processos
-                    seletivos.
+                    Autorizo o uso dos meus dados para análise de perfil, contato e participação em processos seletivos.
                 </label>
             </div>
 
-            <button type="submit" class="btn">Enviar currículo</button>
+            <!-- Botão -->
+            <button type="submit" class="btn">Enviar Currículo</button>
+
             <p id="mensagem-retorno" class="mensagem"></p>
         </form>
     </main>
 
+    <!-- Script -->
     <script src="js/cadastro.js"></script>
+
 </body>
 
 </html>
