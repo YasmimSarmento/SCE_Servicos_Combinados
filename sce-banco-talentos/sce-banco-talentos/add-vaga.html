@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Publicar Vaga - SCE Banco de Talentos</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <header class="topo">
+      <img src="img/logo-sce.png" />
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="vagas.html">Vagas</a>
+      </nav>
+    </header>
+
+    <main class="conteudo">
+      <h1>Publicar Nova Vaga</h1>
+
+      <form id="form-vaga">
+        <div class="campo">
+          <label>Título*</label>
+          <input id="titulo" required />
+        </div>
+
+        <div class="campo">
+          <label>Local*</label>
+          <input id="local" required />
+        </div>
+
+        <div class="campo">
+          <label>Tipo de vaga*</label>
+          <select id="tipo" required>
+            <option>CLT</option>
+            <option>Estágio</option>
+            <option>Temporário</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Descrição*</label>
+          <textarea id="descricao" required></textarea>
+        </div>
+
+        <button class="btn" type="submit">Publicar Vaga</button>
+        <p id="msg"></p>
+      </form>
+    </main>
+
+    <script src="js/add-vaga.js"></script>
+  </body>
+</html>

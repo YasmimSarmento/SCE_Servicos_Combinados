@@ -1,23 +1,26 @@
-const vagas = [
-  {
-    titulo: "Auxiliar Administrativo",
-    local: "Belém - PA",
-    tipo: "CLT",
-    descricao: "Atuação em setor administrativo da SCE.",
-  },
-  {
-    titulo: "Atendente de Ouvidoria",
-    local: "Belém - PA",
-    tipo: "CLT",
-    descricao: "Atendimento ao público e registro de demandas.",
-  },
-];
+async function carregarVagas() {
+  try {
+    const resposta = await fetch("http://localhost:3000/vagas");
+
+    if (!resposta.ok) {
+      throw new Error("Erro ao carregar vagas do servidor");
+    }
+
+    const vagas = await resposta.json();
+    renderizarVagas(vagas);
+  } catch (erro) {
+    console.error("Erro ao carregar vagas:", erro);
+    const container = document.getElementById("lista-vagas");
+    container.innerHTML =
+      "<p>Erro ao carregar vagas. Tente novamente mais tarde.</p>";
+  }
+}
 
 function renderizarVagas(lista) {
   const container = document.getElementById("lista-vagas");
   container.innerHTML = "";
 
-  if (lista.length === 0) {
+  if (!lista || lista.length === 0) {
     container.innerHTML = "<p>Nenhuma vaga encontrada.</p>";
     return;
   }
@@ -38,4 +41,5 @@ function renderizarVagas(lista) {
   });
 }
 
-renderizarVagas(vagas);
+// Executa ao carregar a página
+carregarVagas();
