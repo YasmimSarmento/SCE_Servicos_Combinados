@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Currículo - SCE Banco de Talentos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <header class="topo">
+        <img src="img/logo-sce.png" alt="Logo SCE">
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="vagas.html">Vagas</a>
+        </nav>
+    </header>
+
+    <main class="conteudo">
+        <h1>Cadastrar Currículo</h1>
+
+        <form id="form-cadastro">
+            <div class="campo">
+                <label for="nome">Nome completo*</label>
+                <input type="text" id="nome" required>
+            </div>
+
+            <div class="campo">
+                <label for="email">E-mail*</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="campo">
+                <label for="telefone">Telefone / WhatsApp*</label>
+                <input type="tel" id="telefone" required>
+            </div>
+
+            <div class="grupo">
+                <div class="campo">
+                    <label for="cidade">Cidade*</label>
+                    <input type="text" id="cidade" required>
+                </div>
+                <div class="campo">
+                    <label for="estado">Estado*</label>
+                    <input type="text" id="estado" maxlength="2" required>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="area">Área de interesse*</label>
+                <select id="area" required>
+                    <option value="">Selecione</option>
+                    <option>Administrativo</option>
+                    <option>Atendimento</option>
+                    <option>Serviços Gerais</option>
+                    <option>Outros</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="tipo-vaga">Tipo de vaga desejada</label>
+                <select id="tipo-vaga">
+                    <option>CLT</option>
+                    <option>Estágio</option>
+                    <option>Temporário</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="link-cv">Link do currículo (Drive, PDF etc.)*</label>
+                <input type="url" id="link-cv" required>
+            </div>
+
+            <div class="campo check">
+                <input type="checkbox" id="lgpd" required>
+                <label for="lgpd">
+                    Autorizo o uso dos meus dados pela SCE para análise de perfil, contato e participação em processos
+                    seletivos.
+                </label>
+            </div>
+
+            <button type="submit" class="btn">Enviar currículo</button>
+            <p id="mensagem-retorno" class="mensagem"></p>
+        </form>
+    </main>
+
+    <script src="js/cadastro.js"></script>
+</body>
+
+</html>
