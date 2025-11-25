@@ -8,7 +8,7 @@
     padding: 0.6rem 1.2rem;
     border-radius: 4px;
     border: none;
-    background-color: var(--azul-medio);
+    background-color: var(--verde-escuro);
     color: #fff;
     cursor: pointer;
     font-size: 0.95rem;
@@ -17,13 +17,13 @@
 }
 
 .btn:hover {
-    background-color: var(--azul-hover);
+    background-color: var(--dourado-fosco);
 }
 
 .btn-secundario {
-    background-color: #fff;
-    color: var(--azul-medio);
-    border: 1px solid var(--azul-medio);
+    background-color: #1a3d2e;
+    color: var(--dourado-fosco);
+    border: 1px solid var(--dourado-fosco);
 }
 
 .btn-secundario:hover {
@@ -48,7 +48,7 @@
 .campo textarea {
     padding: 0.6rem;
     border-radius: 4px;
-    border: 1px solid var(--cinza-borda);
+    border: 1px solid var(--preto);
     font-size: 0.95rem;
 }
 
@@ -56,7 +56,7 @@
 .campo select:focus,
 .campo textarea:focus {
     outline: none;
-    border-color: var(--azul-medio);
+    border-color: var(--verde-escuro);
 }
 
 .grupo {
@@ -82,7 +82,7 @@
 .card-vaga h2 {
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
-    color: var(--azul-medio);
+    color: var(--verde-escuro);
 }
 
 .card-vaga p {

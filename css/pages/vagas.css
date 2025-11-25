@@ -13,7 +13,7 @@
 .filtros select {
     padding: 0.6rem;
     border-radius: 4px;
-    border: 1px solid var(--cinza-borda);
+    border: 1px solid var(--preto);
     font-size: 0.95rem;
 }
 

@@ -21,11 +21,11 @@ body {
 
 /* Paleta de Cores */
 :root {
-    --azul-escuro: #002b45;
-    --azul-medio: #0077c2;
-    --azul-hover: #005f9a;
+    --verde-escuro: #1a3d2e;
+    --dourado-fosco: #c9a961;
+    --verde-limão-brilhante: #50ce02;
     --cinza-claro: #f5f5f5;
-    --cinza-borda: #ccc;
+    --preto: #000000;
     --verde-ok: #0a7a2f;
     --vermelho-erro: #c21807;
 }
