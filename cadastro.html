@@ -6,7 +6,6 @@
     <title>Cadastrar Currículo – SCE Banco de Talentos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- CSS Global -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -85,10 +84,12 @@
                 </select>
             </div>
 
-            <!-- Link do Currículo -->
+            <!-- Currículo: Arquivo ou Link -->
             <div class="campo">
-                <label for="link-cv">Link do currículo (Drive, PDF etc.)*</label>
-                <input type="url" id="link-cv" required placeholder="Cole o link do seu currículo">
+                <label for="curriculo">Currículo*</label>
+                <input type="file" id="curriculo-arquivo" multiple accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
+                <input type="url" id="curriculo-link" placeholder="Ou cole o link do seu currículo">
+                <p class="info">Envie um arquivo ou cole um link. Você pode usar ambos.</p>
             </div>
 
             <!-- LGPD -->
@@ -102,8 +103,17 @@
             <!-- Botão -->
             <button type="submit" class="btn">Enviar Currículo</button>
 
+            <!-- Mensagem de retorno -->
             <p id="mensagem-retorno" class="mensagem"></p>
         </form>
+
+        <!-- ================================================
+             HISTÓRICO DE CANDIDATURAS
+        ================================================= -->
+        <section id="historico-candidaturas">
+            <h2>Histórico de Candidaturas</h2>
+            <ul id="lista-candidaturas"></ul>
+        </section>
     </main>
 
     <!-- Script -->

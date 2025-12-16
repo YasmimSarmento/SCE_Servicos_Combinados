@@ -1,34 +1,36 @@
 /* =====================================================================
-   cadastro.js — Envio e salvamento de candidaturas (localStorage)
+   cadastro.js — Formulário de cadastro e upload de currículos
    Projeto: SCE – Banco de Talentos
-   - Salva cada candidatura em localStorage com a chave "candidaturas"
-   - Mantém vínculo com a vaga (se houver)
+   - Permite enviar arquivos ou links de currículo
+   - Salva cada candidatura no localStorage
+   - Exibe histórico de candidaturas com arquivos e links
 ===================================================================== */
 
 (function () {
-    // ----- Elementos do DOM (IDs conforme seu HTML enviado) -----
+
+    // ----- Elementos do DOM -----
     const form = document.getElementById("form-cadastro");
     const mensagem = document.getElementById("mensagem-retorno");
-    const btnEnviar = form ? form.querySelector("button[type='submit']") : null;
+    const btnEnviar = form?.querySelector("button[type='submit']");
+    const listaCandidaturas = document.getElementById("lista-candidaturas");
 
-    // Se o form não existir, evita erros silenciosos
     if (!form) {
         console.error("Formulário não encontrado: id='form-cadastro'");
         return;
     }
 
-    // ----- Helpers de localStorage (segurança) -----
-    function lerLocalStorage(chave) {
+    // ----- Helpers LocalStorage -----
+    const lerLocalStorage = (chave) => {
         try {
             const raw = localStorage.getItem(chave);
-            return raw ? JSON.parse(raw) : null;
+            return raw ? JSON.parse(raw) : [];
         } catch (e) {
             console.error("Erro ao ler localStorage:", e);
-            return null;
+            return [];
         }
-    }
+    };
 
-    function gravarLocalStorage(chave, valor) {
+    const gravarLocalStorage = (chave, valor) => {
         try {
             localStorage.setItem(chave, JSON.stringify(valor));
             return true;
@@ -36,92 +38,96 @@
             console.error("Erro ao gravar no localStorage:", e);
             return false;
         }
-    }
+    };
 
-    // ----- Obter vaga vinculada (URL ?vaga=ID ou vagaSelecionada no localStorage) -----
-    function obterParametro(nome) {
-        return new URLSearchParams(window.location.search).get(nome);
-    }
-
+    // ----- Obter vaga vinculada -----
     function obterVagaVinculada() {
-        // 1) Preferir ?vaga=ID (caso o fluxo use essa abordagem)
-        const vagaId = obterParametro("vaga");
-        if (vagaId) {
-            const vagas = lerLocalStorage("vagas") || [];
-            const encontrada = vagas.find(v => String(v.id) === String(vagaId));
-            if (encontrada) return encontrada;
-        }
-
-        // 2) Fallback para vagaSelecionada (fluxo atual)
         const vagaSel = lerLocalStorage("vagaSelecionada");
-        if (vagaSel) return vagaSel;
-
-        return null;
+        return vagaSel || null;
     }
 
-    // ----- Validação simples (baseada nos campos do HTML) -----
+    // ----- Validação -----
     function validarDados(d) {
         if (!d.nome) return "Informe seu nome completo.";
         if (!d.email || !d.email.includes("@")) return "Forneça um e-mail válido.";
-        if (!d.telefone) return "Informe um telefone (WhatsApp ou fixo).";
+        if (!d.telefone) return "Informe um telefone.";
         if (!d.cidade) return "Informe sua cidade.";
         if (!d.estado || d.estado.length > 2) return "Informe o estado (UF) corretamente.";
         if (!d.area) return "Selecione a área de interesse.";
-        if (!d.linkCv) return "Cole o link do seu currículo (Drive, PDF etc.).";
+        if ((!d.arquivos || d.arquivos.length === 0) && !d.linkCv) return "Envie um arquivo ou cole o link do currículo.";
         if (!d.lgpd) return "Você precisa autorizar o uso dos dados (LGPD).";
         return null;
     }
 
-    // ----- Criar objeto de candidatura e salvar em localStorage -----
-    function salvarCandidatura(dados) {
-        const chave = "candidaturas";
-        const atuais = lerLocalStorage(chave) || [];
-
-        // id simples baseado em timestamp (único e fácil)
-        const candidato = Object.assign({}, dados, {
-            id: Date.now(),
-            criadoEm: new Date().toISOString()
-        });
-
-        atuais.push(candidato);
-        const ok = gravarLocalStorage(chave, atuais);
-        return ok ? candidato : null;
+    // ----- Ler arquivos do input -----
+    function lerArquivos(fileList) {
+        if (!fileList || fileList.length === 0) return [];
+        const arquivos = [];
+        for (let i = 0; i < fileList.length; i++) {
+            const f = fileList[i];
+            arquivos.push({
+                nome: f.name,
+                tamanho: f.size,
+                tipo: f.type
+            });
+        }
+        return arquivos;
     }
 
-    // ----- Manipular mensagens visuais -----
+    // ----- Salvar candidatura -----
+    function salvarCandidatura(dados) {
+        const chave = "candidaturas";
+        const atuais = lerLocalStorage(chave);
+        const candidato = {
+            id: Date.now(),
+            criadoEm: new Date().toLocaleString(),
+            ...dados
+        };
+        atuais.push(candidato);
+        gravarLocalStorage(chave, atuais);
+        return candidato;
+    }
+
+    // ----- Mostrar mensagem -----
     function mostrarMensagem(texto, tipo = "sucesso") {
         if (!mensagem) return;
         mensagem.textContent = texto;
         mensagem.className = `mensagem ${tipo === "sucesso" ? "sucesso" : "erro"}`;
-        // rolar para a mensagem em telas pequenas
         mensagem.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
-    // ----- Envio (simulação + persistência) -----
-    async function enviar(dados) {
-        // Simulação de envio remoto (aqui você pode trocar por fetch)
-        return new Promise(resolve => {
-            setTimeout(() => resolve({ ok: true }), 900);
+    // ----- Exibir histórico de candidaturas -----
+    function renderizarHistorico() {
+        if (!listaCandidaturas) return;
+        const candidatos = lerLocalStorage("candidaturas");
+        listaCandidaturas.innerHTML = "";
+
+        candidatos.forEach(c => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <strong>${c.nome}</strong> (${c.area}) - ${c.criadoEm} <br>
+                Vaga: ${c.vaga ? c.vaga.titulo : "Não vinculada"} <br>
+                ${c.linkCv ? `<a href="${c.linkCv}" target="_blank">Link do Currículo</a><br>` : ""}
+                ${c.arquivos && c.arquivos.length > 0 ? "Arquivos: " + c.arquivos.map(a => a.nome).join(", ") : ""}
+            `;
+            listaCandidaturas.appendChild(li);
         });
     }
 
-    // ----- Handler do formulário -----
+    // ----- Handler de envio do formulário -----
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        // Desabilita botão (protege contra cliques repetidos)
+        // Desabilita botão
         if (btnEnviar) {
             btnEnviar.disabled = true;
             btnEnviar.textContent = "Enviando...";
         }
 
-        // Limpar mensagens antigas
-        if (mensagem) {
-            mensagem.textContent = "";
-            mensagem.className = "mensagem";
-        }
+        // Limpa mensagens
+        if (mensagem) mensagem.textContent = "";
 
-        // Ler campos (IDs do seu HTML)
+        // Ler dados
         const dados = {
             nome: (document.getElementById("nome")?.value || "").trim(),
             email: (document.getElementById("email")?.value || "").trim(),
@@ -130,19 +136,11 @@
             estado: (document.getElementById("estado")?.value || "").trim(),
             area: (document.getElementById("area")?.value || "").trim(),
             tipoVaga: (document.getElementById("tipo-vaga")?.value || "").trim(),
-            linkCv: (document.getElementById("link-cv")?.value || "").trim(),
+            arquivos: lerArquivos(document.getElementById("curriculo-arquivo")?.files),
+            linkCv: (document.getElementById("curriculo-link")?.value || "").trim(),
             lgpd: !!document.getElementById("lgpd")?.checked,
-            // vinculo com a vaga (id + titulo quando possível)
-            vaga: null
+            vaga: obterVagaVinculada()
         };
-
-        const vagaVinculada = obterVagaVinculada();
-        if (vagaVinculada) {
-            dados.vaga = {
-                id: vagaVinculada.id || null,
-                titulo: vagaVinculada.titulo || (vagaVinculada.nome || "Vaga")
-            };
-        }
 
         // Validação
         const erro = validarDados(dados);
@@ -155,28 +153,25 @@
             return;
         }
 
+        // Simulação de envio remoto
         try {
-            // 1) Simula envio remoto (opcional)
-            const resposta = await enviar(dados);
-            if (!resposta || !resposta.ok) {
-                throw new Error("Falha no envio remoto");
-            }
+            await new Promise(resolve => setTimeout(resolve, 900));
 
-            // 2) Salva localmente como backup / histórico
-            const salvo = salvarCandidatura(dados);
-            if (!salvo) {
-                throw new Error("Falha ao salvar localmente");
-            }
+            // Salvar localmente
+            salvarCandidatura(dados);
 
-            // 3) Feedback ao usuário
-            mostrarMensagem("Currículo enviado com sucesso! Agradecemos sua candidatura.", "sucesso");
+            // Feedback
+            mostrarMensagem("Currículo enviado com sucesso!", "sucesso");
 
-            // zera formulário
+            // Reset do formulário
             form.reset();
+
+            // Atualizar histórico
+            renderizarHistorico();
 
         } catch (err) {
             console.error(err);
-            mostrarMensagem("Erro ao enviar candidatura. Tente novamente mais tarde.", "erro");
+            mostrarMensagem("Erro ao enviar candidatura.", "erro");
         } finally {
             if (btnEnviar) {
                 btnEnviar.disabled = false;
@@ -185,8 +180,7 @@
         }
     });
 
-    // ----- Expor utilitário (opcional) para debug no console -----
-    window.__SCE = window.__SCE || {};
-    window.__SCE.obterCandidaturas = () => lerLocalStorage("candidaturas") || [];
+    // ----- Inicializar histórico ao carregar a página -----
+    renderizarHistorico();
 
 })();
