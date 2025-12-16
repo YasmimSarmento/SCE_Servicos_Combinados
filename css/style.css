@@ -2,6 +2,7 @@
 @import url("layout.css");
 @import url("components.css");
 @import url("responsive.css");
+@import url("pages/sobre.css");
 
 @import url("pages/home.css");
 @import url("pages/vagas.css");
