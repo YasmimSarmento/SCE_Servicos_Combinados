@@ -1,7 +1,7 @@
 /* =====================================================================
-   cadastro.js — Envio do formulário de cadastro de currículo
+   cadastro.js — Envio do formulário de currículo
    Projeto: SCE – Banco de Talentos
-   ===================================================================== */
+===================================================================== */
 
 /* ---------------------------------------------------------------------
    1. Capturar elementos
@@ -11,53 +11,46 @@ const msgSucesso = document.getElementById("msg-sucesso");
 const msgErro = document.getElementById("msg-erro");
 const btnEnviar = document.getElementById("btn-enviar");
 
-
 /* ---------------------------------------------------------------------
-   2. Validação simples e eficaz
+   2. Validação
 --------------------------------------------------------------------- */
 function validarFormulario(dados) {
     if (!dados.nome.trim()) return "Informe seu nome completo.";
     if (!dados.email.trim() || !dados.email.includes("@")) return "Forneça um e-mail válido.";
-    if (!dados.telefone.trim()) return "Informe um número de telefone para contato.";
+    if (!dados.telefone.trim()) return "Informe um telefone para contato.";
     if (!dados.area.trim()) return "Selecione a área desejada.";
-    if (!dados.experiencia.trim()) return "Descreva brevemente sua experiência.";
+    if (!dados.experiencia.trim()) return "Descreva sua experiência.";
 
-    return null; // válido
+    return null;
 }
 
-
 /* ---------------------------------------------------------------------
-   3. Simular envio (futuramente vira integração real com API)
+   3. Simulação de envio
 --------------------------------------------------------------------- */
-async function enviarParaServidor(dados) {
-    // Exemplo real futuro:
-    // return fetch("https://api.sce.com/candidatos", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(dados)
-    // });
-
+function enviarParaServidor(dados) {
     return new Promise(resolve => {
-        setTimeout(() => resolve({ ok: true }), 1500); // animação fake bonitinha
+        setTimeout(() => resolve({ ok: true }), 1500);
     });
 }
 
-
 /* ---------------------------------------------------------------------
-   4. Função principal de envio
+   4. Envio do formulário
 --------------------------------------------------------------------- */
 async function processarCadastro(event) {
     event.preventDefault();
 
-    msgErro.textContent = "";
-    msgSucesso.textContent = "";
+    msgErro.style.display = "none";
+    msgSucesso.style.display = "none";
+
+    const vagaSelecionada = JSON.parse(localStorage.getItem("vagaSelecionada"));
 
     const dados = {
         nome: form.nome.value,
         email: form.email.value,
         telefone: form.telefone.value,
         area: form.area.value,
-        experiencia: form.experiencia.value
+        experiencia: form.experiencia.value,
+        vaga: vagaSelecionada ? vagaSelecionada.titulo : "Vaga não identificada"
     };
 
     const erro = validarFormulario(dados);
@@ -77,14 +70,12 @@ async function processarCadastro(event) {
         if (resposta.ok) {
             msgSucesso.textContent = "Currículo enviado com sucesso!";
             msgSucesso.style.display = "block";
-
             form.reset();
         } else {
-            msgErro.textContent = "Não foi possível enviar seu cadastro. Tente novamente.";
-            msgErro.style.display = "block";
+            throw new Error();
         }
-    } catch (e) {
-        msgErro.textContent = "Erro inesperado. Verifique sua conexão.";
+    } catch {
+        msgErro.textContent = "Erro ao enviar. Tente novamente.";
         msgErro.style.display = "block";
     }
 
@@ -92,8 +83,7 @@ async function processarCadastro(event) {
     btnEnviar.textContent = "Enviar Currículo";
 }
 
-
 /* ---------------------------------------------------------------------
-   5. Eventos
+   5. Evento
 --------------------------------------------------------------------- */
 form.addEventListener("submit", processarCadastro);

@@ -1,78 +1,57 @@
-// detalheVaga.js
-// Script responsável por carregar e exibir os detalhes da vaga selecionada.
+/* =====================================================================
+   detalhe-vaga.js — Exibição da vaga selecionada
+   Projeto: SCE – Banco de Talentos
+===================================================================== */
 
-// --------------------------
-// Função utilitária
-// --------------------------
-function obterParametro(nome) {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(nome);
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-// --------------------------
-// Carregar vagas do localStorage
-// --------------------------
-function carregarVagas() {
-    const vagas = localStorage.getItem("vagas");
-    return vagas ? JSON.parse(vagas) : [];
-}
+    const vaga = JSON.parse(localStorage.getItem("vagaSelecionada"));
+    const container = document.querySelector(".vaga-container");
 
-// --------------------------
-// Renderizar dados da vaga
-// --------------------------
-function exibirDetalhesVaga() {
-    const vagaId = obterParametro("id");
-    const vagas = carregarVagas();
-
-    const container = document.getElementById("detalhe-vaga");
-
-    if (!vagaId) {
-        container.innerHTML = `
-            <p class="erro">ID da vaga não foi encontrado na URL.</p>
-        `;
+    if (!vaga || !container) {
+        container.innerHTML = "<p class='erro'>Vaga não encontrada.</p>";
         return;
     }
 
-    const vaga = vagas.find(v => v.id == vagaId);
+    // Cabeçalho
+    document.getElementById("vagaTitulo").textContent = vaga.titulo;
+    document.getElementById("vagaEmpresa").textContent =
+        vaga.empresa || "Empresa confidencial";
 
-    if (!vaga) {
-        container.innerHTML = `
-            <p class="erro">Vaga não encontrada ou removida.</p>
-        `;
-        return;
-    }
+    document.getElementById("vagaTipo").textContent = vaga.tipo;
+    document.getElementById("vagaLocal").textContent = vaga.local;
+    document.getElementById("vagaNivel").textContent = vaga.area;
 
-    // Renderização da vaga
-    container.innerHTML = `
-        <h1>${vaga.titulo}</h1>
-        <p class="empresa">${vaga.empresa || "Empresa confidencial"}</p>
+    // Descrição
+    document.getElementById("vagaDescricao").textContent = vaga.descricao;
 
-        <div class="info">
-            <p><strong>Local:</strong> ${vaga.local}</p>
-            <p><strong>Área:</strong> ${vaga.area}</p>
-            <p><strong>Tipo:</strong> ${vaga.tipo}</p>
-        </div>
+    // Requisitos
+    const listaRequisitos = document.getElementById("vagaRequisitos");
+    listaRequisitos.innerHTML = "";
 
-        <h2>Descrição da vaga</h2>
-        <p class="descricao">${vaga.descricao}</p>
+    (vaga.requisitos || []).forEach(req => {
+        const li = document.createElement("li");
+        li.textContent = req;
+        listaRequisitos.appendChild(li);
+    });
 
-        <h2>Requisitos</h2>
-        <ul class="lista-requisitos">
-            ${(vaga.requisitos || []).map(req => `<li>${req}</li>`).join("")}
-        </ul>
+    // Benefícios
+    const listaBeneficios = document.getElementById("vagaBeneficios");
+    listaBeneficios.innerHTML = "";
 
-        <h2>Benefícios</h2>
-        <ul class="lista-beneficios">
-            ${(vaga.beneficios || []).map(ben => `<li>${ben}</li>`).join("")}
-        </ul>
+    (vaga.beneficios || []).forEach(ben => {
+        const li = document.createElement("li");
+        li.textContent = ben;
+        listaBeneficios.appendChild(li);
+    });
 
-        <a href="cadastro.html?vaga=${vaga.id}" class="btn-candidatar">
-            Candidatar-se
-        </a>
-    `;
-}
+    // Salário
+    document.getElementById("vagaSalario").textContent =
+        vaga.salario || "A combinar";
 
-// --------------------------
-// Inicialização
-// --------------------------
-document.addEventListener("DOMContentLoaded", exibirDetalhesVaga);
+    // Botão candidatar
+    document.getElementById("btnCandidatar").addEventListener("click", () => {
+        window.location.href = "cadastro.html";
+    });
+
+});
