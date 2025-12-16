@@ -1,0 +1,77 @@
+/* ===== PÁGINA SOBRE ===== */
+
+.sobre-grid {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.sobre h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.sobre p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+}
+
+.valores {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.valores li {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 28px;
+    align-items: flex-start;
+}
+
+.valores .icone {
+    width: 44px;
+    height: 44px;
+    background-color: #e6f4ec;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.3s ease;
+}
+
+.valores .icone svg {
+    width: 22px;
+    height: 22px;
+    fill: #0b7a3b;
+    transition: fill 0.3s ease;
+}
+
+.valores strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 16px;
+}
+
+.valores p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Efeito sutil (opcional, mas recomendado) */
+.valores li:hover .icone {
+    background-color: #0b7a3b;
+}
+
+.valores li:hover svg {
+    fill: #ffffff;
+}
+
