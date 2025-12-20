@@ -5,6 +5,148 @@
     <title>Vagas – SCE Banco de Talentos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ===== Melhorias de Layout - Vagas ===== */
+        
+        main.conteudo h1 {
+            font-size: 2.3rem !important;
+            color: #1a3d2e !important;
+            margin-bottom: 3rem !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        main.conteudo h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #1a3d2e, #c9a961);
+            border-radius: 2px;
+        }
+
+        .filtros {
+            background-color: #fff !important;
+            padding: 2rem !important;
+            border-radius: 12px !important;
+            border: 1px solid #f0f0f0 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+            margin-bottom: 3rem !important;
+            display: flex !important;
+            gap: 1.5rem !important;
+            flex-wrap: wrap !important;
+        }
+
+        .filtros input,
+        .filtros select {
+            padding: 0.875rem !important;
+            border-radius: 8px !important;
+            border: 2px solid #ddd !important;
+            font-size: 0.95rem !important;
+            transition: all 0.3s ease !important;
+            min-width: 200px !important;
+        }
+
+        .filtros input:focus,
+        .filtros select:focus {
+            outline: none !important;
+            border-color: #1a3d2e !important;
+            box-shadow: 0 0 0 4px rgba(26, 61, 46, 0.1) !important;
+        }
+
+        .lista-vagas {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 2.5rem !important;
+        }
+
+        /* Card de vaga melhorado */
+        .lista-vagas .card-vaga,
+        #lista-vagas .card-vaga {
+            background-color: #fff !important;
+            padding: 2rem !important;
+            border-radius: 12px !important;
+            border: 1px solid #f0f0f0 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lista-vagas .card-vaga::before,
+        #lista-vagas .card-vaga::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(90deg, #1a3d2e, #c9a961);
+        }
+
+        .lista-vagas .card-vaga:hover,
+        #lista-vagas .card-vaga:hover {
+            transform: translateY(-8px) !important;
+            box-shadow: 0 12px 30px rgba(26, 61, 46, 0.15) !important;
+            border-color: #1a3d2e !important;
+        }
+
+        .lista-vagas .card-vaga h2,
+        #lista-vagas .card-vaga h2 {
+            font-size: 1.3rem !important;
+            margin-bottom: 1rem !important;
+            color: #1a3d2e !important;
+            font-weight: 700 !important;
+        }
+
+        .lista-vagas .card-vaga p,
+        #lista-vagas .card-vaga p {
+            font-size: 0.95rem !important;
+            color: #666 !important;
+            margin-bottom: 0.6rem !important;
+            line-height: 1.6;
+        }
+
+        /* Responsivo */
+        @media (max-width: 900px) {
+            .lista-vagas {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+
+            .filtros {
+                flex-direction: column;
+            }
+
+            .filtros input,
+            .filtros select {
+                width: 100%;
+                min-width: unset;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main.conteudo h1 {
+                font-size: 1.5rem !important;
+            }
+
+            .filtros {
+                padding: 1.5rem !important;
+                gap: 1rem !important;
+            }
+
+            .lista-vagas .card-vaga,
+            #lista-vagas .card-vaga {
+                padding: 1.5rem !important;
+            }
+        }
+    </style>
 </head>
 
 <body>

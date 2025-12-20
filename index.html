@@ -7,6 +7,219 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
+    <style>
+        /* ===== Melhorias de Layout - Home ===== */
+        
+        .hero {
+            background: linear-gradient(135deg, #1a3d2e 0%, #2d5a42 100%) !important;
+            padding: 5rem 3rem !important;
+            border-radius: 16px !important;
+            color: #fff !important;
+            text-align: center !important;
+            position: relative !important;
+            overflow: hidden !important;
+            box-shadow: 0 8px 32px rgba(26, 61, 46, 0.2) !important;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(201, 169, 97, 0.08);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 300px;
+            height: 300px;
+            background: rgba(201, 169, 97, 0.05);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem !important;
+            margin-bottom: 1.5rem !important;
+            font-weight: 700 !important;
+            line-height: 1.2 !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero p {
+            font-size: 1.2rem !important;
+            max-width: 650px !important;
+            margin: 1.5rem auto 2.5rem !important;
+            opacity: 0.95 !important;
+            line-height: 1.8 !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-actions {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 1.5rem !important;
+            flex-wrap: wrap !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-actions .btn {
+            padding: 1.2rem 2.5rem !important;
+            font-size: 1.05rem !important;
+            font-weight: 600 !important;
+            border-radius: 10px !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 4px 15px rgba(26, 61, 46, 0.2) !important;
+        }
+
+        .hero-actions .btn:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 6px 20px rgba(26, 61, 46, 0.3) !important;
+        }
+
+        .como-funciona {
+            margin-top: 5rem !important;
+        }
+
+        .como-funciona h2 {
+            font-size: 2.3rem !important;
+            margin-bottom: 3rem !important;
+            text-align: center !important;
+            color: #1a3d2e !important;
+            font-weight: 700 !important;
+            position: relative;
+        }
+
+        .como-funciona h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #1a3d2e, #c9a961);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        .passos {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 2.5rem !important;
+        }
+
+        .passo {
+            background-color: #fff !important;
+            padding: 2.5rem 2rem !important;
+            border-radius: 12px !important;
+            border: 1px solid #f0f0f0 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            text-align: center !important;
+        }
+
+        .passo::before {
+            content: attr(data-number);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1a3d2e, #2d5a42);
+            color: #c9a961;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(26, 61, 46, 0.2);
+        }
+
+        .passo:hover {
+            transform: translateY(-8px) !important;
+            box-shadow: 0 12px 30px rgba(26, 61, 46, 0.15) !important;
+            border-color: #c9a961 !important;
+        }
+
+        .passo h3 {
+            margin-top: 1.5rem !important;
+            margin-bottom: 1rem !important;
+            color: #1a3d2e !important;
+            font-size: 1.3rem !important;
+            font-weight: 700 !important;
+        }
+
+        .passo p {
+            color: #666 !important;
+            line-height: 1.7 !important;
+            font-size: 0.95rem !important;
+        }
+
+        /* Responsivo */
+        @media (max-width: 900px) {
+            .passos {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+
+            .hero {
+                padding: 3rem 2rem !important;
+            }
+
+            .hero h1 {
+                font-size: 2rem !important;
+            }
+
+            .como-funciona h2 {
+                font-size: 1.8rem !important;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2.5rem 1.5rem !important;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem !important;
+            }
+
+            .hero p {
+                font-size: 0.95rem !important;
+            }
+
+            .passo {
+                padding: 1.5rem 1rem !important;
+            }
+
+            .passo h3 {
+                font-size: 1rem !important;
+            }
+
+            .como-funciona h2 {
+                font-size: 1.5rem !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
