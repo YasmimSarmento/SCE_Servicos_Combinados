@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Painel do Candidato | SCE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/pages/dashboard.css">
+</head>
+<body class="dash-body">
+
+<aside class="sidebar-pro">
+    <div class="side-logo">
+        <img src="imagem/logo c&s.png" alt="Logo">
+    </div>
+    <nav class="side-nav">
+        <a href="dashboard.html" class="nav-link active"><i class="fa-solid fa-chart-line"></i> Início</a>
+        <a href="perfil.html" class="nav-link"><i class="fa-solid fa-user-tie"></i> Meu Perfil</a>
+        <a href="documentos.html" class="nav-link"><i class="fa-solid fa-file-arrow-up"></i> Documentos</a>
+        <a href="vagas.html" class="nav-link"><i class="fa-solid fa-briefcase"></i> Vagas</a>
+        <div class="nav-divider"></div>
+        <a href="index.html" class="nav-link logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+    </nav>
+</aside>
+
+<main class="main-content">
+
+<header class="dash-header">
+    <div class="header-title">
+        <h1>Bem-vindo, <span id="userNome">Candidato</span></h1>
+        <p>Acompanhe suas oportunidades e mantenha seu perfil atualizado.</p>
+    </div>
+</header>
+
+<section class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-paper-plane"></i></div>
+        <div class="stat-info">
+            <span class="label">Candidaturas</span>
+            <strong class="value" id="countVagas">0</strong>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon gold"><i class="fa-solid fa-star"></i></div>
+        <div class="stat-info">
+            <span class="label">Pontuação</span>
+            <strong class="value" id="pontuacao">0%</strong>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon green"><i class="fa-solid fa-bell"></i></div>
+        <div class="stat-info">
+            <span class="label">Notificações</span>
+            <strong class="value" id="qtdNotificacoes">0</strong>
+        </div>
+    </div>
+</section>
+
+<div class="content-grid">
+
+    <!-- Card Status da Candidatura -->
+    <div class="card-glass">
+        <div class="card-head">
+            <h3>Status da Candidatura</h3>
+        </div>
+        <div class="card-body">
+            <ul id="listaStatus" class="status-list"></ul>
+        </div>
+    </div>
+
+</div>
+
+</main>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
