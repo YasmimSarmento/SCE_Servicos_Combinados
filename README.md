@@ -1,174 +1,178 @@
-SCE - Serviços Combinados de Escritório
+# SCE – Serviços Combinados de Escritório  
+## Banco de Talentos (Frontend)
 
-O SCE Banco de Talentos é um sistema voltado para conectar candidatos a oportunidades de emprego de forma simples, rápida e organizada.
-O projeto está sendo desenvolvido inicialmente com foco no frontend, garantindo uma base sólida para futuras integrações com backend.
+O **SCE – Banco de Talentos** é um sistema desenvolvido para conectar candidatos a oportunidades de emprego de forma **simples, rápida e organizada**.  
+Nesta fase, o projeto está focado exclusivamente no **frontend**, estabelecendo uma base sólida, escalável e preparada para futuras integrações com backend e banco de dados.
 
-🚀 Objetivo do Projeto
+---
 
-O sistema tem como missão:
+## 🎯 Objetivo do Projeto
 
-Facilitar o cadastro de currículos (agora com upload de arquivos e links).
+O sistema tem como principais objetivos:
 
-Exibir vagas abertas de forma clara e filtrável.
+- Facilitar o **cadastro de currículos**, com suporte a **upload de arquivos** e **links externos**;
+- Exibir **vagas abertas** de forma clara, organizada e filtrável;
+- Permitir o **detalhamento completo** de cada vaga;
+- Criar um ambiente profissional para **triagem inicial de candidatos**;
+- Servir futuramente como a **plataforma oficial da SCE** para gestão de talentos.
 
-Permitir detalhamento completo de cada vaga.
+---
 
-Criar um ambiente profissional e rápido para triagem de candidatos.
+## 🏗️ Estrutura do Projeto
 
-Servir futuramente como plataforma oficial da SCE para gestão de talentos.
-
-🏗 Estrutura Atual do Projeto
-
-/ (raiz)
-│
-├── index.html → Página inicial
-├── vagas.html → Lista de vagas disponíveis
-├── cadastro.html → Formulário de cadastro de candidatos (com upload de arquivos e links)
-├── detalhe-vaga.html → Página de detalhes de cada vaga
+```text
+/
+├── index.html            # Página inicial
+├── vagas.html            # Listagem de vagas disponíveis
+├── cadastro.html         # Cadastro de candidatos (upload de arquivos e links)
+├── detalhe-vaga.html     # Detalhes da vaga selecionada
 │
 ├── css/
-│ ├── style.css → Arquivo que importa TODOS os demais
-│ ├── base.css → Reset, variáveis, tipografia, cores
-│ ├── layout.css → Header, footer, containers, grids
-│ ├── components.css → Botões, cards, inputs, feedbacks
-│ ├── responsive.css → Responsividade global
-│ └── pages/
-│ ├── home.css → Estilos da página inicial
-│ ├── vagas.css → Estilos da lista de vagas
-│ ├── cadastro.css → Estilos do formulário de cadastro (upload incluído)
-│ └── detalhe-vaga.css → Estilos da página de detalhes da vaga
+│   ├── style.css         # Arquivo principal que importa os demais estilos
+│   ├── base.css          # Reset, variáveis globais, tipografia e cores
+│   ├── layout.css        # Header, footer, grids e containers
+│   ├── components.css   # Botões, cards, inputs e feedbacks
+│   ├── responsive.css   # Responsividade global
+│   └── pages/
+│       ├── home.css
+│       ├── vagas.css
+│       ├── cadastro.css
+│       └── detalhe-vaga.css
 │
 ├── js/
-│ ├── vagas.js → Listagem e filtros de vagas
-│ ├── cadastro.js → Validação, envio de formulários, upload de arquivos e histórico de candidaturas
-│ └── detalhe-vaga.js → Renderização da vaga selecionada
+│   ├── vagas.js          # Listagem e filtros de vagas
+│   ├── cadastro.js       # Validação, envio de formulários e upload de arquivos
+│   └── detalhe-vaga.js   # Renderização da vaga selecionada
 │
 └── img/
-├── logo-sce.png → Logotipo principal
-└── (...outras imagens)
+    ├── logo-sce.png      # Logotipo principal
+    └── ...               # Outras imagens
 
-🎨 Padrões Visuais
+```
+## 🎨 Padrões Visuais
 
-O sistema segue uma identidade visual profissional e moderna:
+O sistema segue uma identidade visual **profissional e moderna**, alinhada ao posicionamento institucional da **SCE**.
 
-Verde escuro (#1A3D2E) – cor corporativa principal, usada em cabeçalhos, títulos e elementos de destaque.
+### 🎯 Paleta de Cores
 
-Dourado fosco (#C9A961) – ações, botões secundários e hover.
+- **Verde escuro (`#1A3D2E`)**  
+  Cor corporativa principal, utilizada em títulos, cabeçalhos e elementos de destaque.
 
-Cinza claro (#F5F5F5) – fundo neutro para leitura, cards e seções.
+- **Dourado fosco (`#C9A961`)**  
+  Aplicado em botões, ações secundárias e efeitos *hover*.
 
-Branco (#FFFFFF) – áreas principais, formulários e destaques de conteúdo.
+- **Cinza claro (`#F5F5F5`)**  
+  Fundo neutro para leitura, cards e seções.
 
-Layout com bordas arredondadas (4px–8px), sombras suaves para profundidade e tipografia limpa com fontes sans-serif.
+- **Branco (`#FFFFFF`)**  
+  Áreas principais, formulários e destaques de conteúdo.
 
-📌 Status do Desenvolvimento
+### 📐 Outros Padrões Adotados
 
-Estrutura completa de frontend
+- Bordas arredondadas (4px–8px)
+- Sombras suaves para profundidade visual
+- Tipografia limpa com fontes *sans-serif*
+- Layout responsivo e organizado
 
-Divisão modular de CSS
+---
 
-Responsividade global criada
+## 📌 Status do Desenvolvimento
 
-Páginas principais prontas
+### ✔ Funcionalidades Concluídas
 
-Scripts revisados para vagas e cadastro (upload de arquivos + links, histórico de candidaturas)
+- Estrutura completa de frontend
+- CSS modularizado e organizado
+- Responsividade global
+- Páginas principais finalizadas
+- Scripts revisados para:
+  - Listagem e filtros de vagas
+  - Cadastro de candidatos
+  - Upload de arquivos e links
+  - Histórico de candidaturas
 
-Integração com backend (futuro)
+### 🔄 Em Desenvolvimento Futuro
 
-Sistema de login do RH
+- Integração com backend
+- Sistema de login do RH
+- Dashboard administrativo
+- Conexão com banco de dados (**SCE – Fase 2**)
 
-Dashboard administrativo
+---
 
-Conexão com banco de dados (SCE – Fase 2)
+## 🔄 Fluxo Atual do Sistema
 
-📂 Fluxo Atual do Sistema
+1. O usuário acessa o site
+2. Visualiza informações iniciais
+3. Pode:
+   - Cadastrar currículo (upload de arquivos e links)
+   - Visualizar vagas disponíveis
+   - Filtrar vagas por cidade ou palavra-chave
+4. Ao clicar em uma vaga:
+   - É direcionado para a página de detalhes
 
-Usuário acessa o site
+### 🔮 Fluxo Futuro Planejado
 
-Visualiza informações iniciais sobre o projeto
+- O RH poderá cadastrar vagas
+- Gerenciar candidatos
+- Analisar currículos diretamente pela plataforma
 
-Pode:
+---
 
-Cadastrar currículo (upload de arquivos e links)
+## 🧪 Tecnologias Utilizadas
 
-Ver lista de vagas
+- **HTML5**
+- **CSS3** (arquitetura modular)
+- **JavaScript (ES6+)**
+- **Responsividade mobile-first**
+- **LocalStorage** para histórico de candidaturas
+- Arquitetura preparada para integração com backend
 
-Filtrar por cidade ou palavra-chave
+---
 
-Ao clicar em uma vaga:
+## 🚀 Como Executar o Projeto
 
-Vai para a página de detalhes
+Não é necessário instalar dependências.
 
-No futuro:
+### Opção 1 – Execução Direta
 
-RH poderá cadastrar vagas e gerenciar candidatos
+Abra qualquer arquivo `.html` diretamente no navegador.
 
-🧪 Tecnologias Usadas
+**Exemplo:**
+```text
+index.html
+```
+### Opção 2 – Servidor Local (Recomendado)
 
-HTML5
+Utilize a extensão **Live Server** no **VS Code**.
 
-CSS3 modularizado
+---
 
-JavaScript (ES6+)
+## 📂 Histórico de Candidaturas
 
-Responsividade mobile-first
+O sistema registra localmente todas as candidaturas realizadas, exibindo:
 
-LocalStorage para histórico de candidaturas
+- Nome do candidato
+- Área de interesse
+- Data e hora do envio
+- Link do currículo (quando informado)
+- Arquivos enviados (listagem de nomes)
 
-Arquitetura escalável para integração futura com backend
+---
 
-💼 Futuras Melhorias Planejadas
+## 💼 Melhorias Planejadas
 
-Autenticação do RH
+- Autenticação do RH
+- Área administrativa completa:
+  - Cadastro e edição de vagas
+  - Banco de currículos com download de arquivos
+  - Exportação de currículos em PDF
+- Painel de indicadores (*dashboard*)
+- Integração com API ou banco de dados
+- Hospedagem oficial do sistema
 
-Área administrativa completa:
+---
 
-Cadastro de vagas
+## 🤝 Contribuição
 
-Edição de vagas
-
-Banco de currículos (com download de arquivos)
-
-Exportação de currículos em PDF
-
-Painel com indicadores (dashboard)
-
-API ou integração com banco de dados
-
-Hospedagem oficial do sistema
-
-📎 Como rodar o projeto
-
-Não precisa instalar nada.
-Basta abrir qualquer arquivo .html no navegador.
-
-Exemplo:
-
-Abra o arquivo: index.html
-
-Se preferir usar um servidor local (recomendado):
-
-VSCode → Live Server
-
-📂 Histórico de Candidaturas
-
-Agora o cadastro de currículos permite arquivos e links, e todas as candidaturas são listadas na página de cadastro, incluindo:
-
-Nome do candidato
-
-Área de interesse
-
-Data/hora de envio
-
-Link do currículo (quando fornecido)
-
-Arquivos enviados (nomes listados)
-
-🤝 Contribuição
-
-Este projeto está em desenvolvimento contínuo.
-Sugestões e melhorias são sempre bem-vindas.
-
-📜 Licença
-
-Uso interno autorizado para o projeto SCE – Banco de Talentos.
+Este projeto está em desenvolvimento contínuo.  
+Sugestões, melhorias e contribuições são sempre bem-vindas.

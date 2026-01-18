@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Vagas – SCE Banco de Talentos</title>
@@ -154,16 +155,28 @@
 <header class="topo">
     <img src="imagem/logo-sce.png" alt="Logotipo da SCE">
     <nav>
-        <a href="index.html">Início</a>
-        <a href="cadastro.html">Cadastrar Currículo</a>
+        <a href="index.html">INÍCIO</a>
+        <a href="index.html" class="ativo">VAGAS</a>
+        <a href="cadastro.html">CADASTRO</a>
     </nav>
 </header>
 
 <main class="conteudo">
     <h1>Vagas Abertas</h1>
 
+    <p class="descricao-form">
+        Confira abaixo as oportunidades disponíveis no momento. </br>
+        Caso nenhuma vaga seja compatível com seu perfil, você ainda
+        pode cadastrar seu currículo em nosso Banco de Talentos.
+    </p>
+
+    <!-- FILTROS -->
     <section class="filtros">
-        <input type="text" id="filtro-palavra" placeholder="Buscar por título ou área">
+        <input
+            type="text"
+            id="filtro-palavra"
+            placeholder="Buscar por cargo ou área"
+        >
 
         <select id="filtro-local">
             <option value="">Localidade</option>
@@ -180,7 +193,9 @@
         </select>
     </section>
 
+    <!-- LISTA -->
     <section id="lista-vagas" class="lista-vagas"></section>
+
 </main>
 
 <script src="js/vagas.js"></script>

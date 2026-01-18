@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Cadastrar Currículo – SCE Banco de Talentos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="css/style.css">
     <style>
         /* ===== Melhorias de Layout - Cadastro ===== */
@@ -253,113 +252,99 @@
 
 <body>
 
-    <!-- ================================================
-         HEADER
-    ================================================= -->
+    <!-- HEADER -->
     <header class="topo">
         <img src="imagem/logo-sce.png" alt="Logotipo da SCE">
         <nav>
-            <a href="index.html">Início</a>
-            <a href="vagas.html">Vagas</a>
+            <a href="index.html">INÍCIO</a>
+            <a href="vagas.html">VAGAS</a>
+            <a href="index.html" class="ativo">CADASTRO</a>
         </nav>
     </header>
 
-    <!-- ================================================
-         FORMULÁRIO DE CADASTRO
-    ================================================= -->
+    <!-- CONTEÚDO -->
     <main class="conteudo">
-        <h1>Cadastrar Currículo</h1>
+        <h1>Cadastro de Currículo</h1>
 
-        <form id="form-cadastro">
+        <p class="descricao-form">
+            Preencha os dados abaixo para cadastrar seu currículo em nosso Banco de Talentos.</br>
+            Mesmo sem vagas abertas no momento, seu perfil poderá ser considerado futuramente.
+        </p>
 
-            <!-- Nome -->
+        <form id="form-cadastro" novalidate>
+
             <div class="campo">
                 <label for="nome">Nome completo*</label>
-                <input type="text" id="nome" required placeholder="Ex.: Maria da Silva">
+                <input type="text" id="nome" required>
             </div>
 
-            <!-- Email -->
             <div class="campo">
-                <label for="email">E-mail*</label>
-                <input type="email" id="email" required placeholder="exemplo@email.com">
+                <label for="email">Email*</label>
+                <input type="email" id="email" required>
             </div>
 
-            <!-- Telefone -->
             <div class="campo">
-                <label for="telefone">Telefone / WhatsApp*</label>
-                <input type="tel" id="telefone" required placeholder="(xx) xxxxx-xxxx">
+                <label for="telefone">Telefone / Celular*</label>
+                <input type="tel" id="telefone" required>
             </div>
 
-            <!-- Cidade + Estado -->
             <div class="grupo">
                 <div class="campo">
                     <label for="cidade">Cidade*</label>
-                    <input type="text" id="cidade" required placeholder="Ex.: Belém">
+                    <input type="text" id="cidade" required>
                 </div>
 
                 <div class="campo">
-                    <label for="estado">Estado*</label>
-                    <input type="text" id="estado" maxlength="2" required placeholder="UF">
+                    <label for="estado">Estado (UF)*</label>
+                    <input type="text" id="estado" maxlength="2" required>
                 </div>
             </div>
 
-            <!-- Área de Interesse -->
             <div class="campo">
                 <label for="area">Área de interesse*</label>
                 <select id="area" required>
                     <option value="">Selecione</option>
                     <option>Administrativo</option>
                     <option>Atendimento</option>
-                    <option>Serviços Gerais</option>
                     <option>Operacional</option>
+                    <option>Serviços Gerais</option>
                     <option>Outros</option>
                 </select>
             </div>
 
-            <!-- Tipo de Vaga -->
             <div class="campo">
                 <label for="tipo-vaga">Tipo de vaga desejada</label>
                 <select id="tipo-vaga">
+                    <option value="">Selecione</option>
                     <option>CLT</option>
                     <option>Estágio</option>
                     <option>Temporário</option>
                 </select>
             </div>
 
-            <!-- Currículo: Arquivo ou Link -->
             <div class="campo">
-                <label for="curriculo">Currículo*</label>
-                <input type="file" id="curriculo-arquivo" multiple accept=".pdf,.doc,.docx,.png,.jpg,.jpeg">
-                <input type="url" id="curriculo-link" placeholder="Ou cole o link do seu currículo">
-                <p class="info">Envie um arquivo ou cole um link. Você pode usar ambos.</p>
+                <label>Currículo*</label>
+                <input type="file" id="curriculo-arquivo" accept=".pdf,.doc,.docx">
             </div>
 
-            <!-- LGPD -->
             <div class="campo check">
                 <input type="checkbox" id="lgpd" required>
                 <label for="lgpd">
-                    Autorizo o uso dos meus dados para análise de perfil, contato e participação em processos seletivos.
+                    Autorizo o uso dos meus dados para análise de perfil e contato.
                 </label>
             </div>
 
-            <!-- Botão -->
             <button type="submit" class="btn">Enviar Currículo</button>
 
-            <!-- Mensagem de retorno -->
             <p id="mensagem-retorno" class="mensagem"></p>
         </form>
-
-        <!-- ================================================
-             HISTÓRICO DE CANDIDATURAS
-        ================================================= -->
-        <section id="historico-candidaturas">
-            <h2>Histórico de Candidaturas</h2>
-            <ul id="lista-candidaturas"></ul>
-        </section>
     </main>
 
-    <!-- Script -->
     <script src="js/cadastro.js"></script>
+
+<footer>
+    © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
+</footer>
 
 </body>
 
