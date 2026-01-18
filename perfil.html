@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Meu Perfil | SCE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/pages/dashboard.css">
+</head>
+<body class="dash-body">
+
+<aside class="sidebar-pro">
+    <div class="side-logo">
+        <img src="imagem/logo c&s.png" alt="Logo">
+    </div>
+    <nav class="side-nav">
+        <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Início</a>
+        <a href="perfil.html" class="nav-link active"><i class="fa-solid fa-user-tie"></i> Meu Perfil</a>
+        <a href="documentos.html" class="nav-link"><i class="fa-solid fa-file-arrow-up"></i> Documentos</a>
+        <a href="vagas.html" class="nav-link"><i class="fa-solid fa-briefcase"></i> Vagas</a>
+        <div class="nav-divider"></div>
+        <a href="index.html" class="nav-link logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+    </nav>
+</aside>
+
+<div class="main-content">
+
+  <!-- TOPO DO PERFIL -->
+  <div class="perfil-topo perfil-card card-glass">
+    <img id="fotoUsuario" src="https://via.placeholder.com/80" alt="Foto do usuário">
+    <div class="info">
+      <h2 id="userNome">Candidato</h2>
+      <span id="resumoMini">Área e Cargo</span>
+    </div>
+  </div>
+
+  <!-- BARRA DE PROGRESSO DO PERFIL -->
+  <div class="perfil-card card-glass">
+    <div class="card-head">
+      <h3>Progresso do Perfil</h3>
+    </div>
+    <div class="card-body">
+      <div class="progresso-container">
+        <div id="barraProgresso"></div>
+      </div>
+      <div id="percentualProgresso">0%</div>
+    </div>
+  </div>
+
+  <!-- FORMULÁRIO DO PERFIL -->
+  <div class="perfil-card card-glass">
+    <div class="card-head">
+      <h3>Informações Pessoais</h3>
+    </div>
+    <div class="card-body">
+
+      <div class="campo">
+        <label for="userNomeCompleto">Nome completo</label>
+        <input type="text" id="userNomeCompleto" class="input-pro">
+      </div>
+
+      <div class="campo">
+        <label for="userEmail">Email</label>
+        <input type="email" id="userEmail" class="input-pro">
+      </div>
+
+      <div class="campo">
+        <label for="userTelefone">Telefone</label>
+        <input type="text" id="userTelefone" class="input-pro">
+      </div>
+
+      <div class="campo">
+        <label for="userDataNascimento">Data de Nascimento</label>
+        <input type="date" id="userDataNascimento" class="input-pro">
+      </div>
+
+      <div class="campo">
+        <label for="userDocumento">Documento</label>
+        <input type="text" id="userDocumento" class="input-pro">
+      </div>
+    </div>
+  </div>
+
+  <!-- ENDEREÇO -->
+  <div class="perfil-card card-glass">
+    <div class="card-head">
+      <h3>Endereço</h3>
+    </div>
+    <div class="card-body">
+      <div class="campo">
+        <label for="userRua">Rua</label>
+        <input type="text" id="userRua" class="input-pro">
+      </div>
+      <div class="campo">
+        <label for="userNumero">Número</label>
+        <input type="text" id="userNumero" class="input-pro">
+      </div>
+      <div class="campo">
+        <label for="userBairro">Bairro</label>
+        <input type="text" id="userBairro" class="input-pro">
+      </div>
+      <div class="campo">
+        <label for="userCidade">Cidade</label>
+        <input type="text" id="userCidade" class="input-pro">
+      </div>
+      <div class="campo">
+        <label for="userEstado">Estado</label>
+        <input type="text" id="userEstado" class="input-pro">
+      </div>
+      <div class="campo">
+        <label for="userCEP">CEP</label>
+        <input type="text" id="userCEP" class="input-pro">
+      </div>
+    </div>
+  </div>
+
+  <!-- INFORMAÇÕES PROFISSIONAIS -->
+  <div class="perfil-card card-glass">
+    <div class="card-head">
+      <h3>Informações Profissionais</h3>
+    </div>
+    <div class="card-body">
+      <div class="campo">
+        <label for="areaInteresse">Área de Interesse</label>
+        <input type="text" id="areaInteresse" class="input-pro">
+      </div>
+
+      <div class="campo">
+        <label for="cargoDesejado">Cargo Desejado</label>
+        <input type="text" id="cargoDesejado" class="input-pro">
+      </div>
+
+      <div class="campo">
+        <label for="nivelExperiencia">Nível de Experiência</label>
+        <select id="nivelExperiencia" class="input-pro">
+          <option value="">Selecione</option>
+          <option value="Júnior">Júnior</option>
+          <option value="Pleno">Pleno</option>
+          <option value="Sênior">Sênior</option>
+          <option value="Especialista">Especialista</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="habilidades">Habilidades</label>
+        <textarea id="habilidades" class="input-pro" rows="3"></textarea>
+      </div>
+
+      <div class="campo">
+        <label for="resumoProfissional">Resumo Profissional</label>
+        <textarea id="resumoProfissional" class="input-pro" rows="4"></textarea>
+      </div>
+
+      <button id="btnSalvar" class="btn-full">Salvar Perfil</button>
+      <div id="msgPerfil" class="msg-sucesso"></div>
+    </div>
+  </div>
+
+</div>
