@@ -4,9 +4,289 @@
     <meta charset="UTF-8">
     <title>Detalhe da Vaga | Grupo C&S</title>
 
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/vagas.css">
+
+    <style>
+        /* Estilo específico desta página - Layout Melhorado */
+        
+        /* Container Principal */
+        .vaga-container {
+            max-width: 950px;
+            margin: 3rem auto;
+            background: #ffffff;
+            padding: 0;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(10, 132, 193, 0.12);
+            overflow: hidden;
+        }
+
+        /* Header com gradiente */
+        .vaga-header {
+            background: linear-gradient(135deg, #064f73 0%, #0a84c1 100%);
+            color: #fff;
+            padding: 3.5rem 3rem;
+            position: relative;
+        }
+
+        .vaga-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: rgba(10, 132, 193, 0.08);
+            border-radius: 50% 0 0 50%;
+        }
+
+        .vaga-header h1 {
+            font-size: 2.3rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            position: relative;
+            z-index: 1;
+        }
+
+        .vaga-header p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Tags/Badges */
+        .tag {
+            display: inline-block;
+            background: #e6f3fb;
+            color: #0a84c1;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 0.8rem;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(10, 132, 193, 0.2);
+        }
+
+        .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10, 132, 193, 0.3);
+        }
+
+        /* Conteúdo Principal */
+        .vaga-container > main {
+            padding: 3rem;
+        }
+
+        /* Seções */
+        .sessao {
+            margin-bottom: 3.5rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .sessao:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .sessao h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #064f73;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sessao h2::before {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 28px;
+            background: linear-gradient(180deg, #e6f3fb, #086fa2);
+            border-radius: 3px;
+        }
+
+        .sessao p {
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        /* Listas */
+        .sessao ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sessao ul li {
+            font-size: 1.05rem;
+            color: #444;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        .sessao ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #0a84c1;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Botão Candidatar */
+        .btn-candidatar {
+            margin-top: 2rem;
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #064f73, #0a84c1);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(10, 132, 193, 0.2);
+        }
+
+        .btn-candidatar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 132, 193, 0.3);
+        }
+
+        .btn-candidatar:active {
+            transform: translateY(0);
+        }
+
+        /* Link Voltar */
+        .voltar {
+            margin-top: 1.5rem;
+            display: inline-block;
+            color: #0a84c1;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .voltar:hover {
+            color: #064f73;
+            margin-left: -5px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .vaga-container {
+                margin: 2rem 1rem;
+            }
+
+            .vaga-header {
+                padding: 2.5rem 2rem;
+            }
+
+            .vaga-container > main {
+                padding: 2rem;
+            }
+
+            .vaga-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .vaga-header p {
+                font-size: 1rem;
+            }
+
+            .tag {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+                margin-right: 0.6rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .sessao {
+                margin-bottom: 2.5rem;
+                padding-bottom: 2rem;
+            }
+
+            .sessao h2 {
+                font-size: 1.3rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .sessao p, .sessao ul li {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .vaga-container {
+                margin: 1rem 0.5rem;
+                border-radius: 12px;
+            }
+
+            .vaga-header {
+                padding: 2rem 1.5rem;
+            }
+
+            .vaga-container > main {
+                padding: 1.5rem;
+            }
+
+            .vaga-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .vaga-header p {
+                font-size: 0.95rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .tag {
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+
+            .sessao {
+                margin-bottom: 2rem;
+                padding-bottom: 1.5rem;
+            }
+
+            .sessao h2 {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .sessao h2::before {
+                width: 4px;
+                height: 22px;
+            }
+
+            .sessao p, .sessao ul li {
+                font-size: 0.9rem;
+            }
+
+            .btn-candidatar {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -21,42 +301,53 @@
     </nav>
 </header>
 
-<main>
+<div class="vaga-container">
+            <!-- Cabeçalho da vaga com header gradiente -->
+            <div class="vaga-header">
+                <h1 id="vagaTitulo">Carregando...</h1>
+                <p id="vagaEmpresa"></p>
 
-    <section class="vaga-container card-vaga">
+                <div style="margin-top: 1rem;">
+                    <span class="tag" id="vagaTipo"></span>
+                    <span class="tag" id="vagaNivel"></span>
+                    <span class="tag" id="vagaLocal"></span>
+                </div>
+            </div>
 
-        <h2 id="vagaTitulo"></h2>
-        <p id="vagaEmpresa"></p>
+            <!-- Conteúdo principal -->
+            <main>
+                <!-- Descrição -->
+                <div class="sessao">
+                    <h2>Descrição da vaga</h2>
+                    <p id="vagaDescricao"></p>
+                </div>
 
-        <div class="grupo" style="margin:1rem 0;">
-            <p><strong>Tipo:</strong> <span id="vagaTipo"></span></p>
-            <p><strong>Local:</strong> <span id="vagaLocal"></span></p>
-            <p><strong>Área:</strong> <span id="vagaNivel"></span></p>
+                <!-- Requisitos -->
+                <div class="sessao">
+                    <h2>Requisitos</h2>
+                    <ul id="vagaRequisitos"></ul>
+                </div>
+
+                <!-- Benefícios -->
+                <div class="sessao">
+                    <h2>Benefícios</h2>
+                    <ul id="vagaBeneficios"></ul>
+                </div>
+
+                <!-- Salário -->
+                <div class="sessao">
+                    <h2>Faixa Salarial</h2>
+                    <p id="vagaSalario"></p>
+                </div>
+
+                <!-- Botão para se candidatar -->
+                <button class="btn-candidatar" id="btnCandidatar">
+                    Candidatar-se para esta vaga
+                </button>
+
+                <a class="voltar" href="vagas.html">← Voltar para lista de vagas</a>
+            </main>
         </div>
-
-        <hr> </br>
-
-        <h3>Descrição da vaga</h3>
-        <p id="vagaDescricao"></p>
-
-        <h3>Requisitos</h3>
-        <ul id="vagaRequisitos"></ul>
-
-        <h3>Benefícios</h3>
-        <ul id="vagaBeneficios"></ul>
-
-        <p style="margin-top:1rem;">
-            <strong>Salário:</strong>
-            <span id="vagaSalario"></span>
-        </p>
-
-        <button id="btnCandidatar" class="btn" style="margin-top:1.5rem;">
-            Candidatar-se
-        </button>
-
-    </section>
-
-</main>
 
 <footer>
     © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
