@@ -13,19 +13,22 @@ html {
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    line-height: 1.5;
+    font-family: Arial,Helvetica,sans-serif;
+    background-color: #ffffff;
+    color: #4a4a4a;
+    line-height: 1.6;
 }
 
-/* Paleta de Cores */
+/* Paleta Grupo C&S */
 :root {
-    --verde-escuro: #1a3d2e;
-    --dourado-fosco: #c9a961;
-    --verde-limão-brilhante: #50ce02;
-    --cinza-claro: #f5f5f5;
-    --preto: #000000;
-    --verde-ok: #0a7a2f;
-    --vermelho-erro: #c21807;
+    --azul-primario: #0a84c1;
+    --azul-primario-hover: #086fa2;
+    --azul-escuro: #064f73;
+    --azul-claro: #e6f3fb;
+
+    --cinza-texto: #4a4a4a;
+    --cinza-borda: #d9e2ec;
+    --cinza-fundo: #f7f9fc;
+
+    --branco: #ffffff;
 }
