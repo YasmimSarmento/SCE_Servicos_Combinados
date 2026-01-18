@@ -1,5 +1,5 @@
 /* =====================================================================
-   detalhe-vaga.js — Exibição da vaga selecionada
+   detalhe-vagas.js — Exibição da vaga selecionada
    Projeto: SCE – Banco de Talentos
 ===================================================================== */
 
@@ -9,15 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.querySelector(".vaga-container");
 
     if (!vaga || !container) {
-        container.innerHTML = "<p class='erro'>Vaga não encontrada.</p>";
+        document.body.innerHTML = "<p class='erro'>Vaga não encontrada.</p>";
         return;
     }
 
     // Cabeçalho
     document.getElementById("vagaTitulo").textContent = vaga.titulo;
-    document.getElementById("vagaEmpresa").textContent =
-        vaga.empresa || "Empresa confidencial";
-
     document.getElementById("vagaTipo").textContent = vaga.tipo;
     document.getElementById("vagaLocal").textContent = vaga.local;
     document.getElementById("vagaNivel").textContent = vaga.area;
