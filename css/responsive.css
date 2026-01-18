@@ -2,24 +2,58 @@
    RESPONSIVIDADE GLOBAL DO PROJETO
    ===================================== */
 
-/* Telas até 900px — ajustes de grids */
+/* Telas até 900px */
 @media (max-width: 900px) {
 
-    /* Grid de passos (home) */
+    /* HOME */
     .passos {
         grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
-    /* Grid de vagas */
+    .hero {
+        padding: 3rem 2rem;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .como-funciona h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* VAGAS */
     .lista-vagas {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+
+    .filtros {
+        flex-direction: column;
+    }
+
+    .filtros input,
+    .filtros select {
+        width: 100%;
+        min-width: unset;
     }
 }
 
-/* Telas até 700px — ajustes principais de layout */
+/* Telas até 700px */
 @media (max-width: 700px) {
 
-    /* Header empilhado */
+    /* HEADER */
     .topo {
         flex-direction: column;
         align-items: flex-start;
@@ -31,41 +65,81 @@
         margin-right: 0.8rem;
     }
 
-    /* Grupos de campos de formulário viram coluna */
-    .grupo {
-        flex-direction: column;
-    }
-}
-
-/* Telas até 480px — ultra mobile */
-@media (max-width: 480px) {
-
-    /* Botões maiores para toque */
-    .btn {
-        width: 100%;
-        text-align: center;
-        padding: 0.8rem 1rem;
-    }
-
-    /* Cards com texto mais ajustado */
-    .card-vaga h2 {
-        font-size: 1rem;
-    }
-
-    .card-vaga p {
-        font-size: 0.85rem;
-    }
-
-    /* Hero mais compacto */
-    .hero {
-        padding: 2.2rem 1rem;
+    /* HOME */
+    .hero-box {
+        padding: 2.2rem 1.6rem;
     }
 
     .hero h1 {
         font-size: 1.6rem;
     }
 
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* CADASTRO */
+    .grupo {
+        flex-direction: column;
+    }
+}
+
+/* Telas até 480px */
+@media (max-width: 480px) {
+
+    /* GLOBAL */
+    main.conteudo h1 {
+        font-size: 1.5rem !important;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem 1rem;
+    }
+
+    /* HOME */
+    .hero {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
     .hero p {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+    }
+
+    .passo {
+        padding: 1.5rem 1rem;
+    }
+
+    .passo h3 {
+        font-size: 1rem;
+    }
+
+    .como-funciona h2 {
+        font-size: 1.5rem;
+    }
+
+    /* VAGAS */
+    .filtros {
+        padding: 1.5rem !important;
+        gap: 1rem !important;
+    }
+
+    .lista-vagas .card-vaga,
+    #lista-vagas .card-vaga {
+        padding: 1.5rem !important;
+    }
+
+    .card-vaga h2 {
+        font-size: 1rem;
+    }
+
+    .card-vaga p {
+        font-size: 0.85rem;
     }
 }

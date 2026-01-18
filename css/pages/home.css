@@ -3,125 +3,175 @@
    ========================== */
 
 .hero {
-    padding: 2rem 1rem;
-    background-color: #ffffff;
+    background: linear-gradient(135deg, #086fa2 0%, #064f73 100%);
+    padding: 5rem 3rem;
+    border-radius: 16px;
+    color: #ffffff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(26, 61, 46, 0.2);
     margin: 2rem 0;
 }
 
-/* Caixa azul */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(10, 132, 193, 0.08);
+    border-radius: 50%;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 300px;
+    height: 300px;
+    background: rgba(10, 132, 193, 0.05);
+    border-radius: 50%;
+}
+
 .hero-box {
     background-color: var(--azul-escuro);
     color: #ffffff;
     padding: 3.5rem 4rem;
     max-width: 1000px;
-    margin: 0 auto;     /* CENTRALIZA */
+    margin: 0 auto;
     border-radius: 8px;
+
     display: flex;
     flex-direction: column;
-    align-items: center;      /* centraliza horizontal */
-    justify-content: center;  /* centraliza vertical */
-    text-align: center;       /* centraliza textos */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
     gap: 1.5rem;
+    position: relative;
+    z-index: 0;
 }
 
-/* Textos */
-.hero-box h1 {
-    font-size: 2.1rem;
+.hero h1 {
+    font-size: 2.8rem;
     font-weight: 700;
-    line-height: 1.3;
-    margin: 0;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
 }
 
-.hero-box p {
-    font-size: 1.05rem;
-    line-height: 1.6;
-    max-width: 700px; /* mantém leitura confortável */
-    margin: 0;
+.hero p {
+    font-size: 1.2rem;
+    max-width: 650px;
+    margin: 1.5rem auto 2.5rem;
     opacity: 0.95;
+    line-height: 1.8;
 }
 
-/* Botões */
 .hero-actions {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
+}
+
+.hero-actions .btn {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(26, 61, 46, 0.2);
+}
+
+.hero-actions .btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(26, 61, 46, 0.3);
 }
 
 /* ==========================
    COMO FUNCIONA
    ========================== */
-.como-funciona h2 {
-    font-size: 1.6rem;
-    margin-bottom: 1.5rem;
-    color: var(--azul-primario);
-}
 
 .como-funciona {
     text-align: center;
+    margin-top: 5rem;
+}
+
+.como-funciona h2 {
+    font-size: 2.3rem;
+    margin-bottom: 3rem;
+    color: var(--azul-primario);
+    font-weight: 700;
+    position: relative;
+}
+
+.como-funciona h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #0a84c1, #086fa2);
+    margin: 1rem auto 0;
+    border-radius: 2px;
 }
 
 .passos {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 2.5rem;
 }
 
 .passo {
     background-color: #ffffff;
-    padding: 1.5rem;
-    border-radius: 8px;
-
-    border: 1px solid var(--cinza-borda);
-
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-
-    transition:
-        box-shadow 0.25s ease,
-        transform 0.25s ease,
-        border-color 0.25s ease;
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    text-align: center;
 }
 
+.passo::before {
+    content: attr(data-number);
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #0a84c1, #064f73);
+    border: 3px solid #ffffff;
+    color: #e6f3fb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(26, 61, 46, 0.2);
+}
 
 .passo:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    transform: translateY(-3px);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(26, 61, 46, 0.15);
+    border-color: #086fa2;
 }
 
-
 .passo h3 {
-    text-align: center;
-    margin-bottom: 0.8rem; /* afasta do texto */
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: #064f73;
+    font-size: 1.3rem;
+    font-weight: 700;
 }
 
 .passo p {
+    color: #666666;
+    line-height: 1.7;
+    font-size: 0.95rem;
     text-align: left;
-    line-height: 1.5;
-}
-
-/* ==========================
-   RESPONSIVO
-   ========================== */
-
-@media (max-width: 700px) {
-
-    .hero-box {
-        padding: 2.2rem 1.6rem;
-    }
-
-    .hero-box h1 {
-        font-size: 1.6rem;
-    }
-
-    .hero-actions {
-        flex-direction: column;
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .passo p {
-        text-align: left;
-    }
 }

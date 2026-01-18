@@ -1,30 +1,141 @@
 /* ==========================
+   VAGAS – ESTILOS ESPECÍFICOS
+   ========================== */
+
+.pagina-vagas h1 {
+    font-size: 2.3rem !important;
+    color: #0a84c1 !important;
+    margin-bottom: 2.2rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.pagina-vagas h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #086fa2, #e6f3fb);
+    border-radius: 2px;
+}
+
+/* ==========================
+   DESCRIÇÃO
+   ========================== */
+
+.pagina-vagas .descricao-vagas {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 3.2rem auto;
+}
+
+.pagina-vagas .descricao-principal {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.6rem;
+}
+
+.pagina-vagas .descricao-secundaria {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* ==========================
+   FILTROS
+   ========================== */
+
+.pagina-vagas .filtros {
+    background-color: #fff !important;
+    padding: 2rem !important;
+    border-radius: 12px !important;
+    border: 1px solid #f0f0f0 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    margin-bottom: 1.8rem !important;
+
+    display: flex !important;
+    justify-content: center !important; /* CENTRALIZA OS FILTROS */
+    gap: 1.5rem !important;
+    flex-wrap: wrap !important;
+}
+
+.pagina-vagas .filtros input,
+.pagina-vagas .filtros select {
+    padding: 0.875rem !important;
+    border-radius: 8px !important;
+    border: 2px solid #ddd !important;
+    font-size: 0.95rem !important;
+    transition: all 0.3s ease !important;
+
+    width: 230px !important;     /* LARGURA PADRÃO */
+    min-width: unset !important; /* EVITA ESPAÇO SOBRANDO */
+}
+
+.pagina-vagas .filtros input:focus,
+.pagina-vagas .filtros select:focus {
+    outline: none !important;
+    border-color: #086fa2 !important;
+    box-shadow: 0 0 0 4px rgba(10, 132, 193, 0.1) !important;
+}
+
+/* ==========================
    LISTA DE VAGAS
    ========================== */
 
-.filtros {
-    margin-bottom: 1.5rem;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+.pagina-vagas .lista-vagas {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2.5rem !important;
 }
 
-.filtros input,
-.filtros select {
-    padding: 0.6rem;
-    border-radius: 4px;
-    border: 1px solid var(--preto);
-    font-size: 0.95rem;
+/* ==========================
+   CARD DE VAGA
+   ========================== */
+
+.pagina-vagas .card-vaga {
+    background-color: #fff !important;
+    padding: 2rem !important;
+    border-radius: 12px !important;
+    border: 1px solid #f0f0f0 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    position: relative;
+    overflow: hidden;
 }
 
-.lista-vagas {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+.pagina-vagas .card-vaga::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, #086fa2, #e6f3fb);
 }
 
-@media (max-width: 900px) {
-    .lista-vagas {
-        grid-template-columns: 1fr;
-    }
+.pagina-vagas .card-vaga:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 12px 30px rgba(10, 132, 193, 0.15) !important;
+    border-color: #086fa2 !important;
+}
+
+.pagina-vagas .card-vaga h2 {
+    font-size: 1.3rem !important;
+    margin-bottom: 1rem !important;
+    color: #086fa2 !important;
+    font-weight: 700 !important;
+}
+
+.pagina-vagas .card-vaga p {
+    font-size: 0.95rem !important;
+    color: #666 !important;
+    margin-bottom: 0.6rem !important;
+    line-height: 1.6;
 }
