@@ -1,15 +1,28 @@
 /* ==========================
-   VAGAS – ESTILOS ESPECÍFICOS
+   VAGAS – ESTILOS REFATORADOS
    ========================== */
 
+/* Título Principal */
 .pagina-vagas h1 {
-    font-size: 2.3rem !important;
-    color: #0a84c1 !important;
-    margin-bottom: 2.2rem !important;
-    font-weight: 700 !important;
-    text-align: center !important;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--azul-primario);
+    margin-bottom: 1rem;
+    text-align: center;
     position: relative;
     padding-bottom: 1.5rem;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .pagina-vagas h1::after {
@@ -18,10 +31,11 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
+    width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #086fa2, #e6f3fb);
+    background: linear-gradient(90deg, var(--azul-primario), var(--azul-claro));
     border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(10, 132, 193, 0.2);
 }
 
 /* ==========================
@@ -31,57 +45,86 @@
 .pagina-vagas .descricao-vagas {
     text-align: center;
     max-width: 720px;
-    margin: 0 auto 3.2rem auto;
+    margin: 0 auto 3.5rem;
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .pagina-vagas .descricao-principal {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    color: #333;
-    margin-bottom: 0.6rem;
+    color: var(--cinza-texto);
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
 }
 
 .pagina-vagas .descricao-secundaria {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #666;
-    line-height: 1.5;
+    line-height: 1.7;
+    opacity: 0.9;
 }
 
 /* ==========================
-   FILTROS
+   FILTROS – REFATORADO
    ========================== */
 
 .pagina-vagas .filtros {
-    background-color: #fff !important;
-    padding: 2rem !important;
-    border-radius: 12px !important;
-    border: 1px solid #f0f0f0 !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-    margin-bottom: 1.8rem !important;
-
-    display: flex !important;
-    justify-content: center !important; /* CENTRALIZA OS FILTROS */
-    gap: 1.5rem !important;
-    flex-wrap: wrap !important;
+    background: linear-gradient(135deg, #f7f9fc 0%, #ffffff 100%);
+    padding: 2.5rem;
+    border-radius: 14px;
+    border: 1px solid #e6f3fb;
+    box-shadow: 0 4px 16px rgba(10, 132, 193, 0.08);
+    margin-bottom: 3rem;
+    
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
 .pagina-vagas .filtros input,
 .pagina-vagas .filtros select {
-    padding: 0.875rem !important;
-    border-radius: 8px !important;
-    border: 2px solid #ddd !important;
-    font-size: 0.95rem !important;
-    transition: all 0.3s ease !important;
+    padding: 0.95rem 1.2rem;
+    border-radius: 10px;
+    border: 2px solid #d9e2ec;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background-color: #ffffff;
+    color: var(--cinza-texto);
+    width: 240px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
 
-    width: 230px !important;     /* LARGURA PADRÃO */
-    min-width: unset !important; /* EVITA ESPAÇO SOBRANDO */
+.pagina-vagas .filtros input::placeholder {
+    color: #999;
+    opacity: 0.8;
+}
+
+.pagina-vagas .filtros input:hover,
+.pagina-vagas .filtros select:hover {
+    border-color: var(--azul-primario);
+    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.12);
 }
 
 .pagina-vagas .filtros input:focus,
 .pagina-vagas .filtros select:focus {
-    outline: none !important;
-    border-color: #086fa2 !important;
-    box-shadow: 0 0 0 4px rgba(10, 132, 193, 0.1) !important;
+    outline: none;
+    border-color: var(--azul-primario);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(10, 132, 193, 0.15);
 }
 
 /* ==========================
@@ -89,53 +132,108 @@
    ========================== */
 
 .pagina-vagas .lista-vagas {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 2.5rem !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+/* Responsividade melhorada */
+@media (min-width: 768px) {
+    .pagina-vagas .lista-vagas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .pagina-vagas .lista-vagas {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 /* ==========================
-   CARD DE VAGA
+   CARD DE VAGA – REDESENHO
    ========================== */
 
 .pagina-vagas .card-vaga {
-    background-color: #fff !important;
-    padding: 2rem !important;
-    border-radius: 12px !important;
-    border: 1px solid #f0f0f0 !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-    transition: all 0.3s ease !important;
-    cursor: pointer !important;
+    background: #ffffff;
+    padding: 2.2rem;
+    border-radius: 14px;
+    border: 2px solid #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
     position: relative;
     overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
 }
 
+/* Barra superior com gradiente */
 .pagina-vagas .card-vaga::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    height: 4px;
+    height: 5px;
     width: 100%;
-    background: linear-gradient(90deg, #086fa2, #e6f3fb);
+    background: linear-gradient(90deg, var(--azul-primario), var(--azul-claro));
+    opacity: 0.9;
+}
+
+/* Efeito de overlay no hover */
+.pagina-vagas .card-vaga::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10, 132, 193, 0.05) 0%, rgba(10, 132, 193, 0) 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
 }
 
 .pagina-vagas .card-vaga:hover {
-    transform: translateY(-8px) !important;
-    box-shadow: 0 12px 30px rgba(10, 132, 193, 0.15) !important;
-    border-color: #086fa2 !important;
+    transform: translateY(-12px);
+    box-shadow: 0 16px 40px rgba(10, 132, 193, 0.18);
+    border-color: var(--azul-primario);
 }
 
+.pagina-vagas .card-vaga:hover::after {
+    opacity: 1;
+}
+
+/* Título da Vaga */
 .pagina-vagas .card-vaga h2 {
-    font-size: 1.3rem !important;
-    margin-bottom: 1rem !important;
-    color: #086fa2 !important;
-    font-weight: 700 !important;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--azul-primario);
+    margin-bottom: 1.2rem;
+    margin-top: 0.3rem;
+    position: relative;
+    z-index: 1;
+    line-height: 1.4;
+    transition: color 0.3s ease;
 }
 
+.pagina-vagas .card-vaga:hover h2 {
+    color: var(--azul-primario-hover);
+}
+
+/* Parágrafos e informações */
 .pagina-vagas .card-vaga p {
-    font-size: 0.95rem !important;
-    color: #666 !important;
-    margin-bottom: 0.6rem !important;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.pagina-vagas .card-vaga:hover p {
+    color: #555;
+}
+
+/* Última informação sem margem inferior */
+.pagina-vagas .card-vaga p:last-of-type {
+    margin-bottom: 0;
 }
