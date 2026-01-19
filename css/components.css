@@ -2,75 +2,126 @@
    COMPONENTES
    ========================== */
 
-/* BOTÕES – escurecem no hover */
+/* BOTÕES – Refatorados com melhor UX */
 .btn {
     display: inline-block;
-    padding: 0.7rem 1.6rem;
-    border-radius: 4px;
+    padding: 0.85rem 1.8rem;
+    border-radius: 10px;
     background-color: var(--azul-primario);
     color: var(--branco);
     border: none;
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     text-decoration: none;
-    transition: background-color 0.25s ease;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
 }
 
 .btn:hover {
     background-color: var(--azul-primario-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(10, 132, 193, 0.3);
 }
 
-/* CARD DE VAGA – igual comportamento do site */
+.btn:active {
+    transform: translateY(0);
+}
+
+/* CARD DE VAGA – Componente base refinado */
 .card-vaga {
     background-color: var(--branco);
-    border: 1px solid var(--cinza-borda);
-    border-radius: 4px;
-    padding: 1.5rem;
+    border: 2px solid var(--cinza-borda);
+    border-radius: 12px;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: 
-        box-shadow 0.25s ease,
-        transform 0.25s ease;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 .card-vaga:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(10, 132, 193, 0.15);
+    transform: translateY(-6px);
+    border-color: var(--azul-primario);
 }
 
 .card-vaga h2 {
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     color: var(--azul-primario);
-    margin-bottom: 0.6rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
 }
 
 .card-vaga p {
-    font-size: 0.9rem;
-    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+}
+
+.card-vaga p:last-child {
+    margin-bottom: 0;
 }
 
 /* CAMPOS */
 .campo {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
 }
 
 .campo label {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--cinza-texto);
+    transition: color 0.3s ease;
 }
 
 .campo input,
 .campo select,
 .campo textarea {
-    padding: 0.6rem;
-    border-radius: 4px;
-    border: 1px solid var(--cinza-borda);
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    border: 2px solid var(--cinza-borda);
     font-size: 0.95rem;
+    font-family: inherit;
+    background-color: #fff;
+    color: var(--cinza-texto);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+    color: #999;
+    opacity: 0.8;
+}
+
+.campo input:hover,
+.campo select:hover,
+.campo textarea:hover {
+    border-color: var(--azul-primario);
+    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.08);
 }
 
 .campo input:focus,
@@ -78,18 +129,61 @@
 .campo textarea:focus {
     outline: none;
     border-color: var(--azul-primario);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(10, 132, 193, 0.15);
+}
+
+.campo textarea {
+    resize: vertical;
+    min-height: 120px;
 }
 
 /* MENSAGENS */
 .mensagem {
-    font-size: 0.9rem;
-    margin-top: 1rem;
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid;
+    animation: slideIn 0.35s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .mensagem.sucesso {
+    background-color: rgba(30, 142, 62, 0.1);
+    border-left-color: #1e8e3e;
     color: #1e8e3e;
 }
 
 .mensagem.erro {
+    background-color: rgba(194, 24, 7, 0.1);
+    border-left-color: #c21807;
     color: #c21807;
+}
+
+/* Secundário */
+.btn-secundario {
+    background-color: transparent;
+    color: var(--azul-primario);
+    border: 2px solid var(--azul-primario);
+    box-shadow: none;
+}
+
+.btn-secundario:hover {
+    background-color: var(--azul-claro);
+    border-color: var(--azul-primario);
+    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.15);
 }

@@ -2,6 +2,13 @@
    RESPONSIVIDADE GLOBAL DO PROJETO
    ===================================== */
 
+/* Telas até 1200px */
+@media (max-width: 1200px) {
+    .pagina-vagas .lista-vagas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 /* Telas até 900px */
 @media (max-width: 900px) {
 
@@ -34,19 +41,22 @@
     }
 
     /* VAGAS */
-    .lista-vagas {
-        grid-template-columns: 1fr !important;
-        gap: 2rem !important;
+    .pagina-vagas .lista-vagas {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
-    .filtros {
+    .pagina-vagas .filtros {
         flex-direction: column;
     }
 
-    .filtros input,
-    .filtros select {
+    .pagina-vagas .filtros input,
+    .pagina-vagas .filtros select {
         width: 100%;
-        min-width: unset;
+    }
+
+    .pagina-vagas h1 {
+        font-size: 2.2rem;
     }
 }
 
@@ -79,6 +89,19 @@
         width: 100%;
     }
 
+    /* VAGAS */
+    .pagina-vagas h1 {
+        font-size: 1.8rem;
+    }
+
+    .pagina-vagas .descricao-principal {
+        font-size: 1.05rem;
+    }
+
+    .pagina-vagas .card-vaga {
+        padding: 1.8rem;
+    }
+
     /* CADASTRO */
     .grupo {
         flex-direction: column;
@@ -90,7 +113,7 @@
 
     /* GLOBAL */
     main.conteudo h1 {
-        font-size: 1.5rem !important;
+        font-size: 1.5rem;
     }
 
     .btn {
@@ -125,21 +148,71 @@
     }
 
     /* VAGAS */
-    .filtros {
-        padding: 1.5rem !important;
-        gap: 1rem !important;
+    .pagina-vagas h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
-    .lista-vagas .card-vaga,
-    #lista-vagas .card-vaga {
-        padding: 1.5rem !important;
+    .pagina-vagas .filtros {
+        padding: 1.5rem;
+        gap: 1rem;
     }
 
-    .card-vaga h2 {
+    .pagina-vagas .filtros input,
+    .pagina-vagas .filtros select {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .pagina-vagas .card-vaga {
+        padding: 1.5rem;
+    }
+
+    .pagina-vagas .card-vaga h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .pagina-vagas .card-vaga p {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .pagina-vagas .descricao-vagas {
+        margin-bottom: 2rem;
+    }
+
+    .pagina-vagas .descricao-principal {
         font-size: 1rem;
     }
 
-    .card-vaga p {
+    .pagina-vagas .descricao-secundaria {
+        font-size: 0.9rem;
+    }
+
+    .pagina-vagas .card-vaga .acoes {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .pagina-vagas .card-vaga .acoes .btn {
+        width: 100%;
+        padding: 0.9rem;
         font-size: 0.85rem;
+    }
+}
+
+/* Telas muito pequenas até 360px */
+@media (max-width: 360px) {
+    .pagina-vagas h1 {
+        font-size: 1.3rem;
+    }
+
+    .pagina-vagas .filtros {
+        padding: 1rem;
+    }
+
+    .pagina-vagas .card-vaga h2 {
+        font-size: 1rem;
     }
 }
