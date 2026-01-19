@@ -3,251 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Currículo – SCE Banco de Talentos</title>
+    <title>Cadastro de Currículo – SCE Banco de Talentos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* ===== Melhorias de Layout - Cadastro ===== */
-        
-        main.conteudo h1 {
-            font-size: 2.3rem !important;
-            color: #0a84c1 !important;
-            margin-bottom: 3rem !important;
-            font-weight: 700 !important;
-            text-align: center !important;
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-
-        main.conteudo h1::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #086fa2, #e6f3fb);
-            border-radius: 2px;
-        }
-
-        #form-cadastro {
-            background-color: #fff !important;
-            padding: 3rem !important;
-            border-radius: 12px !important;
-            border: 1px solid #f0f0f0 !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-            max-width: 700px !important;
-            margin: 0 auto 3rem !important;
-        }
-
-        .campo {
-            margin-bottom: 1.5rem !important;
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
-        .campo label {
-            margin-bottom: 0.6rem !important;
-            font-weight: 600 !important;
-            font-size: 0.95rem !important;
-            color: #064f73 !important;
-        }
-
-        .campo input,
-        .campo select,
-        .campo textarea {
-            padding: 1rem !important;
-            border-radius: 8px !important;
-            border: 2px solid #ddd !important;
-            font-size: 0.95rem !important;
-            font-family: inherit !important;
-            transition: all 0.3s ease !important;
-            background-color: #fff !important;
-        }
-
-        .campo input:focus,
-        .campo select:focus,
-        .campo textarea:focus {
-            outline: none !important;
-            border-color: #086fa2 !important;
-            box-shadow: 0 0 0 4px rgba(10, 132, 193, 0.1) !important;
-        }
-
-        .campo.check {
-            flex-direction: row !important;
-            align-items: center !important;
-            margin-bottom: 2rem !important;
-        }
-
-        .campo.check input {
-            margin-right: 0.8rem !important;
-            width: 20px !important;
-            height: 20px !important;
-            cursor: pointer !important;
-        }
-
-        .campo.check label {
-            margin-bottom: 0 !important;
-            font-weight: 500 !important;
-            font-size: 0.9rem !important;
-            margin-top: -0.5rem;
-        }
-
-        .grupo {
-            display: flex !important;
-            gap: 1.5rem !important;
-        }
-
-        .grupo .campo {
-            flex: 1 !important;
-        }
-
-        .campo .btn {
-            width: 100% !important;
-            text-align: center !important;
-            padding: 1.2rem !important;
-            font-size: 1.1rem !important;
-            font-weight: 600 !important;
-            background: linear-gradient(135deg, #064f73, #0a84c1) !important;
-            color: #fff !important;
-            border: none !important;
-            border-radius: 10px !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-            box-shadow: 0 4px 15px rgba(10, 132, 193, 0.2) !important;
-        }
-
-        .campo .btn:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 6px 20px rgba(10, 132, 193, 0.3) !important;
-        }
-
-        .campo .btn:active {
-            transform: translateY(0) !important;
-        }
-
-        .mensagem {
-            margin-top: 1.5rem !important;
-            padding: 1rem 1.5rem !important;
-            border-radius: 8px !important;
-            border-left: 4px solid !important;
-            animation: slideIn 0.3s ease;
-        }
-
-        .mensagem.sucesso {
-            background-color: rgba(10, 122, 47, 0.1) !important;
-            border-left-color: #0a7a2f !important;
-            color: #0a7a2f !important;
-        }
-
-        .mensagem.erro {
-            background-color: rgba(194, 24, 7, 0.1) !important;
-            border-left-color: #c21807 !important;
-            color: #c21807 !important;
-        }
-
-        .info {
-            font-size: 0.85rem !important;
-            color: #999 !important;
-            margin-top: 0.5rem !important;
-        }
-
-        #historico-candidaturas {
-            background-color: #fff !important;
-            padding: 3rem !important;
-            border-radius: 12px !important;
-            border: 1px solid #f0f0f0 !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
-            max-width: 700px !important;
-            margin: 0 auto;
-        }
-
-        #historico-candidaturas h2 {
-            font-size: 1.8rem !important;
-            color: #064f73 !important;
-            margin-bottom: 2rem !important;
-            font-weight: 700 !important;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        #historico-candidaturas h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(90deg, #064f73, #0a84c1);
-            border-radius: 2px;
-        }
-
-        #lista-candidaturas {
-            list-style: none;
-            padding: 0;
-        }
-
-        #lista-candidaturas li {
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border-left: 4px solid #0a84c1;
-            transition: all 0.3s ease;
-        }
-
-        #lista-candidaturas li:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transform: translateX(4px);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Responsivo */
-        @media (max-width: 768px) {
-            #form-cadastro {
-                padding: 2rem !important;
-            }
-
-            .grupo {
-                flex-direction: column !important;
-                gap: 0 !important;
-            }
-
-            main.conteudo h1 {
-                font-size: 1.8rem !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            main.conteudo h1 {
-                font-size: 1.5rem !important;
-            }
-
-            #form-cadastro {
-                padding: 1.5rem !important;
-            }
-
-            #historico-candidaturas {
-                padding: 1.5rem !important;
-            }
-
-            .campo input,
-            .campo select {
-                font-size: 16px !important; /* Previne zoom no iOS */
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -258,7 +16,7 @@
         <nav>
             <a href="index.html">INÍCIO</a>
             <a href="vagas.html">VAGAS</a>
-            <a href="index.html" class="ativo">CADASTRO</a>
+            <a href="cadastro.html" class="ativo">CADASTRO</a>
         </nav>
     </header>
 
@@ -320,6 +78,51 @@
                     <option>Estágio</option>
                     <option>Temporário</option>
                 </select>
+            </div>
+
+            <div class="grupo">
+                <div class="campo">
+                    <label for="experiencia">Anos de experiência*</label>
+                    <select id="experiencia" required>
+                        <option value="">Selecione</option>
+                        <option>Menos de 1 ano</option>
+                        <option>1-2 anos</option>
+                        <option>3-5 anos</option>
+                        <option>5-10 anos</option>
+                        <option>Mais de 10 anos</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="disponibilidade">Disponibilidade*</label>
+                    <select id="disponibilidade" required>
+                        <option value="">Selecione</option>
+                        <option>Tempo integral</option>
+                        <option>Meio período</option>
+                        <option>Autônomo/PJ</option>
+                        <option>Consultoria</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="especialidades">Especialidades (principais competências)*</label>
+                <textarea id="especialidades" placeholder="Ex: Consultoria empresarial, Projetos de segurança, Análise de risco..." required></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="certificacoes">Certificações e qualificações</label>
+                <textarea id="certificacoes" placeholder="Ex: ISO 27001, MBA em Gestão, Cursos de segurança..."></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="linkedin">Perfil profissional (LinkedIn, Portfólio)</label>
+                <input type="url" id="linkedin" placeholder="https://linkedin.com/in/seu-perfil">
+            </div>
+
+            <div class="campo">
+                <label for="conhecimentos">Conhecimentos adicionais (idiomas, softwares, etc)</label>
+                <textarea id="conhecimentos" placeholder="Ex: Inglês fluente, Excel avançado, Python, SAP..."></textarea>
             </div>
 
             <div class="campo">

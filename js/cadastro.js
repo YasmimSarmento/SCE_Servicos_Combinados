@@ -14,7 +14,10 @@
         if (!d.cidade) return "Informe a cidade.";
         if (!d.estado || d.estado.length !== 2) return "Informe o estado corretamente.";
         if (!d.area) return "Selecione a área de interesse.";
-        if (!d.arquivos.length && !d.linkCv) return "Envie um currículo ou informe um link.";
+        if (!d.experiencia) return "Selecione sua experiência.";
+        if (!d.disponibilidade) return "Selecione a disponibilidade.";
+        if (!d.especialidades) return "Informe suas especialidades.";
+        if (!d.arquivos.length) return "Envie um currículo em PDF, DOC ou DOCX.";
         if (!d.lgpd) return "É necessário autorizar o uso dos dados.";
         return null;
     }
@@ -49,8 +52,13 @@
             estado: estado.value.trim().toUpperCase(),
             area: area.value,
             tipoVaga: document.getElementById("tipo-vaga").value,
-            arquivos: arquivosInfo(curriculo-arquivo.files),
-            linkCv: curriculo-link.value.trim(),
+            experiencia: document.getElementById("experiencia").value,
+            disponibilidade: document.getElementById("disponibilidade").value,
+            especialidades: document.getElementById("especialidades").value.trim(),
+            certificacoes: document.getElementById("certificacoes").value.trim(),
+            linkedin: document.getElementById("linkedin").value.trim(),
+            conhecimentos: document.getElementById("conhecimentos").value.trim(),
+            arquivos: arquivosInfo(document.getElementById("curriculo-arquivo").files),
             lgpd: lgpd.checked
         };
 
