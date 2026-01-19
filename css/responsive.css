@@ -189,6 +189,17 @@
     .pagina-vagas .descricao-secundaria {
         font-size: 0.9rem;
     }
+
+    .pagina-vagas .card-vaga .acoes {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .pagina-vagas .card-vaga .acoes .btn {
+        width: 100%;
+        padding: 0.9rem;
+        font-size: 0.85rem;
+    }
 }
 
 /* Telas muito pequenas até 360px */

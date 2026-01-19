@@ -237,3 +237,50 @@
 .pagina-vagas .card-vaga p:last-of-type {
     margin-bottom: 0;
 }
+
+/* ==========================
+   AÇÕES (BOTÕES)
+   ========================== */
+
+.pagina-vagas .card-vaga .acoes {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.8rem;
+    position: relative;
+    z-index: 2;
+}
+
+.pagina-vagas .card-vaga .acoes .btn {
+    flex: 1;
+    padding: 0.95rem 1.2rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+}
+
+.pagina-vagas .card-vaga .acoes .btn:not(.btn-secundario) {
+    background-color: var(--azul-primario);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.2);
+}
+
+.pagina-vagas .card-vaga .acoes .btn:not(.btn-secundario):hover {
+    background-color: var(--azul-primario-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(10, 132, 193, 0.3);
+}
+
+.pagina-vagas .card-vaga .acoes .btn-secundario {
+    background-color: transparent;
+    color: var(--azul-primario);
+    border: 2px solid var(--azul-primario);
+}
+
+.pagina-vagas .card-vaga .acoes .btn-secundario:hover {
+    background-color: var(--azul-claro);
+    border-color: var(--azul-primario-hover);
+    color: var(--azul-primario-hover);
+}
