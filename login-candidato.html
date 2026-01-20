@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SCE – Banco de Talentos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages/login.css">
+</head>
+
+<body data-page="candidato">
+
+    <header class="topo">
+        <img src="imagem/logo-sce.png" alt="Logotipo da SCE">
+
+        <nav>
+            <a href="index.html" class="ativo">INÍCIO</a>
+            <a href="vagas.html">VAGAS</a>
+            <a href="cadastro.html">CADASTRO</a>
+            <a href="login-candidato.html">LOGIN CANDIDATO</a>
+            <a href="login-empresa.html">LOGIN EMPRESA</a>
+        </nav>
+
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main class="login-page">
+        <div class="login-card candidato">
+
+            <img src="imagem/logo-sce.png" alt="SCE Serviços" class="login-logo">
+
+            <h2>Acesse como Candidato</h2>
+            <p class="login-subtitle">
+                Gerencie seu currículo e vagas.
+            </p>
+
+            <form id="login-form">
+                <label>Usuário ou e-mail</label>
+                <input type="text" id="usuario" name="usuario" placeholder="Digite seu usuário ou e-mail" required>
+
+                <label>Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+                <p id="login-error" class="login-error"></p>
+
+                <a href="recuperar-senha.html?tipo=candidato" class="recuperar">
+                    Esqueci meu usuário ou senha?
+                </a>
+
+                <button type="submit" class="btn-primary">Entrar</button>
+            </form>
+
+            <p class="login-footer">
+                Não tem cadastro?
+                <a href="cadastro.html">Acesse aqui</a>
+            </p>
+        </div>
+    </main>
+
+    <!-- FOOTER PADRÃO -->
+    <footer>
+        © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
+    </footer>
+
+    <script src="js/login.js"></script>
+</body>
+
+</html>
