@@ -12,24 +12,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!usuario || !senha) return;
 
-    // limpa erro anterior
-    errorBox.classList.remove("ativo");
-    errorBox.textContent = "";
+    // limpa erro
+    hideError(errorBox);
 
-    if (usuario.value === "candidato" && senha.value === "123") {
-      localStorage.setItem("auth", "candidato");
-      window.location.href = "painel-candidato.html";
+    const session = authenticate(usuario.value, senha.value);
+
+    if (!session) {
+      showError(errorBox, "Usuário ou senha inválidos.");
       return;
     }
 
-    if (usuario.value === "empresa" && senha.value === "123") {
-      localStorage.setItem("auth", "empresa");
-      window.location.href = "painel-empresa.html";
-      return;
-    }
+    // cria sessão
+    localStorage.setItem("session", JSON.stringify(session));
 
-    // erro de login
-    errorBox.textContent = "Usuário ou senha inválidos.";
-    errorBox.classList.add("ativo");
+    // quem decide o destino é o auth.js
+    window.location.href = "index.html";
   });
 });
+
+/* =========================
+   AUTENTICAÇÃO SIMULADA
+========================= */
+
+function authenticate(user, pass) {
+  if (user === "candidato" && pass === "123") {
+    return {
+      role: "candidato",
+      id: 1,
+      name: "Candidato Teste",
+    };
+  }
+
+  if (user === "empresa" && pass === "123") {
+    return {
+      role: "empresa",
+      id: 100,
+      name: "Empresa Teste",
+    };
+  }
+
+  return null;
+}
+
+/* =========================
+   UI DE ERRO
+========================= */
+
+function showError(box, message) {
+  box.textContent = message;
+  box.classList.add("ativo");
+}
+
+function hideError(box) {
+  box.textContent = "";
+  box.classList.remove("ativo");
+}
