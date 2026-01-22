@@ -1,54 +1,77 @@
-/* =====================================================================
-   detalhe-vagas.js — Exibição da vaga selecionada
-   Projeto: SCE – Banco de Talentos
-===================================================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
-
     const vaga = JSON.parse(localStorage.getItem("vagaSelecionada"));
-    const container = document.querySelector(".vaga-container");
 
-    if (!vaga || !container) {
-        document.body.innerHTML = "<p class='erro'>Vaga não encontrada.</p>";
+    // 🔒 Se não houver vaga selecionada, volta
+    if (!vaga) {
+        window.location.href = "vagas.html";
         return;
     }
 
-    // Cabeçalho
-    document.getElementById("vagaTitulo").textContent = vaga.titulo;
-    document.getElementById("vagaTipo").textContent = vaga.tipo;
-    document.getElementById("vagaLocal").textContent = vaga.local;
-    document.getElementById("vagaNivel").textContent = vaga.area;
+    // ===============================
+    // Preenchimento dos dados
+    // ===============================
+    document.getElementById("vagaTitulo").textContent = vaga.titulo || "Vaga";
+    document.getElementById("vagaEmpresa").textContent = "SCE – Banco de Talentos";
 
-    // Descrição
-    document.getElementById("vagaDescricao").textContent = vaga.descricao;
+    document.getElementById("vagaTipo").textContent = vaga.tipo || "-";
+    document.getElementById("vagaNivel").textContent = vaga.area || "-";
+    document.getElementById("vagaLocal").textContent = vaga.local || "-";
+
+    document.getElementById("vagaDescricao").textContent =
+        vaga.descricao || "Descrição não informada.";
 
     // Requisitos
     const listaRequisitos = document.getElementById("vagaRequisitos");
     listaRequisitos.innerHTML = "";
 
-    (vaga.requisitos || []).forEach(req => {
-        const li = document.createElement("li");
-        li.textContent = req;
-        listaRequisitos.appendChild(li);
-    });
+    if (vaga.requisitos && vaga.requisitos.length) {
+        vaga.requisitos.forEach(req => {
+            const li = document.createElement("li");
+            li.textContent = req;
+            listaRequisitos.appendChild(li);
+        });
+    } else {
+        listaRequisitos.innerHTML = "<li>Não informado</li>";
+    }
 
     // Benefícios
     const listaBeneficios = document.getElementById("vagaBeneficios");
     listaBeneficios.innerHTML = "";
 
-    (vaga.beneficios || []).forEach(ben => {
-        const li = document.createElement("li");
-        li.textContent = ben;
-        listaBeneficios.appendChild(li);
-    });
+    if (vaga.beneficios && vaga.beneficios.length) {
+        vaga.beneficios.forEach(ben => {
+            const li = document.createElement("li");
+            li.textContent = ben;
+            listaBeneficios.appendChild(li);
+        });
+    } else {
+        listaBeneficios.innerHTML = "<li>Não informado</li>";
+    }
 
     // Salário
     document.getElementById("vagaSalario").textContent =
         vaga.salario || "A combinar";
 
-    // Botão candidatar
-    document.getElementById("btnCandidatar").addEventListener("click", () => {
+    // ===============================
+    // Ação: Candidatar-se
+    // ===============================
+    const btnCandidatar = document.getElementById("btnCandidatar");
+
+    btnCandidatar.addEventListener("click", () => {
+        const auth = localStorage.getItem("auth");
+
+        if (!auth) {
+            alert("Faça login como candidato para se candidatar.");
+            window.location.href = "login-candidato.html";
+            return;
+        }
+
+        if (auth !== "candidato") {
+            alert("Apenas candidatos podem se candidatar a vagas.");
+            return;
+        }
+
+        // segue fluxo normal
         window.location.href = "cadastro.html";
     });
-
 });
