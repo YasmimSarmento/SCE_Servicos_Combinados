@@ -1,29 +1,64 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const tipoUsuario = localStorage.getItem("auth");
-  const pagina = document.body.dataset.page;
+  const session = getSession();
+  const pageRole = document.body.dataset.page;
 
-  // 🔒 Proteção de rota
-  if (!tipoUsuario) {
-    window.location.href = "login-candidato.html";
+  // 🔒 Proteção global
+  if (!session) {
+    redirectToLogin();
     return;
   }
 
-  // 🔁 Impede acesso cruzado
-  if (pagina !== tipoUsuario) {
-    window.location.href =
-      tipoUsuario === "empresa"
-        ? "painel-empresa.html"
-        : "painel-candidato.html";
+  // 🔁 Bloqueio por papel
+  if (pageRole && session.role !== pageRole) {
+    redirectByRole(session.role);
     return;
   }
 
   // 🚪 Logout
-  const btnLogout = document.getElementById("logout");
-
-  if (btnLogout) {
-    btnLogout.addEventListener("click", () => {
-      localStorage.removeItem("auth");
-      window.location.href = "index.html";
-    });
-  }
+  bindLogout();
 });
+
+/* =========================
+   CONTROLE DE SESSÃO
+========================= */
+
+function getSession() {
+  try {
+    const data = localStorage.getItem("session");
+    return data ? JSON.parse(data) : null;
+  } catch {
+    return null;
+  }
+}
+
+/* =========================
+   REDIRECIONAMENTOS
+========================= */
+
+function redirectToLogin() {
+  window.location.href = "login.html";
+}
+
+function redirectByRole(role) {
+  const routes = {
+    candidato: "painel-candidato.html",
+    empresa: "painel-empresa.html",
+  };
+
+  window.location.href = routes[role] || "index.html";
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+function bindLogout() {
+  const btn = document.getElementById("logout");
+
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    localStorage.removeItem("session");
+    window.location.href = "index.html";
+  });
+}
