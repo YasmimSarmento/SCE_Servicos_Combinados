@@ -31,14 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // compatibilidade com páginas que ainda usam "auth"
     localStorage.setItem("auth", session.role);
 
-    // redireciona direto para o painel correto
-    if (session.role === "candidato") {
-      window.location.href = "painel-candidato.html";
-    } else if (session.role === "empresa") {
-      window.location.href = "painel-empresa.html";
-    } else {
-      window.location.href = "index.html";
-    }
+// redirecionamento após login
+if (session.role === "empresa") {
+  window.location.href = "painel-empresa.html";
+} else {
+  // candidato (ou qualquer outro perfil)
+  window.location.href = "index.html";
+}
+
   });
 });
 
