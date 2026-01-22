@@ -1,0 +1,123 @@
+/* ===============================
+   PAINEL – BASE
+   =============================== */
+
+.painel {
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    padding: 2rem 1.5rem;
+}
+
+/* ===============================
+   CABEÇALHO DO PAINEL
+   =============================== */
+
+.painel-header {
+    margin-bottom: 2.5rem;
+}
+
+.painel-header h1 {
+    font-size: 1.8rem;
+    color: #0A8ED8;
+    margin-bottom: 0.5rem;
+}
+
+.painel-subtitle {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* ===============================
+   CARDS DO PAINEL
+   =============================== */
+
+.painel-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #dceaf3;
+    border-left: 4px solid #0A8ED8;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.6rem;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    margin-bottom: 1.2rem;
+}
+
+/* Link do card */
+.card-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0A8ED8;
+    text-decoration: none;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+/* ===============================
+   AÇÕES DO PAINEL
+   =============================== */
+
+.painel-acoes {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-sair {
+    padding: 0.7rem 1.5rem;
+    background: #ffffff;
+    color: #0A8ED8;
+    border: 2px solid #0A8ED8;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-sair:hover {
+    background: #0A8ED8;
+    color: #ffffff;
+}
+
+/* ===============================
+   RESPONSIVO
+   =============================== */
+
+@media (max-width: 600px) {
+    .painel {
+        padding: 1.5rem 1rem;
+    }
+
+    .painel-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .painel-acoes {
+        justify-content: center;
+    }
+}

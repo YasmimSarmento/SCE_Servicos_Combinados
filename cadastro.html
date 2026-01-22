@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Currículo – SCE Banco de Talentos</title>
+    <title>Cadastro de Currículo – SCE Banco de Talentos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -16,7 +16,7 @@
         <nav>
             <a href="index.html">INÍCIO</a>
             <a href="vagas.html">VAGAS</a>
-            <a href="index.html" class="ativo">CADASTRO</a>
+            <a href="cadastro.html" class="ativo">CADASTRO</a>
         </nav>
     </header>
 
@@ -78,6 +78,51 @@
                     <option>Estágio</option>
                     <option>Temporário</option>
                 </select>
+            </div>
+
+            <div class="grupo">
+                <div class="campo">
+                    <label for="experiencia">Anos de experiência*</label>
+                    <select id="experiencia" required>
+                        <option value="">Selecione</option>
+                        <option>Menos de 1 ano</option>
+                        <option>1-2 anos</option>
+                        <option>3-5 anos</option>
+                        <option>5-10 anos</option>
+                        <option>Mais de 10 anos</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="disponibilidade">Disponibilidade*</label>
+                    <select id="disponibilidade" required>
+                        <option value="">Selecione</option>
+                        <option>Tempo integral</option>
+                        <option>Meio período</option>
+                        <option>Autônomo/PJ</option>
+                        <option>Consultoria</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label for="especialidades">Especialidades (principais competências)*</label>
+                <textarea id="especialidades" placeholder="Ex: Consultoria empresarial, Projetos de segurança, Análise de risco..." required></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="certificacoes">Certificações e qualificações</label>
+                <textarea id="certificacoes" placeholder="Ex: ISO 27001, MBA em Gestão, Cursos de segurança..."></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="linkedin">Perfil profissional (LinkedIn, Portfólio)</label>
+                <input type="url" id="linkedin" placeholder="https://linkedin.com/in/seu-perfil">
+            </div>
+
+            <div class="campo">
+                <label for="conhecimentos">Conhecimentos adicionais (idiomas, softwares, etc)</label>
+                <textarea id="conhecimentos" placeholder="Ex: Inglês fluente, Excel avançado, Python, SAP..."></textarea>
             </div>
 
             <div class="campo">

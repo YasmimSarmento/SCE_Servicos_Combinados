@@ -1,30 +1,286 @@
 /* ==========================
+   VAGAS – ESTILOS REFATORADOS
+   ========================== */
+
+/* Título Principal */
+.pagina-vagas h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--azul-primario);
+    margin-bottom: 1rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1.5rem;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pagina-vagas h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--azul-primario), var(--azul-claro));
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(10, 132, 193, 0.2);
+}
+
+/* ==========================
+   DESCRIÇÃO
+   ========================== */
+
+.pagina-vagas .descricao-vagas {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 3.5rem;
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pagina-vagas .descricao-principal {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--cinza-texto);
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+}
+
+.pagina-vagas .descricao-secundaria {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* ==========================
+   FILTROS – REFATORADO
+   ========================== */
+
+.pagina-vagas .filtros {
+    background: linear-gradient(135deg, #f7f9fc 0%, #ffffff 100%);
+    padding: 2.5rem;
+    border-radius: 14px;
+    border: 1px solid #e6f3fb;
+    box-shadow: 0 4px 16px rgba(10, 132, 193, 0.08);
+    margin-bottom: 3rem;
+    
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.pagina-vagas .filtros input,
+.pagina-vagas .filtros select {
+    padding: 0.95rem 1.2rem;
+    border-radius: 10px;
+    border: 2px solid #d9e2ec;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background-color: #ffffff;
+    color: var(--cinza-texto);
+    width: 240px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.pagina-vagas .filtros input::placeholder {
+    color: #999;
+    opacity: 0.8;
+}
+
+.pagina-vagas .filtros input:hover,
+.pagina-vagas .filtros select:hover {
+    border-color: var(--azul-primario);
+    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.12);
+}
+
+.pagina-vagas .filtros input:focus,
+.pagina-vagas .filtros select:focus {
+    outline: none;
+    border-color: var(--azul-primario);
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(10, 132, 193, 0.15);
+}
+
+/* ==========================
    LISTA DE VAGAS
    ========================== */
 
-.filtros {
-    margin-bottom: 1.5rem;
+.pagina-vagas .lista-vagas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+/* Responsividade melhorada */
+@media (min-width: 768px) {
+    .pagina-vagas .lista-vagas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .pagina-vagas .lista-vagas {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==========================
+   CARD DE VAGA – REDESENHO
+   ========================== */
+
+.pagina-vagas .card-vaga {
+    background: #ffffff;
+    padding: 2.2rem;
+    border-radius: 14px;
+    border: 2px solid #f0f0f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Barra superior com gradiente */
+.pagina-vagas .card-vaga::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--azul-primario), var(--azul-claro));
+    opacity: 0.9;
+}
+
+/* Efeito de overlay no hover */
+.pagina-vagas .card-vaga::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10, 132, 193, 0.05) 0%, rgba(10, 132, 193, 0) 100%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.pagina-vagas .card-vaga:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 16px 40px rgba(10, 132, 193, 0.18);
+    border-color: var(--azul-primario);
+}
+
+.pagina-vagas .card-vaga:hover::after {
+    opacity: 1;
+}
+
+/* Título da Vaga */
+.pagina-vagas .card-vaga h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--azul-primario);
+    margin-bottom: 1.2rem;
+    margin-top: 0.3rem;
+    position: relative;
+    z-index: 1;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.pagina-vagas .card-vaga:hover h2 {
+    color: var(--azul-primario-hover);
+}
+
+/* Parágrafos e informações */
+.pagina-vagas .card-vaga p {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.pagina-vagas .card-vaga:hover p {
+    color: #555;
+}
+
+/* Última informação sem margem inferior */
+.pagina-vagas .card-vaga p:last-of-type {
+    margin-bottom: 0;
+}
+
+/* ==========================
+   AÇÕES (BOTÕES)
+   ========================== */
+
+.pagina-vagas .card-vaga .acoes {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap;
+    margin-top: 1.8rem;
+    position: relative;
+    z-index: 2;
 }
 
-.filtros input,
-.filtros select {
-    padding: 0.6rem;
-    border-radius: 4px;
-    border: 1px solid var(--preto);
-    font-size: 0.95rem;
+.pagina-vagas .card-vaga .acoes .btn {
+    flex: 1;
+    padding: 0.95rem 1.2rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
 }
 
-.lista-vagas {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+.pagina-vagas .card-vaga .acoes .btn:not(.btn-secundario) {
+    background-color: var(--azul-primario);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.2);
 }
 
-@media (max-width: 900px) {
-    .lista-vagas {
-        grid-template-columns: 1fr;
-    }
+.pagina-vagas .card-vaga .acoes .btn:not(.btn-secundario):hover {
+    background-color: var(--azul-primario-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(10, 132, 193, 0.3);
+}
+
+.pagina-vagas .card-vaga .acoes .btn-secundario {
+    background-color: transparent;
+    color: var(--azul-primario);
+    border: 2px solid var(--azul-primario);
+}
+
+.pagina-vagas .card-vaga .acoes .btn-secundario:hover {
+    background-color: var(--azul-claro);
+    border-color: var(--azul-primario-hover);
+    color: var(--azul-primario-hover);
 }
