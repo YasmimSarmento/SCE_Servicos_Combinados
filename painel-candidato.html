@@ -1,81 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8">
-    <title>SCE – Banco de Talentos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>SCE – Banco de Talentos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/pages/painel.css">
-
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages/painel.css">
 </head>
 
 <body data-page="candidato">
 
-    <header class="topo">
-        <img src="imagem/logo-sce.png" alt="Logotipo da SCE">
+  <header class="topo">
+    <img src="imagem/logo-sce.png" alt="Logotipo da SCE">
 
-        <nav>
-            <a href="index.html" class="ativo">INÍCIO</a>
-            <a href="vagas.html">VAGAS</a>
-            <a href="cadastro.html">CADASTRO</a>
-            <a href="login-candidato.html">LOGIN CANDIDATO</a>
-            <a href="login-empresa.html">LOGIN EMPRESA</a>
-        </nav>
+    <nav>
+      <a href="index.html">INÍCIO</a>
+      <a href="vagas.html">VAGAS</a>
+      <a href="cadastro.html">CADASTRO</a>
+      <a href="perfil.html">MEU PERFIL</a>
+    </nav>
+  </header>
 
-    </header>
+  <main class="painel">
 
-    <main class="painel">
+    <div class="painel-header">
+      <h1 id="welcome-user">Bem-vindo(a)</h1>
+      <p class="painel-subtitle">
+        Gerencie seu currículo, acompanhe vagas e mantenha seus dados sempre atualizados.
+      </p>
+    </div>
 
-        <div class="painel-header">
-            <h1>Bem-vindo(a), Candidato</h1>
-            <p class="painel-subtitle">
-                Gerencie seu currículo, acompanhe vagas e mantenha seus dados sempre atualizados.
-            </p>
-        </div>
+    <section class="painel-cards">
 
-        <section class="painel-cards">
+      <div class="card">
+        <h3>Meu Currículo</h3>
+        <p>Atualize suas informações profissionais e dados pessoais.</p>
+        <a href="perfil.html" class="card-link">Editar currículo</a>
+      </div>
 
-            <div class="card">
-                <h3>Meu Currículo</h3>
-                <p>Atualize suas informações profissionais e dados pessoais.</p>
-                <a href="#" class="card-link">Editar currículo</a>
-            </div>
+      <div class="card">
+        <h3>Vagas Salvas</h3>
+        <p>Oportunidades marcadas como favoritas.</p>
+        <strong id="total-salvas">0</strong>
+      </div>
 
-            <div class="card">
-                <h3>Vagas Salvas</h3>
-                <p>Veja as oportunidades que você marcou como favoritas.</p>
-                <a href="#" class="card-link">Ver vagas</a>
-            </div>
+      <div class="card">
+        <h3>Candidaturas</h3>
+        <p>Vagas em que você se candidatou.</p>
+        <strong id="total-candidaturas">0</strong>
+      </div>
 
-            <div class="card">
-                <h3>Candidaturas</h3>
-                <p>Acompanhe o status das vagas em que você se candidatou.</p>
-                <a href="#" class="card-link">Acompanhar</a>
-            </div>
+      <div class="card">
+        <h3>Documentos</h3>
+        <p>Currículos e arquivos enviados.</p>
+        <strong id="total-documentos">0</strong>
+      </div>
 
-            <div class="card">
-                <h3>Meu Perfil</h3>
-                <p>Altere seus dados de acesso e informações da conta.</p>
-                <a href="#" class="card-link">Editar perfil</a>
-            </div>
+    </section>
 
-        </section>
+    <div class="painel-acoes">
+      <button class="btn-sair" id="logout">Sair</button>
+    </div>
 
-        <div class="painel-acoes">
-            <button class="btn-sair" id="logout">Sair</button>
-        </div>
+  </main>
 
-    </main>
+  <footer>
+    © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
+  </footer>
 
-    <!-- FOOTER PADRÃO -->
-    <footer>
-        © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
-    </footer>
+  <!-- Segurança + sessão -->
+  <script src="js/core/auth.js"></script>
 
-    <script src="js/auth.js"></script>
+  <!-- Lógica do painel -->
+  <script src="js/pages/painel-candidato.js"></script>
 
 </body>
-
 </html>

@@ -16,14 +16,6 @@
             tipo: "CLT",
             area: "Administrativo",
             descricao: "Atuação em rotinas administrativas, organização de documentos e suporte ao setor.",
-            requisitos: [
-                "Ensino médio completo",
-                "Conhecimento básico em informática"
-            ],
-            beneficios: [
-                "Vale transporte",
-                "Vale alimentação"
-            ],
             salario: "R$ 1.412,00"
         },
         {
@@ -33,11 +25,6 @@
             tipo: "CLT",
             area: "Atendimento",
             descricao: "Registro de demandas, orientação ao público e acompanhamento de solicitações.",
-            requisitos: [
-                "Boa comunicação",
-                "Ensino médio completo"
-            ],
-            beneficios: ["Vale transporte"],
             salario: "R$ 1.500,00"
         },
         {
@@ -47,8 +34,6 @@
             tipo: "Temporário",
             area: "Serviços Gerais",
             descricao: "Limpeza e manutenção de ambientes internos.",
-            requisitos: ["Ensino fundamental"],
-            beneficios: ["Vale transporte"],
             salario: "R$ 1.320,00"
         },
         {
@@ -58,13 +43,18 @@
             tipo: "Estágio",
             area: "Administrativo",
             descricao: "Suporte às rotinas administrativas e controle de documentos.",
-            requisitos: ["Cursando Administração"],
-            beneficios: ["Auxílio transporte"],
             salario: "Bolsa estágio"
         }
     ];
 
     const lista = document.getElementById("lista-vagas");
+
+    /* -----------------------------------------------------------------
+       AUTENTICAÇÃO
+    ----------------------------------------------------------------- */
+    function getAuth() {
+        return localStorage.getItem("auth");
+    }
 
     /* -----------------------------------------------------------------
        RENDERIZAÇÃO
@@ -73,7 +63,7 @@
         lista.innerHTML = "";
 
         if (!vagas.length) {
-            lista.innerHTML = "<p>Nenhuma vaga encontrada para os filtros selecionados.</p>";
+            lista.innerHTML = "<p>Nenhuma vaga encontrada.</p>";
             return;
         }
 
@@ -112,6 +102,19 @@
     }
 
     function candidatar(vaga) {
+        const auth = getAuth();
+
+        if (!auth) {
+            alert("Para se candidatar, faça login como candidato.");
+            window.location.href = "login-candidato.html";
+            return;
+        }
+
+        if (auth !== "candidato") {
+            alert("Apenas candidatos podem se candidatar a vagas.");
+            return;
+        }
+
         localStorage.setItem("vagaSelecionada", JSON.stringify(vaga));
         window.location.href = "cadastro.html";
     }

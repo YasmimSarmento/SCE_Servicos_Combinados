@@ -7,6 +7,8 @@
     const ler = chave => JSON.parse(localStorage.getItem(chave) || "[]");
     const gravar = (chave, valor) => localStorage.setItem(chave, JSON.stringify(valor));
 
+    const vagaSelecionada = JSON.parse(localStorage.getItem("vagaSelecionada"));
+
     function validar(d) {
         if (!d.nome) return "Informe seu nome completo.";
         if (!d.email || !d.email.includes("@")) return "Informe um e-mail válido.";
@@ -59,7 +61,8 @@
             linkedin: document.getElementById("linkedin").value.trim(),
             conhecimentos: document.getElementById("conhecimentos").value.trim(),
             arquivos: arquivosInfo(document.getElementById("curriculo-arquivo").files),
-            lgpd: lgpd.checked
+            lgpd: lgpd.checked,
+            vaga: vagaSelecionada || null // 🔗 vínculo com a vaga
         };
 
         const erro = validar(dados);
@@ -72,12 +75,34 @@
 
         await new Promise(r => setTimeout(r, 800));
 
-        const lista = ler("bancoTalentos");
-        lista.push(dados);
-        gravar("bancoTalentos", lista);
+        // Banco geral de currículos
+        const banco = ler("bancoTalentos");
+        banco.push(dados);
+        gravar("bancoTalentos", banco);
+
+        // Banco de candidaturas (se houver vaga)
+        if (vagaSelecionada) {
+            const candidaturas = ler("candidaturas");
+            candidaturas.push({
+                id: Date.now(),
+                vaga: vagaSelecionada,
+                candidato: {
+                    nome: dados.nome,
+                    email: dados.email,
+                    telefone: dados.telefone
+                },
+                data: new Date().toLocaleString()
+            });
+            gravar("candidaturas", candidaturas);
+
+            // limpa a vaga após candidatura
+            localStorage.removeItem("vagaSelecionada");
+        }
 
         feedback(
-            "Currículo cadastrado com sucesso! Caso seu perfil seja compatível com alguma oportunidade, entraremos em contato.",
+            vagaSelecionada
+                ? "Candidatura realizada com sucesso! Seu currículo foi enviado para esta vaga."
+                : "Currículo cadastrado com sucesso! Caso seu perfil seja compatível, entraremos em contato.",
             "sucesso"
         );
 
