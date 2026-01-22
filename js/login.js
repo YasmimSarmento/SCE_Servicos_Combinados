@@ -15,18 +15,30 @@ document.addEventListener("DOMContentLoaded", () => {
     // limpa erro
     hideError(errorBox);
 
-    const session = authenticate(usuario.value, senha.value);
+    const session = authenticate(usuario.value.trim(), senha.value);
 
     if (!session) {
       showError(errorBox, "Usuário ou senha inválidos.");
       return;
     }
 
+    // completa a sessão com o usuário digitado (usado depois nas candidaturas)
+    session.email = usuario.value.trim();
+
     // cria sessão
     localStorage.setItem("session", JSON.stringify(session));
 
-    // quem decide o destino é o auth.js
-    window.location.href = "index.html";
+    // compatibilidade com páginas que ainda usam "auth"
+    localStorage.setItem("auth", session.role);
+
+    // redireciona direto para o painel correto
+    if (session.role === "candidato") {
+      window.location.href = "painel-candidato.html";
+    } else if (session.role === "empresa") {
+      window.location.href = "painel-empresa.html";
+    } else {
+      window.location.href = "index.html";
+    }
   });
 });
 
