@@ -2,24 +2,68 @@
    RESPONSIVIDADE GLOBAL DO PROJETO
    ===================================== */
 
-/* Telas até 900px — ajustes de grids */
-@media (max-width: 900px) {
-
-    /* Grid de passos (home) */
-    .passos {
-        grid-template-columns: 1fr;
-    }
-
-    /* Grid de vagas */
-    .lista-vagas {
-        grid-template-columns: 1fr;
+/* Telas até 1200px */
+@media (max-width: 1200px) {
+    .pagina-vagas .lista-vagas {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Telas até 700px — ajustes principais de layout */
+/* Telas até 900px */
+@media (max-width: 900px) {
+
+    /* HOME */
+    .passos {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .hero {
+        padding: 3rem 2rem;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .como-funciona h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* VAGAS */
+    .pagina-vagas .lista-vagas {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .pagina-vagas .filtros {
+        flex-direction: column;
+    }
+
+    .pagina-vagas .filtros input,
+    .pagina-vagas .filtros select {
+        width: 100%;
+    }
+
+    .pagina-vagas h1 {
+        font-size: 2.2rem;
+    }
+}
+
+/* Telas até 700px */
 @media (max-width: 700px) {
 
-    /* Header empilhado */
+    /* HEADER */
     .topo {
         flex-direction: column;
         align-items: flex-start;
@@ -31,41 +75,144 @@
         margin-right: 0.8rem;
     }
 
-    /* Grupos de campos de formulário viram coluna */
-    .grupo {
-        flex-direction: column;
-    }
-}
-
-/* Telas até 480px — ultra mobile */
-@media (max-width: 480px) {
-
-    /* Botões maiores para toque */
-    .btn {
-        width: 100%;
-        text-align: center;
-        padding: 0.8rem 1rem;
-    }
-
-    /* Cards com texto mais ajustado */
-    .card-vaga h2 {
-        font-size: 1rem;
-    }
-
-    .card-vaga p {
-        font-size: 0.85rem;
-    }
-
-    /* Hero mais compacto */
-    .hero {
-        padding: 2.2rem 1rem;
+    /* HOME */
+    .hero-box {
+        padding: 2.2rem 1.6rem;
     }
 
     .hero h1 {
         font-size: 1.6rem;
     }
 
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* VAGAS */
+    .pagina-vagas h1 {
+        font-size: 1.8rem;
+    }
+
+    .pagina-vagas .descricao-principal {
+        font-size: 1.05rem;
+    }
+
+    .pagina-vagas .card-vaga {
+        padding: 1.8rem;
+    }
+
+    /* CADASTRO */
+    .grupo {
+        flex-direction: column;
+    }
+}
+
+/* Telas até 480px */
+@media (max-width: 480px) {
+
+    /* GLOBAL */
+    main.conteudo h1 {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem 1rem;
+    }
+
+    /* HOME */
+    .hero {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
     .hero p {
+        font-size: 0.95rem;
+    }
+
+    .passo {
+        padding: 1.5rem 1rem;
+    }
+
+    .passo h3 {
+        font-size: 1rem;
+    }
+
+    .como-funciona h2 {
+        font-size: 1.5rem;
+    }
+
+    /* VAGAS */
+    .pagina-vagas h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .pagina-vagas .filtros {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .pagina-vagas .filtros input,
+    .pagina-vagas .filtros select {
+        width: 100%;
         font-size: 0.9rem;
+    }
+
+    .pagina-vagas .card-vaga {
+        padding: 1.5rem;
+    }
+
+    .pagina-vagas .card-vaga h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .pagina-vagas .card-vaga p {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .pagina-vagas .descricao-vagas {
+        margin-bottom: 2rem;
+    }
+
+    .pagina-vagas .descricao-principal {
+        font-size: 1rem;
+    }
+
+    .pagina-vagas .descricao-secundaria {
+        font-size: 0.9rem;
+    }
+
+    .pagina-vagas .card-vaga .acoes {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .pagina-vagas .card-vaga .acoes .btn {
+        width: 100%;
+        padding: 0.9rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Telas muito pequenas até 360px */
+@media (max-width: 360px) {
+    .pagina-vagas h1 {
+        font-size: 1.3rem;
+    }
+
+    .pagina-vagas .filtros {
+        padding: 1rem;
+    }
+
+    .pagina-vagas .card-vaga h2 {
+        font-size: 1rem;
     }
 }

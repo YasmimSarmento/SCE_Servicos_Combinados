@@ -1,19 +1,544 @@
 /* ==========================
-   DETALHE DA VAGA
+   DETALHE DA VAGA – DESIGN COMPLETO
    ========================== */
 
-.detalhe-vaga {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+/* Container Principal */
+.vaga-container {
+    max-width: 1000px;
+    margin: 3.5rem auto;
+    background: #ffffff;
+    padding: 0;
+    border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(10, 132, 193, 0.15);
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease-out;
 }
 
-.detalhe-vaga h1 {
-    color: var(--dourado-fosco);
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================
+   HEADER COM GRADIENTE
+   ========================== */
+
+.vaga-header {
+    background: linear-gradient(135deg, #064f73 0%, #0a84c1 100%);
+    color: #fff;
+    padding: 4rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorações de fundo */
+.vaga-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: rgba(10, 132, 193, 0.08);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.vaga-header::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -5%;
+    width: 250px;
+    height: 250px;
+    background: rgba(10, 132, 193, 0.05);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.vaga-header h1 {
+    font-size: 2.6rem;
     margin-bottom: 1rem;
+    font-weight: 800;
+    line-height: 1.25;
+    position: relative;
+    z-index: 1;
+    color: #ffffff;
 }
 
-.detalhe-vaga p {
-    margin-bottom: 0.7rem;
+.vaga-header p {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    font-weight: 500;
+}
+
+/* ==========================
+   TAGS/BADGES
+   ========================== */
+
+.vaga-header > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(230, 243, 251, 0.95);
+    color: #064f73;
+    padding: 0.8rem 1.6rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.tag:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(10, 132, 193, 0.3);
+    background: rgba(255, 255, 255, 1);
+}
+
+/* ==========================
+   CONTEÚDO PRINCIPAL
+   ========================== */
+
+.vaga-container > main {
+    padding: 3.5rem;
+}
+
+/* ==========================
+   SEÇÕES
+   ========================== */
+
+.sessao {
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 2px solid #f0f0f0;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.sessao:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2rem;
+    padding-bottom: 0;
+}
+
+.sessao h2 {
+    font-size: 1.7rem;
+    margin-bottom: 2rem;
+    color: var(--azul-escuro);
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    position: relative;
+}
+
+/* Indicador visual da seção */
+.sessao h2::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 34px;
+    background: linear-gradient(180deg, var(--azul-primario) 0%, var(--azul-escuro) 100%);
+    border-radius: 4px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(10, 132, 193, 0.25);
+}
+
+.sessao p {
+    font-size: 1.05rem;
+    color: #555;
+    line-height: 1.9;
+    margin-bottom: 0;
+    text-align: justify;
+}
+
+/* ==========================
+   LISTAS
+   ========================== */
+
+.sessao ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1.4rem;
+}
+
+.sessao ul li {
+    font-size: 1.05rem;
+    color: #555;
+    padding-left: 3rem;
+    position: relative;
+    line-height: 1.8;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sessao ul li:hover {
+    color: var(--azul-primario);
+    padding-left: 3.5rem;
+    transform: translateX(0.5rem);
+}
+
+.sessao ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: -4px;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, var(--azul-primario), var(--azul-escuro));
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.25);
+    transition: all 0.3s ease;
+}
+
+.sessao ul li:hover::before {
+    transform: scale(1.2) rotate(20deg);
+    box-shadow: 0 6px 16px rgba(10, 132, 193, 0.35);
+}
+
+/* ==========================
+   BOTÕES
+   ========================== */
+
+.btn-candidatar {
+    margin-top: 2.5rem;
+    width: 100%;
+    padding: 1.5rem 2rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #064f73, #0a84c1);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 28px rgba(10, 132, 193, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-candidatar::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-candidatar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(10, 132, 193, 0.4);
+}
+
+.btn-candidatar:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-candidatar:active {
+    transform: translateY(-2px);
+}
+
+/* ==========================
+   LINK VOLTAR
+   ========================== */
+
+.voltar {
+    margin-top: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--azul-primario);
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.voltar::before {
+    content: '←';
+    display: inline-block;
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+}
+
+.voltar:hover {
+    color: var(--azul-escuro);
+}
+
+.voltar:hover::before {
+    transform: translateX(-8px);
+}
+
+/* ==========================
+   RESPONSIVIDADE
+   ========================== */
+
+@media (max-width: 1024px) {
+    .vaga-container {
+        margin: 2.5rem 1.5rem;
+    }
+
+    .vaga-container > main {
+        padding: 2.5rem;
+    }
+
+    .vaga-header {
+        padding: 3.5rem 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .vaga-container {
+        margin: 2rem 1rem;
+        border-radius: 16px;
+        box-shadow: 0 6px 24px rgba(10, 132, 193, 0.12);
+    }
+
+    .vaga-header {
+        padding: 3rem 2rem;
+    }
+
+    .vaga-header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .vaga-header p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .vaga-header > div {
+        gap: 0.8rem;
+    }
+
+    .tag {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.8rem;
+    }
+
+    .vaga-container > main {
+        padding: 2rem;
+    }
+
+    .sessao {
+        margin-bottom: 3rem;
+        padding-bottom: 2.5rem;
+    }
+
+    .sessao h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+        gap: 0.8rem;
+    }
+
+    .sessao h2::before {
+        width: 5px;
+        height: 28px;
+    }
+
+    .sessao p,
+    .sessao ul li {
+        font-size: 0.98rem;
+        line-height: 1.7;
+    }
+
+    .sessao ul {
+        gap: 1.2rem;
+    }
+
+    .sessao ul li {
+        padding-left: 2.5rem;
+    }
+
+    .btn-candidatar {
+        padding: 1.3rem 1.5rem;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+    }
+}
+
+@media (max-width: 600px) {
+    .vaga-container {
+        margin: 1.5rem 0.5rem;
+        border-radius: 14px;
+    }
+
+    .vaga-header {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .vaga-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .vaga-header p {
+        font-size: 0.95rem;
+    }
+
+    .vaga-header > div {
+        flex-direction: column;
+    }
+
+    .tag {
+        width: 100%;
+        justify-content: center;
+        padding: 0.6rem 1rem;
+        font-size: 0.75rem;
+    }
+
+    .vaga-container > main {
+        padding: 1.5rem;
+    }
+
+    .sessao {
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+    }
+
+    .sessao h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1.2rem;
+        gap: 0.8rem;
+    }
+
+    .sessao h2::before {
+        width: 5px;
+        height: 26px;
+    }
+
+    .sessao p,
+    .sessao ul li {
+        font-size: 0.95rem;
+        text-align: left;
+    }
+
+    .sessao ul {
+        gap: 1rem;
+    }
+
+    .sessao ul li {
+        padding-left: 2.2rem;
+    }
+
+    .sessao ul li::before {
+        width: 26px;
+        height: 26px;
+        font-size: 0.9rem;
+    }
+
+    .btn-candidatar {
+        padding: 1rem 1.2rem;
+        font-size: 0.95rem;
+        margin-top: 2rem;
+    }
+
+    .voltar {
+        font-size: 0.95rem;
+        margin-top: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .vaga-container {
+        margin: 1rem 0;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(10, 132, 193, 0.1);
+    }
+
+    .vaga-header {
+        padding: 2rem 1.2rem;
+    }
+
+    .vaga-header h1 {
+        font-size: 1.4rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .vaga-header p {
+        font-size: 0.9rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .tag {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.7rem;
+    }
+
+    .vaga-container > main {
+        padding: 1.2rem;
+    }
+
+    .sessao {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .sessao h2 {
+        font-size: 1.15rem;
+        margin-bottom: 1rem;
+    }
+
+    .sessao p,
+    .sessao ul li {
+        font-size: 0.9rem;
+        line-height: 1.65;
+    }
+
+    .sessao ul li {
+        padding-left: 2rem;
+    }
+
+    .sessao ul li::before {
+        width: 24px;
+        height: 24px;
+        font-size: 0.8rem;
+        top: -2px;
+    }
+
+    .btn-candidatar {
+        padding: 0.95rem 1rem;
+        font-size: 0.9rem;
+        margin-top: 1.5rem;
+    }
+
+    .voltar {
+        font-size: 0.9rem;
+    }
 }

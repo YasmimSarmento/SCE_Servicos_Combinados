@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Senha | SCE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages/login.css">
+</head>
+
+<body>
+
+    <!-- HEADER PADRÃO -->
+    <header class="topo">
+        <img src="imagem/logo-sce.png" alt="Logotipo da SCE">
+
+        <nav>
+            <a href="index.html">INÍCIO</a>
+            <a href="vagas.html">VAGAS</a>
+            <a href="cadastro.html">CADASTRO</a>
+            <a href="login-candidato.html">LOGIN CANDIDATO</a>
+            <a href="login-empresa.html">LOGIN EMPRESA</a>
+        </nav>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="login-container">
+
+        <div class="login-box">
+
+            <img src="imagem/logo-sce.png" alt="SCE Serviços" class="login-logo">
+
+            <h2 class="login-title">ESQUECEU SUA SENHA?</h2>
+
+            <p class="login-text">
+                Informe seu e-mail ou CPF.<br> Caso exista uma conta cadastrada,
+                enviaremos instruções para redefinir sua senha.
+            </p>
+
+            <form>
+                <div class="campo">
+                    <label for="identificador">E-mail ou CPF</label>
+                    <input type="text" id="identificador" placeholder="Digite seu e-mail ou CPF" required>
+                </div>
+
+                <div class="login-actions">
+                    <a href="#" id="btn-voltar" class="btn-secundario">Voltar</a>
+                    <button type="submit" class="btn-primario">Recuperar</button>
+                </div>
+            </form>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
+    </footer>
+
+    <script src="js/recuperar.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Painel da Empresa | SCE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/pages/painel.css">
+
+</head>
+
+<body data-page="empresa">
+
+    <header class="topo">
+        <img src="imagem/logo-sce.png" alt="Logotipo da SCE">
+
+        <nav>
+            <a href="index.html" class="ativo">INÍCIO</a>
+            <a href="vagas.html">VAGAS</a>
+            <a href="cadastro.html">CADASTRO</a>
+            <a href="login-candidato.html">LOGIN CANDIDATO</a>
+            <a href="login-empresa.html" class="ativo">LOGIN EMPRESA</a>
+        </nav>
+
+    </header>
+
+    <!-- CONTEÚDO DO PAINEL -->
+    <main class="painel">
+
+        <div class="painel-header">
+            <h1>Bem-vindo(a), Recrutador</h1>
+            <p class="painel-subtitle">
+                Gerencie suas vagas, candidatos e processos seletivos.
+            </p>
+        </div>
+
+        <section class="painel-cards"></section>
+
+        <section class="painel-cards">
+
+            <div class="card">
+                <h3>Minhas Vagas</h3>
+                <p>Visualize e edite vagas publicadas</p>
+                <a href="#" class="card-link">Editar vagas</a>
+            </div>
+
+            <div class="card">
+                <h3>Cadastrar Nova Vaga</h3>
+                <p>Publique novas oportunidades</p>
+                <a href="#" class="card-link">Ver vagas</a>
+            </div>
+
+            <div class="card">
+                <h3>Candidatos Recebidos</h3>
+                <p>Acompanhe currículos enviados</p>
+                <a href="#" class="card-link">Acompanhar</a>
+            </div>
+
+            <div class="card">
+                <h3>Perfil da Empresa</h3>
+                <p>Atualize informações institucionais</p>
+                <a href="#" class="card-link">Editar perfil</a>
+            </div>
+            </div>
+
+        </section>
+
+        <div class="painel-acoes">
+            <button class="btn-sair" id="logout">Sair</button>
+        </div>
+
+    </main>
+
+    <!-- FOOTER PADRÃO -->
+    <footer>
+        © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
+    </footer>
+
+    <!-- JS DE AUTENTICAÇÃO -->
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

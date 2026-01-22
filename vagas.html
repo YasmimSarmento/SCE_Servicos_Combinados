@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Vagas – SCE Banco de Talentos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confira as vagas abertas no Banco de Talentos da SCE. Encontre oportunidades de trabalho em diversos cargos e localizações.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -14,19 +15,25 @@
     <img src="imagem/logo c&s.png" alt="Logotipo da SCE">
     <nav>
         <a href="index.html">INÍCIO</a>
-        <a href="index.html" class="ativo">VAGAS</a>
+        <a href="vagas.html" class="ativo">VAGAS</a>
         <a href="cadastro.html">CADASTRO</a>
     </nav>
 </header>
 
-<main class="conteudo">
+<main class="conteudo pagina-vagas">
     <h1>Vagas Abertas</h1>
 
-    <p class="descricao-form">
-        Confira abaixo as oportunidades disponíveis no momento. </br>
-        Caso nenhuma vaga seja compatível com seu perfil, você ainda
-        pode cadastrar seu currículo em nosso Banco de Talentos.
-    </p>
+    <!-- DESCRIÇÃO CENTRALIZADA -->
+    <div class="descricao-vagas">
+        <p class="descricao-principal">
+            Confira abaixo as oportunidades disponíveis no momento.
+        </p>
+
+        <p class="descricao-secundaria">
+            Caso nenhuma vaga seja compatível com seu perfil, você ainda
+            pode cadastrar seu currículo em nosso Banco de Talentos.
+        </p>
+    </div>
 
     <!-- FILTROS -->
     <section class="filtros">
@@ -53,8 +60,11 @@
 
     <!-- LISTA -->
     <section id="lista-vagas" class="lista-vagas"></section>
-
 </main>
+
+<footer class="rodape">
+    © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
+</footer>
 
 <script src="js/vagas.js"></script>
 </body>
