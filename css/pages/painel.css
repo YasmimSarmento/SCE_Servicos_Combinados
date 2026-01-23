@@ -121,3 +121,164 @@
         justify-content: center;
     }
 }
+
+/* =========================
+   Painel - Detalhes (Seção da lista)
+========================= */
+
+.painel-detalhes {
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.painel-detalhes-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.painel-detalhes-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+
+.painel-detalhes-header p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+/* Texto padrão usado no JS quando não tem candidaturas */
+.muted {
+  margin: 0;
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 0.95rem;
+}
+
+/* =========================
+   Lista de candidaturas (grid responsivo)
+========================= */
+
+.lista-candidaturas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+/* Em telas maiores, dois cards por linha */
+@media (min-width: 900px) {
+  .lista-candidaturas {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* =========================
+   Card de candidatura
+========================= */
+
+.card-candidatura {
+  padding: 14px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.card-candidatura:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.card-candidatura-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.card-candidatura-titulo {
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.2;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* Badge de status */
+.card-candidatura-status {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(110, 0, 255, 0.1);
+  color: #6E00FF;
+  border: 1px solid rgba(110, 0, 255, 0.18);
+  white-space: nowrap;
+}
+
+/* Meta info */
+.card-candidatura-meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  margin-bottom: 10px;
+  font-size: 0.92rem;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.card-candidatura-meta span b {
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* Footer (data) */
+.card-candidatura-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.12);
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.card-candidatura-footer span b {
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* =========================
+   Ajustes mobile
+========================= */
+
+@media (max-width: 420px) {
+  .painel-detalhes {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .card-candidatura {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .card-candidatura-status {
+    padding: 5px 9px;
+    font-size: 0.78rem;
+  }
+}

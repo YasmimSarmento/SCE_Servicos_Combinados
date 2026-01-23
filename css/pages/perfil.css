@@ -1,0 +1,456 @@
+/* ============================
+   PERFIL - CSS COMPLETO (COMPLEMENTA dashboard.css)
+   - Layout compacto
+   - Avatar clicável com menu (Carregar / Remover)
+   - Barra "Salvar" fixa (sticky)
+============================ */
+
+/* Container principal do perfil */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 90px; /* espaço pro sticky salvar */
+}
+
+/* ============================
+   TOPO DO PERFIL (compacto)
+============================ */
+.perfil-topo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+}
+
+.perfil-topo .info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.perfil-topo .info h2 {
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 850;
+  color: var(--azul-escuro);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.perfil-topo .info span {
+  font-size: 0.92rem;
+  color: var(--cinza-escuro);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================
+   AVATAR PROFISSIONAL (compacto)
+========================= */
+.avatar-wrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid rgba(110, 0, 255, 0.35);
+  background: #fff;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.10);
+  display: block;
+  cursor: pointer;
+}
+
+/* botãozinho de câmera */
+.avatar-edit {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(0,0,0,0.04);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+.avatar-edit:hover {
+  transform: translateY(-1px);
+  background: rgba(110, 0, 255, 0.10);
+  border-color: rgba(110, 0, 255, 0.25);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.10);
+}
+
+.avatar-menu {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 160px;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.10);
+  box-shadow: 0 14px 26px rgba(0,0,0,0.12);
+  padding: 6px;
+  display: none;
+  z-index: 999;
+}
+
+.avatar-menu.open {
+  display: grid;
+  gap: 6px;
+}
+
+.avatar-menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.03);
+  cursor: pointer;
+  font-weight: 750;
+  text-align: left;
+  transition: background .18s ease, transform .18s ease;
+}
+
+.avatar-menu-item:hover {
+  background: rgba(110, 0, 255, 0.10);
+  transform: translateY(-1px);
+}
+
+.avatar-menu-item.danger {
+  background: rgba(229, 57, 53, 0.08);
+  color: #b32624;
+}
+
+.avatar-menu-item.danger:hover {
+  background: rgba(229, 57, 53, 0.14);
+}
+
+/* ============================
+   PROGRESSO DO PERFIL
+============================ */
+.progresso-container {
+  background: rgba(0,0,0,0.08);
+  border-radius: 999px;
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+#barraProgresso {
+  height: 100%;
+  width: 0%;
+  background: var(--roxo-tecnologia);
+  border-radius: 999px;
+  transition: width .3s ease;
+}
+
+#percentualProgresso {
+  margin-top: 8px;
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 750;
+  color: rgba(0,0,0,0.65);
+}
+
+/* ============================
+   CARDS MAIS COMPACTOS
+============================ */
+.perfil-card.card-glass {
+  padding: 14px;
+}
+
+.card-head {
+  padding-bottom: .7rem;
+  margin-bottom: .8rem;
+}
+
+.card-head h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ============================
+   FORM (GRID)
+============================ */
+.card-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* botões/mensagem ocupam tudo */
+#btnSalvar,
+#msgPerfil {
+  grid-column: 1 / -1;
+}
+
+/* textareas ocupam linha toda */
+#habilidades,
+#resumoProfissional {
+  grid-column: 1 / -1;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: 0.88rem;
+  font-weight: 750;
+  color: rgba(0,0,0,0.75);
+}
+
+.input-pro {
+  border-radius: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: #fff;
+  transition: border-color .2s ease, box-shadow .2s ease;
+  font-size: 0.95rem;
+}
+
+.input-pro:focus {
+  outline: none;
+  border-color: rgba(110, 0, 255, 0.55);
+  box-shadow: 0 0 0 4px rgba(110, 0, 255, 0.12);
+}
+
+textarea.input-pro {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Mensagens */
+.msg-sucesso {
+  margin-top: 6px;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(0,0,0,0.03);
+  font-weight: 750;
+}
+
+.msg-sucesso.success {
+  border-color: rgba(76, 175, 80, 0.25);
+  background: rgba(76, 175, 80, 0.10);
+  color: #1f7a3a;
+}
+
+.msg-sucesso.error {
+  border-color: rgba(229, 57, 53, 0.25);
+  background: rgba(229, 57, 53, 0.10);
+  color: #b32624;
+}
+
+/* Sidebar button como link */
+.side-nav button.nav-link {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+/* ============================
+   BARRA STICKY DE SALVAR (rodapé)
+   Você só precisa colocar um container no HTML (eu te passo depois)
+============================ */
+.perfil-sticky {
+  position: fixed;
+  left: 260px; /* acompanha sidebar desktop */
+  right: 0;
+  bottom: 0;
+  padding: 12px 16px;
+  background: rgba(240, 242, 245, 0.92);
+  border-top: 1px solid rgba(0,0,0,0.10);
+  backdrop-filter: blur(10px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.perfil-sticky .hint {
+  color: rgba(0,0,0,0.65);
+  font-weight: 650;
+  font-size: 0.92rem;
+}
+
+.perfil-sticky .actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.perfil-sticky .btn-save {
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 14px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 850;
+  background: var(--roxo-tecnologia);
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(110,0,255,0.18);
+  transition: transform .18s ease, filter .18s ease;
+}
+
+.perfil-sticky .btn-save:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.98);
+}
+
+.perfil-sticky .btn-secondary {
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(0,0,0,0.03);
+  cursor: pointer;
+  font-weight: 750;
+}
+
+/* ============================
+   RESPONSIVO
+============================ */
+@media (max-width: 1024px) {
+  .card-body {
+    grid-template-columns: 1fr;
+  }
+
+  #habilidades,
+  #resumoProfissional {
+    grid-column: auto;
+  }
+
+  .perfil-sticky {
+    left: 80px; /* sidebar reduz */
+  }
+}
+
+@media (max-width: 520px) {
+  .perfil-topo {
+    align-items: flex-start;
+  }
+
+  .avatar-wrap {
+    width: 56px;
+    height: 56px;
+  }
+
+  .avatar {
+    width: 56px;
+    height: 56px;
+  }
+
+  .avatar-menu {
+    top: 62px;
+  }
+
+  .perfil-sticky {
+    left: 0; /* mobile: sidebar some/colapsa */
+    padding: 10px 12px;
+  }
+
+  .perfil-sticky .hint {
+    display: none;
+  }
+}
+
+/* ============================
+   DARK MODE (se usar .dash-body.dark)
+============================ */
+.dash-body.dark .perfil-topo .info h2 {
+  color: rgba(255,255,255,0.92);
+}
+
+.dash-body.dark .perfil-topo .info span {
+  color: rgba(255,255,255,0.72);
+}
+
+.dash-body.dark .campo label {
+  color: rgba(255,255,255,0.80);
+}
+
+.dash-body.dark .input-pro {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.92);
+}
+
+.dash-body.dark .msg-sucesso {
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.85);
+}
+
+.dash-body.dark #percentualProgresso {
+  color: rgba(255,255,255,0.75);
+}
+
+.dash-body.dark .progresso-container {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.dash-body.dark .avatar {
+  background: rgba(255,255,255,0.06);
+}
+
+.dash-body.dark .avatar-edit {
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.92);
+}
+
+.dash-body.dark .avatar-menu {
+  background: rgba(20, 24, 40, 0.98);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.dash-body.dark .avatar-menu-item {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.90);
+}
+
+.dash-body.dark .avatar-menu-item:hover {
+  background: rgba(110, 0, 255, 0.16);
+}
+
+.dash-body.dark .perfil-sticky {
+  background: rgba(15, 18, 32, 0.92);
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+
+.dash-body.dark .perfil-sticky .hint {
+  color: rgba(255,255,255,0.70);
+}
+
+.dash-body.dark .perfil-sticky .btn-secondary {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.92);
+}

@@ -58,18 +58,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnCandidatar = document.getElementById("btnCandidatar");
 
     btnCandidatar.addEventListener("click", () => {
-        const auth = localStorage.getItem("auth");
+const session = JSON.parse(localStorage.getItem("session") || "null");
+const auth = localStorage.getItem("auth");
 
-        if (!auth) {
-            alert("Faça login como candidato para se candidatar.");
-            window.location.href = "login-candidato.html";
-            return;
-        }
+// se não tem sessão, força login
+if (!session && !auth) {
+  alert("Faça login como candidato para se candidatar.");
+  window.location.href = "login-candidato.html";
+  return;
+}
 
-        if (auth !== "candidato") {
-            alert("Apenas candidatos podem se candidatar a vagas.");
-            return;
-        }
+// se tiver session, valida por ela (mais confiável)
+if (session && session.role !== "candidato") {
+  alert("Apenas candidatos podem se candidatar a vagas.");
+  return;
+}
+
+// fallback: se não tem session mas tem auth, valida por auth
+if (!session && auth !== "candidato") {
+  alert("Apenas candidatos podem se candidatar a vagas.");
+  return;
+}
+
 
         // segue fluxo normal
         window.location.href = "cadastro.html";

@@ -7,6 +7,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="css/pages/dashboard.css">
+<link rel="stylesheet" href="css/pages/perfil.css">
 </head>
 <body class="dash-body" data-page="candidato">
 
@@ -20,15 +21,37 @@
         <a href="documentos.html" class="nav-link"><i class="fa-solid fa-file-arrow-up"></i> Documentos</a>
         <a href="vagas.html" class="nav-link"><i class="fa-solid fa-briefcase"></i> Vagas</a>
         <div class="nav-divider"></div>
-        <a href="index.html" class="nav-link logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+<button type="button" class="nav-link logout" id="btnLogout">
+  <i class="fa-solid fa-right-from-bracket"></i> Sair
+</button>
+
     </nav>
 </aside>
 
 <div class="main-content">
 
   <!-- TOPO DO PERFIL -->
-  <div class="perfil-topo perfil-card card-glass">
-    <img id="fotoUsuario" src="https://via.placeholder.com/80" alt="Foto do usuário">
+<div class="avatar-wrap compact">
+  <img id="fotoUsuario" class="avatar" src="https://via.placeholder.com/80" alt="Foto do usuário">
+
+  <button type="button" class="avatar-edit" id="btnAvatarMenu" aria-label="Editar foto">
+    <i class="fa-solid fa-camera"></i>
+  </button>
+
+  <div class="avatar-menu" id="avatarMenu">
+    <button type="button" class="avatar-menu-item" id="btnUploadFoto">
+      <i class="fa-solid fa-upload"></i> Carregar
+    </button>
+    <button type="button" class="avatar-menu-item danger" id="btnRemoverFoto">
+      <i class="fa-solid fa-trash"></i> Remover
+    </button>
+  </div>
+
+  <input type="file" id="uploadFoto" accept="image/*" hidden>
+</div>
+
+
+
     <div class="info">
       <h2 id="userNome">Candidato</h2>
       <span id="resumoMini">Área e Cargo</span>
@@ -158,3 +181,24 @@
   </div>
 
 </div>
+
+<!-- Barra fixa (sticky) de salvar -->
+<div class="perfil-sticky" id="perfilSticky">
+  <div class="hint">
+    <span id="stickyStatus">Tudo salvo.</span>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="btn-secondary" id="btnTopo">
+      Voltar ao topo
+    </button>
+
+    <button type="button" class="btn-save" id="btnSalvarSticky">
+      Salvar alterações
+    </button>
+  </div>
+</div>
+
+<script src="js/perfil.js"></script>
+</body>
+</html>
