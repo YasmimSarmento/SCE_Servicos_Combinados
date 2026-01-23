@@ -1,98 +1,110 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Documentos do Candidato | SCE</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Documentos do Candidato | SCE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/pages/documentos.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages/documentos.css">
 </head>
+
 <body class="dash-body" data-page="candidato">
 
-<aside class="sidebar-pro">
+  <aside class="sidebar-pro">
     <div class="side-logo">
-        <img src="imagem/logo c&s.png" alt="Logo">
+      <img src="imagem/logo c&s.png" alt="Logo">
     </div>
+
     <nav class="side-nav">
-        <a href="painel-candidato.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Início</a>
-        <a href="perfil.html" class="nav-link"><i class="fa-solid fa-user-tie"></i> Meu Perfil</a>
-        <a href="documentos.html" class="nav-link active"><i class="fa-solid fa-file-arrow-up"></i> Documentos</a>
-        <a href="vagas.html" class="nav-link"><i class="fa-solid fa-briefcase"></i> Vagas</a>
-        <div class="nav-divider"></div>
-<a href="index.html" class="nav-link logout" id="logout">
-  <i class="fa-solid fa-right-from-bracket"></i> Sair
-</a>
+      <a href="painel-candidato.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Início</a>
+      <a href="perfil.html" class="nav-link"><i class="fa-solid fa-user-tie"></i> Meu Perfil</a>
+      <a href="documentos.html" class="nav-link active"><i class="fa-solid fa-file-arrow-up"></i> Documentos</a>
+      <a href="vagas.html" class="nav-link"><i class="fa-solid fa-briefcase"></i> Vagas</a>
 
+      <div class="nav-divider"></div>
+
+      <a href="index.html" class="nav-link logout" id="logout">
+        <i class="fa-solid fa-right-from-bracket"></i> Sair
+      </a>
     </nav>
-</aside>
+  </aside>
 
-<main class="main-content">
-<header class="dash-header">
-    <div class="header-title">
+  <main class="main-content">
+    <header class="dash-header">
+      <div class="header-title">
         <h1>Documentos</h1>
         <p>Envie seus documentos e acompanhe o status de análise.</p>
-    </div>
-</header>
+      </div>
+    </header>
 
-<div class="content-grid">
+    <div class="content-grid">
 
-    <!-- CARD UPLOAD -->
-    <div class="card-glass">
+      <!-- CARD UPLOAD -->
+      <div class="card-glass">
         <div class="card-head">
-            <h3><i class="fa-solid fa-upload"></i> Enviar Documento</h3>
+          <h3><i class="fa-solid fa-upload"></i> Enviar Documento</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="campo">
+            <label>Tipo de Documento</label>
+            <select id="tipoDocumento" class="input-pro">
+              <option value="">Selecione...</option>
+              <option value="Currículo">Currículo (PDF)</option>
+              <option value="Identidade">Documento de Identidade</option>
+              <option value="Certificado">Certificado</option>
+              <option value="Comprovante">Comprovante</option>
+            </select>
+          </div>
+
+          <div class="campo drag-drop" tabindex="0" role="button" aria-label="Selecionar arquivo para envio">
+            <label>Arraste e solte os arquivos aqui</label>
+            <input type="file" id="arquivoDocumento" class="input-pro">
+            <small>Ou clique para selecionar um arquivo.</small>
+
+            <!-- ✅ Status do arquivo selecionado (aparece quando anexar) -->
+            <div class="file-status" id="fileStatus" style="display:none;">
+              <div class="file-status__info">
+                <strong id="fileName">arquivo.pdf</strong>
+                <span id="fileMeta">PDF • 1,2 MB</span>
+              </div>
+              <button type="button" class="file-status__remove" id="btnRemoverArquivo">Remover</button>
+            </div>
+          </div>
+
+          <!-- ✅ ID alinhado com o JS -->
+          <button class="btn btn-full" id="btnEnviarDocumento">Enviar Documento</button>
+          <p id="msgDocumento" class="msg-sucesso"></p>
+        </div>
+      </div>
+
+      <!-- CARD LISTA DE DOCUMENTOS -->
+      <div class="card-glass">
+        <div class="card-head">
+          <h3><i class="fa-solid fa-folder-open"></i> Meus Documentos</h3>
         </div>
         <div class="card-body">
-            <div class="campo">
-                <label>Tipo de Documento</label>
-                <select id="tipoDocumento" class="input-pro">
-                    <option value="">Selecione...</option>
-                    <option value="Currículo">Currículo (PDF)</option>
-                    <option value="Identidade">Documento de Identidade</option>
-                    <option value="Certificado">Certificado</option>
-                    <option value="Comprovante">Comprovante</option>
-                </select>
-            </div>
-
-            <div class="campo drag-drop">
-                <label>Arraste e solte os arquivos aqui</label>
-                <input type="file" id="arquivoDocumento" class="input-pro" multiple>
-                <small>Ou clique para selecionar arquivos.</small>
-            </div>
-
-            <button class="btn btn-full">Enviar Documento</button>
-            <p id="msgDocumento" class="msg-sucesso"></p>
+          <ul id="listaDocumentos" class="status-list documentos-list"></ul>
         </div>
+      </div>
+
     </div>
+  </main>
 
-    <!-- CARD LISTA DE DOCUMENTOS -->
-    <div class="card-glass">
-        <div class="card-head">
-            <h3><i class="fa-solid fa-folder-open"></i> Meus Documentos</h3>
-        </div>
-        <div class="card-body">
-            <ul id="listaDocumentos" class="status-list documentos-list"></ul>
-        </div>
-    </div>
-
-</div>
-</main>
-
-<!-- MODAL PREVIEW -->
-<div class="modal-preview" style="display:none;">
+  <!-- MODAL PREVIEW -->
+  <div class="modal-preview" style="display:none;">
     <div class="modal-preview-content">
-        <button class="modal-close" onclick="fecharModal()">×</button>
-        <div id="previewContent"></div>
-        <iframe id="previewFrame" style="width:100%; height:400px; border:none;"></iframe>
+      <!-- O JS monta o conteúdo aqui quando clicar em "Visualizar" -->
     </div>
-</div>
+  </div>
 
-<!-- JS -->
- <script src="js/core/auth.js"></script>
-<script src="js/documentos.js"></script>
+  <!-- JS -->
+  <script src="js/core/auth.js"></script>
+  <script src="js/documentos.js"></script>
 </body>
 </html>
