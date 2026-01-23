@@ -195,38 +195,39 @@
     return notas;
   }
 
-  function renderNotificacoes(notificacoes) {
-    const ul = document.getElementById("listaNotificacoes");
-    if (!ul) return;
+function renderNotificacoes(notificacoes) {
+  const ul = document.getElementById("listaNotificacoes");
+  if (!ul) return;
 
-    ul.innerHTML = "";
+  ul.innerHTML = "";
 
-    if (!notificacoes.length) {
-      ul.innerHTML = `
-        <li class="notify-item">
-          <div class="txt">
-            <strong>Tudo certo!</strong>
-            <span>Nenhuma ação pendente no momento.</span>
-          </div>
-          <span class="tag">OK</span>
-        </li>
-      `;
-      return;
-    }
-
-    notificacoes.slice(0, 5).forEach((n) => {
-      const li = document.createElement("li");
-      li.className = "notify-item";
-      li.innerHTML = `
+  if (!notificacoes.length) {
+    ul.innerHTML = `
+      <li class="notify-item">
         <div class="txt">
-          <strong>${escapeHtml(n.texto)}</strong>
-          <span>${escapeHtml(formatarData(n.data))}</span>
+          <strong>Tudo certo!</strong>
+          <span>Seu perfil está em dia no momento.</span>
         </div>
-        <span class="tag">Ação</span>
-      `;
-      ul.appendChild(li);
-    });
+        <span class="tag">OK</span>
+      </li>
+    `;
+    return;
   }
+
+  // mostra até 5 sugestões
+  notificacoes.slice(0, 5).forEach((n) => {
+    const li = document.createElement("li");
+    li.className = "notify-item";
+    li.innerHTML = `
+      <div class="txt">
+        <strong>${escapeHtml(n.texto)}</strong>
+      </div>
+      <span class="tag">Sugestão</span>
+    `;
+    ul.appendChild(li);
+  });
+}
+
 
   /* =========================
      UI - STATUS LIST
