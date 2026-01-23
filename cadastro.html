@@ -1,166 +1,236 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Cadastro de Currículo – SCE Banco de Talentos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <title>Cadastro de Currículo – SCE Banco de Talentos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages/cadastro.css" />
 </head>
 
-<body>
+<body class="pagina-cadastro">
 
-    <!-- HEADER -->
-    <header class="topo">
-        <img src="imagem/logo c&s.png" alt="Logotipo da SCE">
-        <nav>
-            <a href="index.html">INÍCIO</a>
-            <a href="vagas.html">VAGAS</a>
-            <a href="cadastro.html" class="ativo">CADASTRO</a>
-        </nav>
+  <!-- HEADER -->
+  <header class="topo">
+    <img src="imagem/logo c&s.png" alt="Logotipo da C&S" />
+    <nav>
+      <a href="index.html">INÍCIO</a>
+      <a href="vagas.html">VAGAS</a>
+      <a href="cadastro.html" class="ativo">CADASTRO</a>
+    </nav>
+  </header>
+
+  <!-- CONTEÚDO -->
+  <main class="conteudo cadastro-page">
+    <header class="cadastro-head">
+      <h1>Cadastro de Currículo</h1>
+      <p class="descricao-form">
+        Preencha seus dados para cadastrar seu currículo no Banco de Talentos.
+        <br />
+        Se você veio por uma vaga específica, este cadastro já ficará vinculado à candidatura.
+      </p>
     </header>
 
-    <!-- CONTEÚDO -->
-    <main class="conteudo">
-        <h1>Cadastro de Currículo</h1>
+    <!-- VAGA SELECIONADA -->
+    <section class="vaga-selecionada" id="vagaSelecionadaBox" style="display: none;">
+      <div class="vaga-selecionada__badge">Vaga selecionada</div>
+      <div class="vaga-selecionada__conteudo">
+        <h3 class="vaga-selecionada__titulo">
+          Você está se candidatando para:
+          <strong id="cadastroVagaTitulo"></strong>
+        </h3>
 
-        <p class="descricao-form">
-            Preencha os dados abaixo para cadastrar seu currículo em nosso Banco de Talentos.</br>
-            Mesmo sem vagas abertas no momento, seu perfil poderá ser considerado futuramente.
+        <p class="vaga-info">
+          <span id="cadastroVagaArea"></span>
+          <span class="dot">•</span>
+          <span id="cadastroVagaLocal"></span>
+          <span class="dot">•</span>
+          <span id="cadastroVagaTipo"></span>
         </p>
+      </div>
+    </section>
 
-        <!-- VAGA SELECIONADA -->
-<div class="vaga-selecionada" id="vagaSelecionadaBox" style="display: none;">
-    <h3>Você está se candidatando para a vaga:</h3>
-    <p><strong id="cadastroVagaTitulo"></strong></p>
-    <p class="vaga-info">
-        <span id="cadastroVagaArea"></span> •
-        <span id="cadastroVagaLocal"></span> •
-        <span id="cadastroVagaTipo"></span>
-    </p>
-</div>
+    <form id="form-cadastro" class="form-pro" novalidate>
 
+      <!-- DADOS PESSOAIS -->
+      <section class="form-section">
+        <h2 class="section-title">Dados pessoais</h2>
 
-        <form id="form-cadastro" novalidate>
+        <div class="campo">
+          <label for="nome">Nome completo <span class="req">*</span></label>
+          <input type="text" id="nome" autocomplete="name" required />
+          <small class="help">Digite seu nome como aparece nos documentos.</small>
+          <p class="erro" id="erro-nome"></p>
+        </div>
 
-            <div class="campo">
-                <label for="nome">Nome completo*</label>
-                <input type="text" id="nome" required>
+        <div class="grupo">
+          <div class="campo">
+            <label for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" autocomplete="email" required />
+            <small class="help">Usaremos este email para contato sobre vagas.</small>
+            <p class="erro" id="erro-email"></p>
+          </div>
+
+          <div class="campo">
+            <label for="telefone">Telefone / Celular <span class="req">*</span></label>
+            <input type="tel" id="telefone" autocomplete="tel" required placeholder="(91) 99999-9999" />
+            <small class="help">WhatsApp (se tiver), melhor ainda.</small>
+            <p class="erro" id="erro-telefone"></p>
+          </div>
+        </div>
+
+        <div class="grupo">
+          <div class="campo">
+            <label for="cidade">Cidade <span class="req">*</span></label>
+            <input type="text" id="cidade" autocomplete="address-level2" required />
+            <p class="erro" id="erro-cidade"></p>
+          </div>
+
+          <div class="campo">
+            <label for="estado">Estado (UF) <span class="req">*</span></label>
+            <input type="text" id="estado" maxlength="2" autocomplete="address-level1" required placeholder="PA" />
+            <small class="help">Digite apenas 2 letras (ex.: PA).</small>
+            <p class="erro" id="erro-estado"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PERFIL PROFISSIONAL -->
+      <section class="form-section">
+        <h2 class="section-title">Perfil profissional</h2>
+
+        <div class="grupo">
+          <div class="campo">
+            <label for="area">Área de interesse <span class="req">*</span></label>
+            <select id="area" required>
+              <option value="">Selecione</option>
+              <option>Administrativo</option>
+              <option>Atendimento</option>
+              <option>Operacional</option>
+              <option>Serviços Gerais</option>
+              <option>Segurança</option>
+              <option>TI</option>
+              <option>Outros</option>
+            </select>
+            <p class="erro" id="erro-area"></p>
+          </div>
+
+          <div class="campo">
+            <label for="tipo-vaga">Tipo de vaga desejada</label>
+            <select id="tipo-vaga">
+              <option value="">Selecione</option>
+              <option>CLT</option>
+              <option>Estágio</option>
+              <option>Temporário</option>
+              <option>PJ</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grupo">
+          <div class="campo">
+            <label for="experiencia">Anos de experiência <span class="req">*</span></label>
+            <select id="experiencia" required>
+              <option value="">Selecione</option>
+              <option>Menos de 1 ano</option>
+              <option>1-2 anos</option>
+              <option>3-5 anos</option>
+              <option>5-10 anos</option>
+              <option>Mais de 10 anos</option>
+            </select>
+            <p class="erro" id="erro-experiencia"></p>
+          </div>
+
+          <div class="campo">
+            <label for="disponibilidade">Disponibilidade <span class="req">*</span></label>
+            <select id="disponibilidade" required>
+              <option value="">Selecione</option>
+              <option>Tempo integral</option>
+              <option>Meio período</option>
+              <option>Autônomo/PJ</option>
+              <option>Consultoria</option>
+            </select>
+            <p class="erro" id="erro-disponibilidade"></p>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="especialidades">Especialidades (competências) <span class="req">*</span></label>
+          <textarea id="especialidades" required placeholder="Ex: Atendimento ao público, Excel, controle de estoque, suporte N1..."></textarea>
+          <small class="help">Dica: use vírgulas e seja direto. Ajuda muito na triagem.</small>
+          <p class="erro" id="erro-especialidades"></p>
+        </div>
+
+        <div class="campo">
+          <label for="certificacoes">Certificações e qualificações</label>
+          <textarea id="certificacoes" placeholder="Ex: NR-10, NR-35, Curso de Vigilante, ITIL, ISO 27001..."></textarea>
+        </div>
+
+        <div class="campo">
+          <label for="linkedin">Perfil profissional (LinkedIn/Portfólio)</label>
+          <input type="url" id="linkedin" placeholder="https://linkedin.com/in/seu-perfil" />
+          <small class="help">Se tiver, ajuda muito.</small>
+        </div>
+
+        <div class="campo">
+          <label for="conhecimentos">Conhecimentos adicionais</label>
+          <textarea id="conhecimentos" placeholder="Ex: Inglês intermediário, Excel avançado, SAP, redes básicas..."></textarea>
+        </div>
+      </section>
+
+      <!-- ANEXO DO CURRÍCULO -->
+      <section class="form-section">
+        <h2 class="section-title">Currículo</h2>
+
+        <div class="campo">
+          <label>Currículo <span class="req">*</span></label>
+
+          <div class="upload-box" id="curriculoDrop" tabindex="0" role="button" aria-label="Selecionar currículo">
+            <input type="file" id="curriculo-arquivo" accept=".pdf,.doc,.docx" />
+            <strong>Arraste e solte aqui</strong>
+            <small>ou clique para selecionar (PDF/DOC/DOCX)</small>
+
+            <!-- status do arquivo (aparece quando anexar) -->
+            <div class="file-status" id="curriculoStatus" style="display:none;">
+              <div class="file-status__info">
+                <strong id="curriculoNome">curriculo.pdf</strong>
+                <span id="curriculoMeta">PDF • 1,2 MB</span>
+              </div>
+              <button type="button" class="file-status__remove" id="btnRemoverCurriculo">Remover</button>
             </div>
+          </div>
 
-            <div class="campo">
-                <label for="email">Email*</label>
-                <input type="email" id="email" required>
-            </div>
+          <p class="erro" id="erro-curriculo"></p>
+        </div>
+      </section>
 
-            <div class="campo">
-                <label for="telefone">Telefone / Celular*</label>
-                <input type="tel" id="telefone" required>
-            </div>
+      <!-- LGPD -->
+      <section class="form-section">
+        <div class="campo check">
+          <input type="checkbox" id="lgpd" required />
+          <label for="lgpd">
+            Autorizo o uso dos meus dados para análise de perfil e contato. <span class="req">*</span>
+          </label>
+        </div>
+        <p class="erro" id="erro-lgpd"></p>
+      </section>
 
-            <div class="grupo">
-                <div class="campo">
-                    <label for="cidade">Cidade*</label>
-                    <input type="text" id="cidade" required>
-                </div>
+      <!-- AÇÕES -->
+      <div class="form-actions">
+        <button type="submit" class="btn" id="btnEnviarCurriculo" disabled>
+          Enviar Currículo
+        </button>
+        <p id="mensagem-retorno" class="mensagem"></p>
+      </div>
+    </form>
+  </main>
 
-                <div class="campo">
-                    <label for="estado">Estado (UF)*</label>
-                    <input type="text" id="estado" maxlength="2" required>
-                </div>
-            </div>
+  <script src="js/cadastro.js"></script>
 
-            <div class="campo">
-                <label for="area">Área de interesse*</label>
-                <select id="area" required>
-                    <option value="">Selecione</option>
-                    <option>Administrativo</option>
-                    <option>Atendimento</option>
-                    <option>Operacional</option>
-                    <option>Serviços Gerais</option>
-                    <option>Outros</option>
-                </select>
-            </div>
-
-            <div class="campo">
-                <label for="tipo-vaga">Tipo de vaga desejada</label>
-                <select id="tipo-vaga">
-                    <option value="">Selecione</option>
-                    <option>CLT</option>
-                    <option>Estágio</option>
-                    <option>Temporário</option>
-                </select>
-            </div>
-
-            <div class="grupo">
-                <div class="campo">
-                    <label for="experiencia">Anos de experiência*</label>
-                    <select id="experiencia" required>
-                        <option value="">Selecione</option>
-                        <option>Menos de 1 ano</option>
-                        <option>1-2 anos</option>
-                        <option>3-5 anos</option>
-                        <option>5-10 anos</option>
-                        <option>Mais de 10 anos</option>
-                    </select>
-                </div>
-
-                <div class="campo">
-                    <label for="disponibilidade">Disponibilidade*</label>
-                    <select id="disponibilidade" required>
-                        <option value="">Selecione</option>
-                        <option>Tempo integral</option>
-                        <option>Meio período</option>
-                        <option>Autônomo/PJ</option>
-                        <option>Consultoria</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="campo">
-                <label for="especialidades">Especialidades (principais competências)*</label>
-                <textarea id="especialidades" placeholder="Ex: Consultoria empresarial, Projetos de segurança, Análise de risco..." required></textarea>
-            </div>
-
-            <div class="campo">
-                <label for="certificacoes">Certificações e qualificações</label>
-                <textarea id="certificacoes" placeholder="Ex: ISO 27001, MBA em Gestão, Cursos de segurança..."></textarea>
-            </div>
-
-            <div class="campo">
-                <label for="linkedin">Perfil profissional (LinkedIn, Portfólio)</label>
-                <input type="url" id="linkedin" placeholder="https://linkedin.com/in/seu-perfil">
-            </div>
-
-            <div class="campo">
-                <label for="conhecimentos">Conhecimentos adicionais (idiomas, softwares, etc)</label>
-                <textarea id="conhecimentos" placeholder="Ex: Inglês fluente, Excel avançado, Python, SAP..."></textarea>
-            </div>
-
-            <div class="campo">
-                <label>Currículo*</label>
-                <input type="file" id="curriculo-arquivo" accept=".pdf,.doc,.docx">
-            </div>
-
-            <div class="campo check">
-                <input type="checkbox" id="lgpd" required>
-                <label for="lgpd">
-                    Autorizo o uso dos meus dados para análise de perfil e contato.
-                </label>
-            </div>
-
-            <button type="submit" class="btn">Enviar Currículo</button>
-
-            <p id="mensagem-retorno" class="mensagem"></p>
-        </form>
-    </main>
-
-    <script src="js/cadastro.js"></script>
-
-<footer>
+  <footer>
     © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
-</footer>
+  </footer>
 
 </body>
-
 </html>

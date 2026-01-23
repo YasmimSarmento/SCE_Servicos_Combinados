@@ -1,78 +1,110 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Detalhe da Vaga – SCE Banco de Talentos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Detalhe da Vaga – SCE Banco de Talentos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Estilos -->
-    <link rel="stylesheet" href="css/style.css">
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/pages/detalhe-vaga.css" />
 </head>
 
-<body >
+<body class="pagina-detalhe-vaga">
 
-<header class="topo">
-    <img src="imagem/logo c&s.png" alt="Logotipo da SCE">
+  <header class="topo">
+    <img src="imagem/logo c&s.png" alt="Logotipo da C&S" />
 
     <nav>
-        <a href="index.html">INÍCIO</a>
-        <a href="vagas.html" class="ativo">VAGAS</a>
-        <a href="cadastro.html">CADASTRO</a>
+      <a href="index.html">INÍCIO</a>
+      <a href="vagas.html" class="ativo">VAGAS</a>
+      <a href="cadastro.html">CADASTRO</a>
     </nav>
-</header>
+  </header>
 
-<div class="vaga-container">
-            <!-- Cabeçalho da vaga com header gradiente -->
-            <div class="vaga-header">
-                <h1 id="vagaTitulo">Carregando...</h1>
-                <p id="vagaEmpresa"></p>
+  <main class="vaga-page">
+    <div class="vaga-container">
 
-                <div style="margin-top: 1rem;">
-                    <span class="tag" id="vagaTipo"></span>
-                    <span class="tag" id="vagaNivel"></span>
-                    <span class="tag" id="vagaLocal"></span>
-                </div>
-            </div>
+      <!-- Topbar da página -->
+      <div class="vaga-topbar">
+        <a class="voltar-inline" href="vagas.html">← Voltar para vagas</a>
 
-            <!-- Conteúdo principal -->
-            <main>
-                <!-- Descrição -->
-                <div class="sessao">
-                    <h2>Descrição da vaga</h2>
-                    <p id="vagaDescricao"></p>
-                </div>
+        <div class="vaga-share">
+          <button type="button" class="btn-ghost" id="btnCopiarLink" aria-label="Copiar link desta vaga">
+            Copiar link
+          </button>
+        </div>
+      </div>
 
-                <!-- Requisitos -->
-                <div class="sessao">
-                    <h2>Requisitos</h2>
-                    <ul id="vagaRequisitos"></ul>
-                </div>
+      <!-- Cabeçalho da vaga -->
+      <section class="vaga-header">
+        <div class="vaga-header__text">
+          <h1 id="vagaTitulo">Carregando...</h1>
+          <p class="vaga-empresa" id="vagaEmpresa"></p>
 
-                <!-- Benefícios -->
-                <div class="sessao">
-                    <h2>Benefícios</h2>
-                    <ul id="vagaBeneficios"></ul>
-                </div>
-
-                <!-- Salário -->
-                <div class="sessao">
-                    <h2>Faixa Salarial</h2>
-                    <p id="vagaSalario"></p>
-                </div>
-
-                <!-- Botão para se candidatar -->
-                <button class="btn-candidatar" id="btnCandidatar">
-                    Candidatar-se para esta vaga
-                </button>
-
-                <a class="voltar" href="vagas.html">← Voltar para lista de vagas</a>
-            </main>
+          <div class="tags">
+            <span class="tag" id="vagaTipo"></span>
+            <span class="tag" id="vagaArea"></span>
+            <span class="tag" id="vagaLocal"></span>
+          </div>
         </div>
 
-<footer>
-    © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
-</footer>
+        <div class="vaga-header__cta">
+          <div class="vaga-salario-box">
+            <span class="vaga-salario-label">Faixa salarial</span>
+            <strong class="vaga-salario" id="vagaSalario">—</strong>
+          </div>
 
-<script src="js/pages/detalhe-vaga.js"></script>
+          <button class="btn-candidatar" id="btnCandidatar" type="button">
+            Candidatar-se para esta vaga
+          </button>
+
+          <p class="vaga-cta-hint" id="vagaHint"></p>
+        </div>
+      </section>
+
+      <!-- Conteúdo -->
+      <section class="vaga-grid">
+
+        <article class="card-sessao">
+          <h2>Descrição da vaga</h2>
+          <p id="vagaDescricao" class="vaga-texto"></p>
+        </article>
+
+        <article class="card-sessao">
+          <h2>Requisitos</h2>
+          <ul id="vagaRequisitos" class="vaga-lista"></ul>
+        </article>
+
+        <article class="card-sessao">
+          <h2>Benefícios</h2>
+          <ul id="vagaBeneficios" class="vaga-lista"></ul>
+        </article>
+
+        <!-- Extras para ficar mais “plataforma” -->
+        <article class="card-sessao">
+          <h2>Como se candidatar</h2>
+          <ol class="vaga-lista vaga-lista--ol">
+            <li>Revise os requisitos e benefícios.</li>
+            <li>Clique em <strong>Candidatar-se</strong>.</li>
+            <li>Complete seu cadastro e envie seus dados.</li>
+          </ol>
+
+          <div class="vaga-alerta">
+            <strong>Atenção:</strong> mantenha seus documentos atualizados na área de <em>Documentos</em>.
+          </div>
+        </article>
+
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="rodape">
+    © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
+  </footer>
+
+  <!-- JS -->
+  <script src="js/pages/detalhe-vaga.js"></script>
 </body>
 </html>

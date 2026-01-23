@@ -1,6 +1,17 @@
 /* ==========================
-   DETALHE DA VAGA – DESIGN COMPLETO
+   DETALHE DA VAGA – DESIGN PROFISSIONAL (ATUALIZADO)
+   Compatível com HTML novo e antigo
    ========================== */
+
+/* Página */
+.pagina-detalhe-vaga {
+    background: #f6f8fb;
+}
+
+/* Área principal */
+.vaga-page {
+    padding: 0 1rem 3rem;
+}
 
 /* Container Principal */
 .vaga-container {
@@ -15,24 +26,65 @@
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================
+   TOPBAR (novo)
+   ========================== */
+.vaga-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.3rem;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    background: #fff;
+}
+
+.voltar-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--azul-primario);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.voltar-inline:hover {
+    color: var(--azul-escuro);
+    transform: translateX(-2px);
+}
+
+.btn-ghost {
+    border: 1px solid rgba(0,0,0,0.10);
+    background: rgba(0,0,0,0.03);
+    color: #333;
+    padding: 0.6rem 0.9rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn-ghost:hover {
+    background: rgba(10, 132, 193, 0.10);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+    transform: translateY(-2px);
+}
+
+.btn-ghost:active {
+    transform: scale(0.98);
 }
 
 /* ==========================
    HEADER COM GRADIENTE
    ========================== */
-
 .vaga-header {
     background: linear-gradient(135deg, #064f73 0%, #0a84c1 100%);
     color: #fff;
-    padding: 4rem 3.5rem;
+    padding: 3.2rem 3rem;
     position: relative;
     overflow: hidden;
 }
@@ -43,9 +95,9 @@
     position: absolute;
     top: -50%;
     right: -10%;
-    width: 400px;
-    height: 400px;
-    background: rgba(10, 132, 193, 0.08);
+    width: 420px;
+    height: 420px;
+    background: rgba(255,255,255,0.08);
     border-radius: 50%;
     z-index: 0;
 }
@@ -55,157 +107,219 @@
     position: absolute;
     bottom: -30%;
     left: -5%;
-    width: 250px;
-    height: 250px;
-    background: rgba(10, 132, 193, 0.05);
+    width: 260px;
+    height: 260px;
+    background: rgba(255,255,255,0.05);
     border-radius: 50%;
     z-index: 0;
 }
 
-.vaga-header h1 {
-    font-size: 2.6rem;
-    margin-bottom: 1rem;
-    font-weight: 800;
-    line-height: 1.25;
+/* ✅ Garantia: nada do texto fica por baixo das “bolhas” */
+.vaga-header * {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+}
+
+/* Layout do header (novo) */
+.vaga-header__text,
+.vaga-header__cta {
+    position: relative;
+    z-index: 2;
+}
+
+.vaga-header__text h1 {
+    font-size: 2.35rem;
+    margin-bottom: 0.55rem;
+    font-weight: 900;
+    line-height: 1.2;
     color: #ffffff;
 }
 
+/* ✅ Empresa mais minimalista (e se estiver vazio, não “grita”) */
+.vaga-empresa,
 .vaga-header p {
-    font-size: 1.15rem;
-    color: rgba(255, 255, 255, 0.92);
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
-    font-weight: 500;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 0.9rem;
+    font-weight: 600;
+    opacity: 0.9;
 }
 
-/* ==========================
-   TAGS/BADGES
-   ========================== */
+/* Se o JS deixar vazio, não cria “espaço” exagerado */
+.vaga-empresa:empty {
+    display: none;
+}
 
-.vaga-header > div {
+.tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    position: relative;
-    z-index: 1;
+    gap: 0.75rem;
 }
 
+/* TAGS/BADGES (um pouco mais minimalistas) */
 .tag {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    background: rgba(230, 243, 251, 0.95);
+    gap: 0.5rem;
+    background: rgba(230, 243, 251, 0.92);
     color: #064f73;
-    padding: 0.8rem 1.6rem;
+    padding: 0.6rem 1rem;          /* ✅ menor */
     border-radius: 12px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(10, 132, 193, 0.2);
+    font-size: 0.78rem;            /* ✅ menor */
+    font-weight: 800;
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 3px 10px rgba(10, 132, 193, 0.18);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.28);
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.35px;
 }
 
 .tag:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 24px rgba(10, 132, 193, 0.3);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 22px rgba(10, 132, 193, 0.28);
     background: rgba(255, 255, 255, 1);
 }
 
-/* ==========================
-   CONTEÚDO PRINCIPAL
-   ========================== */
-
-.vaga-container > main {
-    padding: 3.5rem;
+/* Caixa de CTA (novo) */
+.vaga-header__cta {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 420px;
 }
 
-/* ==========================
-   SEÇÕES
-   ========================== */
-
-.sessao {
-    margin-bottom: 4rem;
-    padding-bottom: 4rem;
-    border-bottom: 2px solid #f0f0f0;
-    animation: fadeInUp 0.6s ease-out;
+.vaga-salario-box {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.20);
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 }
 
-.sessao:last-of-type {
-    border-bottom: none;
-    margin-bottom: 2rem;
-    padding-bottom: 0;
-}
-
-.sessao h2 {
-    font-size: 1.7rem;
-    margin-bottom: 2rem;
-    color: var(--azul-escuro);
+.vaga-salario-label {
+    display: block;
+    font-size: 0.82rem;
     font-weight: 800;
+    letter-spacing: 0.55px;
+    text-transform: uppercase;
+    opacity: 0.92;
+}
+
+.vaga-salario {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 1.22rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+/* Hint/estado abaixo do botão */
+.vaga-cta-hint {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 650;
+    color: rgba(255,255,255,0.92);
+}
+
+/* ==========================
+   GRID (novo) + Main antigo compatível
+   ========================== */
+.vaga-container > main {
+    padding: 3rem;
+}
+
+.vaga-grid {
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+}
+
+/* Cards (novo) */
+.card-sessao {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 16px;
+    padding: 1.8rem;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+}
+
+.card-sessao::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--azul-primario), var(--azul-claro));
+    opacity: 0.9;
+}
+
+.card-sessao h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1.2rem;
+    color: var(--azul-escuro);
+    font-weight: 900;
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: 0.8rem;
     position: relative;
 }
 
-/* Indicador visual da seção */
-.sessao h2::before {
+.card-sessao h2::before {
     content: '';
     display: inline-block;
     width: 6px;
-    height: 34px;
+    height: 28px;
     background: linear-gradient(180deg, var(--azul-primario) 0%, var(--azul-escuro) 100%);
     border-radius: 4px;
     flex-shrink: 0;
     box-shadow: 0 4px 16px rgba(10, 132, 193, 0.25);
 }
 
-.sessao p {
-    font-size: 1.05rem;
+.vaga-texto,
+.card-sessao p {
+    font-size: 1.02rem;
     color: #555;
-    line-height: 1.9;
-    margin-bottom: 0;
-    text-align: justify;
+    line-height: 1.85;
+    margin: 0;
 }
 
-/* ==========================
-   LISTAS
-   ========================== */
-
-.sessao ul {
+/* Lista (novo) */
+.vaga-lista {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: grid;
-    gap: 1.4rem;
+    gap: 1rem;
 }
 
-.sessao ul li {
-    font-size: 1.05rem;
+.vaga-lista li {
+    font-size: 1.02rem;
     color: #555;
-    padding-left: 3rem;
+    padding-left: 2.7rem;
     position: relative;
-    line-height: 1.8;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1.75;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.sessao ul li:hover {
+.vaga-lista li:hover {
     color: var(--azul-primario);
-    padding-left: 3.5rem;
-    transform: translateX(0.5rem);
+    transform: translateX(6px);
 }
 
-.sessao ul li::before {
+.vaga-lista li::before {
     content: '✓';
     position: absolute;
     left: 0;
-    top: -4px;
-    width: 30px;
-    height: 30px;
+    top: -2px;
+    width: 28px;
+    height: 28px;
     background: linear-gradient(135deg, var(--azul-primario), var(--azul-escuro));
     color: #fff;
     border-radius: 50%;
@@ -213,332 +327,216 @@
     align-items: center;
     justify-content: center;
     font-weight: 900;
-    font-size: 1.1rem;
+    font-size: 1rem;
     box-shadow: 0 4px 12px rgba(10, 132, 193, 0.25);
-    transition: all 0.3s ease;
+    transition: transform 0.25s ease;
 }
 
-.sessao ul li:hover::before {
-    transform: scale(1.2) rotate(20deg);
-    box-shadow: 0 6px 16px rgba(10, 132, 193, 0.35);
+.vaga-lista li:hover::before {
+    transform: scale(1.1) rotate(12deg);
+}
+
+/* Lista ordenada (novo) */
+.vaga-lista--ol {
+    list-style: decimal;
+    padding-left: 1.2rem;
+    margin: 0;
+    display: grid;
+    gap: 0.7rem;
+}
+
+.vaga-lista--ol li {
+    padding-left: 4;
+}
+
+.vaga-alerta {
+    margin-top: 1.2rem;
+    border-radius: 14px;
+    border: 1px solid rgba(10, 132, 193, 0.15);
+    background: rgba(10, 132, 193, 0.08);
+    padding: 1rem 1.2rem;
+    color: #0b4260;
+    font-weight: 700;
 }
 
 /* ==========================
-   BOTÕES
+   BOTÃO CANDIDATAR (mais visível e profissional)
    ========================== */
-
 .btn-candidatar {
-    margin-top: 2.5rem;
     width: 100%;
-    padding: 1.5rem 2rem;
-    font-size: 1.15rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #064f73, #0a84c1);
-    color: #fff;
-    border: none;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 900;
+
+    /* ✅ Mais contraste e “CTA” */
+    background: linear-gradient(135deg, #ffffff 0%, #eaf6ff 40%, #d7f0ff 100%);
+    color: #063a54;
+
+    border: 2px solid rgba(255,255,255,0.65);
+    outline: 2px solid rgba(255,255,255,0.0);
+    outline-offset: 3px;
+
     border-radius: 14px;
     cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 28px rgba(10, 132, 193, 0.3);
+
+    /* ✅ Fica destacado no header, mesmo sendo azul */
+    box-shadow:
+        0 14px 30px rgba(0,0,0,0.18),
+        0 0 0 6px rgba(255,255,255,0.10);
+
     position: relative;
     overflow: hidden;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    transition: transform 0.18s ease, box-shadow 0.25s ease, filter 0.25s ease;
 }
 
+/* brilho diagonal */
 .btn-candidatar::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    top: -60%;
+    left: -30%;
+    width: 60%;
+    height: 220%;
+    background: rgba(255,255,255,0.35);
+    transform: rotate(25deg);
+    filter: blur(2px);
+    transition: left 0.6s ease;
 }
 
 .btn-candidatar:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(10, 132, 193, 0.4);
+    transform: translateY(-3px);
+    box-shadow:
+        0 18px 38px rgba(0,0,0,0.22),
+        0 0 0 8px rgba(255,255,255,0.14);
+    filter: brightness(1.03);
 }
 
 .btn-candidatar:hover::before {
-    width: 300px;
-    height: 300px;
+    left: 110%;
 }
 
 .btn-candidatar:active {
-    transform: translateY(-2px);
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* foco teclado (acessibilidade top) */
+.btn-candidatar:focus-visible {
+    outline-color: rgba(255,255,255,0.55);
 }
 
 /* ==========================
-   LINK VOLTAR
+   LINK VOLTAR (antigo)
    ========================== */
-
 .voltar {
     margin-top: 2rem;
     display: inline-flex;
     align-items: center;
     gap: 0.8rem;
     color: var(--azul-primario);
-    font-weight: 700;
-    font-size: 1.05rem;
+    font-weight: 800;
+    font-size: 1.02rem;
     cursor: pointer;
     text-decoration: none;
     transition: all 0.3s ease;
 }
 
-.voltar::before {
-    content: '←';
-    display: inline-block;
-    font-size: 1.3rem;
-    transition: transform 0.3s ease;
-}
-
 .voltar:hover {
     color: var(--azul-escuro);
+    transform: translateX(-2px);
 }
 
-.voltar:hover::before {
-    transform: translateX(-8px);
+/* Rodapé (se existir classe nova) */
+.rodape {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: #777;
 }
 
 /* ==========================
-   RESPONSIVIDADE
+   RESPONSIVO
    ========================== */
-
 @media (max-width: 1024px) {
     .vaga-container {
-        margin: 2.5rem 1.5rem;
+        margin: 2.5rem 1rem;
     }
-
-    .vaga-container > main {
-        padding: 2.5rem;
-    }
-
     .vaga-header {
-        padding: 3.5rem 2.5rem;
+        padding: 3rem 2.2rem;
+    }
+    .vaga-container > main,
+    .vaga-grid {
+        padding: 2.2rem;
     }
 }
 
 @media (max-width: 768px) {
     .vaga-container {
-        margin: 2rem 1rem;
+        margin: 2rem 0.8rem;
         border-radius: 16px;
         box-shadow: 0 6px 24px rgba(10, 132, 193, 0.12);
     }
 
     .vaga-header {
-        padding: 3rem 2rem;
+        padding: 2.6rem 1.6rem;
     }
 
-    .vaga-header h1 {
-        font-size: 2rem;
-        margin-bottom: 0.8rem;
+    .vaga-header__text h1 {
+        font-size: 1.8rem;
     }
 
-    .vaga-header p {
-        font-size: 1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .vaga-header > div {
-        gap: 0.8rem;
+    .vaga-empresa {
+        font-size: 0.92rem;
     }
 
     .tag {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.8rem;
+        padding: 0.6rem 0.95rem;
+        font-size: 0.75rem;
     }
 
-    .vaga-container > main {
-        padding: 2rem;
+    .vaga-grid {
+        padding: 1.8rem;
+        gap: 1.1rem;
     }
 
-    .sessao {
-        margin-bottom: 3rem;
-        padding-bottom: 2.5rem;
-    }
-
-    .sessao h2 {
-        font-size: 1.4rem;
-        margin-bottom: 1.5rem;
-        gap: 0.8rem;
-    }
-
-    .sessao h2::before {
-        width: 5px;
-        height: 28px;
-    }
-
-    .sessao p,
-    .sessao ul li {
-        font-size: 0.98rem;
-        line-height: 1.7;
-    }
-
-    .sessao ul {
-        gap: 1.2rem;
-    }
-
-    .sessao ul li {
-        padding-left: 2.5rem;
+    .card-sessao {
+        padding: 1.4rem;
     }
 
     .btn-candidatar {
-        padding: 1.3rem 1.5rem;
-        font-size: 1rem;
-        letter-spacing: 0.5px;
+        padding: 1.1rem 1.2rem;
+        font-size: 0.95rem;
+        letter-spacing: 0.4px;
     }
 }
 
-@media (max-width: 600px) {
-    .vaga-container {
-        margin: 1.5rem 0.5rem;
-        border-radius: 14px;
+@media (max-width: 520px) {
+    .vaga-topbar {
+        padding: 0.9rem 1rem;
+        gap: 0.8rem;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .vaga-header {
-        padding: 2.5rem 1.5rem;
+        padding: 2.2rem 1.2rem;
     }
 
-    .vaga-header h1 {
-        font-size: 1.6rem;
+    .vaga-header__cta {
+        max-width: 100%;
     }
 
-    .vaga-header p {
-        font-size: 0.95rem;
-    }
-
-    .vaga-header > div {
+    .tags {
         flex-direction: column;
+        align-items: flex-start;
     }
 
     .tag {
         width: 100%;
         justify-content: center;
-        padding: 0.6rem 1rem;
-        font-size: 0.75rem;
     }
 
-    .vaga-container > main {
-        padding: 1.5rem;
-    }
-
-    .sessao {
-        margin-bottom: 2.5rem;
-        padding-bottom: 2rem;
-    }
-
-    .sessao h2 {
-        font-size: 1.25rem;
-        margin-bottom: 1.2rem;
-        gap: 0.8rem;
-    }
-
-    .sessao h2::before {
-        width: 5px;
-        height: 26px;
-    }
-
-    .sessao p,
-    .sessao ul li {
-        font-size: 0.95rem;
-        text-align: left;
-    }
-
-    .sessao ul {
-        gap: 1rem;
-    }
-
-    .sessao ul li {
-        padding-left: 2.2rem;
-    }
-
-    .sessao ul li::before {
-        width: 26px;
-        height: 26px;
-        font-size: 0.9rem;
-    }
-
-    .btn-candidatar {
-        padding: 1rem 1.2rem;
-        font-size: 0.95rem;
-        margin-top: 2rem;
-    }
-
-    .voltar {
-        font-size: 0.95rem;
-        margin-top: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .vaga-container {
-        margin: 1rem 0;
-        border-radius: 12px;
-        box-shadow: 0 4px 16px rgba(10, 132, 193, 0.1);
-    }
-
-    .vaga-header {
-        padding: 2rem 1.2rem;
-    }
-
-    .vaga-header h1 {
-        font-size: 1.4rem;
-        margin-bottom: 0.6rem;
-    }
-
-    .vaga-header p {
-        font-size: 0.9rem;
-        margin-bottom: 1.2rem;
-    }
-
-    .tag {
-        padding: 0.5rem 0.9rem;
-        font-size: 0.7rem;
-    }
-
-    .vaga-container > main {
+    .vaga-grid {
         padding: 1.2rem;
-    }
-
-    .sessao {
-        margin-bottom: 2rem;
-        padding-bottom: 1.5rem;
-    }
-
-    .sessao h2 {
-        font-size: 1.15rem;
-        margin-bottom: 1rem;
-    }
-
-    .sessao p,
-    .sessao ul li {
-        font-size: 0.9rem;
-        line-height: 1.65;
-    }
-
-    .sessao ul li {
-        padding-left: 2rem;
-    }
-
-    .sessao ul li::before {
-        width: 24px;
-        height: 24px;
-        font-size: 0.8rem;
-        top: -2px;
-    }
-
-    .btn-candidatar {
-        padding: 0.95rem 1rem;
-        font-size: 0.9rem;
-        margin-top: 1.5rem;
-    }
-
-    .voltar {
-        font-size: 0.9rem;
     }
 }

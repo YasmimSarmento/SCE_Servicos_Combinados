@@ -2,64 +2,93 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-form");
   const errorBox = document.getElementById("login-error");
 
+  // papel esperado vindo do HTML (login-candidato.html / login-empresa.html)
+  const expectedRole = document.body?.dataset?.page || null;
+
   if (!form) return;
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const usuario = document.getElementById("usuario");
-    const senha = document.getElementById("senha");
+    const usuarioEl = document.getElementById("usuario");
+    const senhaEl = document.getElementById("senha");
+    if (!usuarioEl || !senhaEl) return;
 
-    if (!usuario || !senha) return;
+    const usuario = String(usuarioEl.value || "").trim();
+    const senha = String(senhaEl.value || "").trim();
 
-    // limpa erro
     hideError(errorBox);
 
-    const session = authenticate(usuario.value.trim(), senha.value);
+    if (!usuario || !senha) {
+      showError(errorBox, "Preencha usuário e senha.");
+      return;
+    }
+
+    const session = authenticate(usuario, senha);
 
     if (!session) {
       showError(errorBox, "Usuário ou senha inválidos.");
       return;
     }
 
-    // completa a sessão com o usuário digitado (usado depois nas candidaturas)
-    session.email = usuario.value.trim();
+    // Se a página é de candidato/empresa, força coerência
+    if (expectedRole && session.role !== expectedRole) {
+      showError(
+        errorBox,
+        expectedRole === "candidato"
+          ? "Este acesso é exclusivo para candidatos."
+          : "Este acesso é exclusivo para recrutadores."
+      );
+      return;
+    }
 
-    // cria sessão
-    localStorage.setItem("session", JSON.stringify(session));
+    // Salva sessão padronizada + compatibilidade com auth
+    const now = new Date().toISOString();
+    const normalized = {
+      role: session.role,
+      id: session.id,
+      name: session.name || (session.role === "empresa" ? "Empresa" : "Candidato"),
+      email: session.email || (usuario.includes("@") ? usuario : `${session.role}@sce.local`),
+      createdAt: session.createdAt || now,
+      lastLoginAt: now,
+    };
 
-    // compatibilidade com páginas que ainda usam "auth"
-    localStorage.setItem("auth", session.role);
+    localStorage.setItem("session", JSON.stringify(normalized));
+    localStorage.setItem("auth", normalized.role); // compatibilidade com páginas antigas
 
-// redirecionamento após login
-if (session.role === "empresa") {
-  window.location.href = "painel-empresa.html";
-} else {
-  // candidato (ou qualquer outro perfil)
-  window.location.href = "index.html";
-}
-
+    // Redireciona por papel
+    if (normalized.role === "empresa") {
+      window.location.href = "painel-empresa.html";
+    } else {
+      window.location.href = "painel-candidato.html";
+    }
   });
 });
 
 /* =========================
-   AUTENTICAÇÃO SIMULADA
+   AUTENTICAÇÃO (PROTÓTIPO)
+   - Mantém contas de teste enquanto não existe backend
 ========================= */
-
 function authenticate(user, pass) {
-  if (user === "candidato" && pass === "123") {
+  const u = String(user || "").trim().toLowerCase();
+  const p = String(pass || "").trim();
+
+  // Contas de teste (padrão do projeto)
+  if ((u === "candidato" || u.includes("candidato")) && p === "123") {
     return {
       role: "candidato",
       id: 1,
       name: "Candidato Teste",
+      email: u.includes("@") ? u : "candidato@sce.local",
     };
   }
 
-  if (user === "empresa" && pass === "123") {
+  if ((u === "empresa" || u.includes("empresa")) && p === "123") {
     return {
       role: "empresa",
       id: 100,
       name: "Empresa Teste",
+      email: u.includes("@") ? u : "empresa@sce.local",
     };
   }
 
@@ -69,13 +98,14 @@ function authenticate(user, pass) {
 /* =========================
    UI DE ERRO
 ========================= */
-
 function showError(box, message) {
+  if (!box) return;
   box.textContent = message;
   box.classList.add("ativo");
 }
 
 function hideError(box) {
+  if (!box) return;
   box.textContent = "";
   box.classList.remove("ativo");
 }

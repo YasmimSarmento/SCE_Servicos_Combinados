@@ -1,5 +1,5 @@
 /* ==========================
-   VAGAS – ESTILOS REFATORADOS
+   VAGAS – ESTILOS REFATORADOS (AJUSTADO)
    ========================== */
 
 /* Título Principal */
@@ -15,14 +15,8 @@
 }
 
 @keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .pagina-vagas h1::after {
@@ -50,14 +44,8 @@
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .pagina-vagas .descricao-principal {
@@ -86,7 +74,7 @@
     border: 1px solid #e6f3fb;
     box-shadow: 0 4px 16px rgba(10, 132, 193, 0.08);
     margin-bottom: 3rem;
-    
+
     display: flex;
     justify-content: center;
     gap: 1.5rem;
@@ -161,7 +149,6 @@
     border-radius: 14px;
     border: 2px solid #f0f0f0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -201,8 +188,9 @@
     opacity: 1;
 }
 
-/* Título da Vaga */
-.pagina-vagas .card-vaga h2 {
+/* ✅ Título da Vaga (AJUSTE: suporta h2 OU h3) */
+.pagina-vagas .card-vaga h2,
+.pagina-vagas .card-vaga h3 {
     font-size: 1.35rem;
     font-weight: 700;
     color: var(--azul-primario);
@@ -214,7 +202,8 @@
     transition: color 0.3s ease;
 }
 
-.pagina-vagas .card-vaga:hover h2 {
+.pagina-vagas .card-vaga:hover h2,
+.pagina-vagas .card-vaga:hover h3 {
     color: var(--azul-primario-hover);
 }
 
@@ -239,7 +228,7 @@
 }
 
 /* ==========================
-   AÇÕES (BOTÕES)
+   AÇÕES (BOTÕES) – AJUSTADO
    ========================== */
 
 .pagina-vagas .card-vaga .acoes {
@@ -248,9 +237,16 @@
     margin-top: 1.8rem;
     position: relative;
     z-index: 2;
+    flex-wrap: wrap;
 }
 
-.pagina-vagas .card-vaga .acoes .btn {
+/* ✅ Base para os dois padrões:
+   - .btn (se você usar em algum lugar)
+   - .btn-pri / .btn-sec (do seu JS atual)
+*/
+.pagina-vagas .card-vaga .acoes .btn,
+.pagina-vagas .card-vaga .acoes .btn-pri,
+.pagina-vagas .card-vaga .acoes .btn-sec {
     flex: 1;
     padding: 0.95rem 1.2rem;
     font-size: 0.9rem;
@@ -259,28 +255,68 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 180px;
 }
 
+/* ✅ Botão principal: .btn-pri (ou .btn que NÃO seja secundário) */
+.pagina-vagas .card-vaga .acoes .btn-pri,
 .pagina-vagas .card-vaga .acoes .btn:not(.btn-secundario) {
     background-color: var(--azul-primario);
     color: #fff;
     box-shadow: 0 4px 12px rgba(10, 132, 193, 0.2);
 }
 
+.pagina-vagas .card-vaga .acoes .btn-pri:hover,
 .pagina-vagas .card-vaga .acoes .btn:not(.btn-secundario):hover {
     background-color: var(--azul-primario-hover);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(10, 132, 193, 0.3);
 }
 
+.pagina-vagas .card-vaga .acoes .btn-pri:active,
+.pagina-vagas .card-vaga .acoes .btn:not(.btn-secundario):active {
+    transform: scale(0.98);
+}
+
+/* ✅ Botão secundário:
+   - .btn-sec (do seu JS)
+   - .btn-secundario (caso use em outro lugar)
+*/
+.pagina-vagas .card-vaga .acoes .btn-sec,
 .pagina-vagas .card-vaga .acoes .btn-secundario {
     background-color: transparent;
     color: var(--azul-primario);
     border: 2px solid var(--azul-primario);
 }
 
+.pagina-vagas .card-vaga .acoes .btn-sec:hover,
 .pagina-vagas .card-vaga .acoes .btn-secundario:hover {
     background-color: var(--azul-claro);
     border-color: var(--azul-primario-hover);
     color: var(--azul-primario-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(10, 132, 193, 0.18);
+}
+
+.pagina-vagas .card-vaga .acoes .btn-sec:active,
+.pagina-vagas .card-vaga .acoes .btn-secundario:active {
+    transform: scale(0.98);
+}
+
+/* ✅ Melhor responsividade dos botões */
+@media (max-width: 520px) {
+    .pagina-vagas .card-vaga .acoes {
+        flex-direction: column;
+    }
+
+    .pagina-vagas .card-vaga .acoes .btn,
+    .pagina-vagas .card-vaga .acoes .btn-pri,
+    .pagina-vagas .card-vaga .acoes .btn-sec {
+        width: 100%;
+        min-width: unset;
+    }
 }

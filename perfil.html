@@ -6,23 +6,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="css/pages/dashboard.css">
+<link rel="stylesheet" href="css/pages/dashboard-candidato.css">
 <link rel="stylesheet" href="css/pages/perfil.css">
 </head>
 <body class="dash-body" data-page="candidato">
 
 <aside class="sidebar-pro">
     <div class="side-logo">
-        <img src="imagem/logo c&s.png" alt="Logo">
+        <img src="imagem/logo c&s.png" alt="Logo da C&S">
     </div>
     <nav class="side-nav">
-        <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Início</a>
+        <a href="painel-candidato.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Início</a>
         <a href="perfil.html" class="nav-link active"><i class="fa-solid fa-user-tie"></i> Meu Perfil</a>
         <a href="documentos.html" class="nav-link"><i class="fa-solid fa-file-arrow-up"></i> Documentos</a>
         <a href="vagas.html" class="nav-link"><i class="fa-solid fa-briefcase"></i> Vagas</a>
         <div class="nav-divider"></div>
 <button type="button" class="nav-link logout" id="btnLogout">
+<a href="index.html" class="nav-link logout" id="logout">
   <i class="fa-solid fa-right-from-bracket"></i> Sair
+</a>
 </button>
 
     </nav>
@@ -199,6 +201,8 @@
   </div>
 </div>
 
+<script src="js/core/auth.js"></script>
 <script src="js/perfil.js"></script>
+
 </body>
 </html>

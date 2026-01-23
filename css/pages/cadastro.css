@@ -1,9 +1,17 @@
 /* ==========================
-   CADASTRO – DESIGN COMPLETO
+   CADASTRO – DESIGN COMPLETO (AJUSTADO)
+   Compatível com HTML antigo e melhorado
    ========================== */
 
-/* Página de Cadastro */
-.conteudo.pagina-cadastro {
+/* Página */
+.pagina-cadastro {
+    background: #f6f8fb;
+}
+
+/* Container do conteúdo (compatível) */
+.conteudo.pagina-cadastro,
+.conteudo.cadastro-page,
+main.conteudo {
     max-width: 750px;
     margin: 0 auto;
 }
@@ -24,14 +32,8 @@ main.conteudo h1 {
 }
 
 @keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 main.conteudo h1::after {
@@ -58,14 +60,67 @@ main.conteudo h1::after {
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================
+   VAGA SELECIONADA (NOVO)
+   ========================== */
+
+.vaga-selecionada {
+    background: linear-gradient(135deg, rgba(10,132,193,0.10), rgba(255,255,255,0.85));
+    border: 1px solid rgba(10,132,193,0.18);
+    border-left: 5px solid var(--azul-primario);
+    border-radius: 14px;
+    padding: 1.4rem 1.6rem;
+    margin: 0 auto 2rem;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+    animation: fadeInUp 0.6s ease-out 0.15s both;
+}
+
+.vaga-selecionada h3,
+.vaga-selecionada__titulo {
+    margin: 0 0 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--azul-escuro);
+}
+
+.vaga-selecionada p {
+    margin: 0.35rem 0 0;
+    color: #3c4a54;
+    font-weight: 600;
+}
+
+.vaga-selecionada .vaga-info {
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+    color: #5c6a74;
+    font-weight: 700;
+    opacity: 0.95;
+}
+
+.vaga-selecionada .dot {
+    margin: 0 0.45rem;
+    opacity: 0.65;
+}
+
+/* Badge (se você usar no HTML melhorado) */
+.vaga-selecionada__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    background: rgba(10,132,193,0.12);
+    color: var(--azul-escuro);
+    border: 1px solid rgba(10,132,193,0.18);
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    margin-bottom: 0.8rem;
 }
 
 /* ==========================
@@ -80,6 +135,56 @@ main.conteudo h1::after {
     box-shadow: 0 8px 32px rgba(10, 132, 193, 0.12);
     margin-bottom: 3rem;
     animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+/* Seções (HTML melhorado) */
+.form-section {
+    padding-top: 0.2rem;
+    margin-bottom: 2.2rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: var(--azul-escuro);
+    margin: 0 0 1.2rem;
+    position: relative;
+    padding-left: 0.9rem;
+}
+
+.section-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    width: 6px;
+    height: 1.35rem;
+    border-radius: 8px;
+    background: linear-gradient(180deg, var(--azul-primario), var(--azul-escuro));
+    box-shadow: 0 6px 18px rgba(10,132,193,0.25);
+}
+
+/* Asterisco obrigatório */
+.req {
+    color: #c21807;
+    font-weight: 900;
+}
+
+/* Ajuda abaixo do input */
+.help {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #8a8a8a;
+    line-height: 1.4;
+}
+
+/* Erro abaixo do input */
+.erro {
+    margin: 0.55rem 0 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #c21807;
+    min-height: 1.05em; /* evita “pular” layout quando aparece */
 }
 
 /* ==========================
@@ -161,6 +266,104 @@ main.conteudo h1::after {
 }
 
 /* ==========================
+   UPLOAD PROFISSIONAL (NOVO)
+   ========================== */
+
+.upload-box {
+    border: 2px dashed rgba(10,132,193,0.55);
+    border-radius: 14px;
+    padding: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, outline-color 0.25s ease;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.upload-box strong {
+    display: block;
+    font-weight: 900;
+    color: var(--azul-escuro);
+    margin-bottom: 0.25rem;
+}
+
+.upload-box small {
+    display: block;
+    color: #6d6d6d;
+    font-weight: 600;
+}
+
+.upload-box input[type="file"] {
+    display: none;
+}
+
+.upload-box.ativo {
+    background: rgba(10,132,193,0.08);
+    border-color: var(--azul-primario);
+    box-shadow: 0 10px 28px rgba(10,132,193,0.16);
+}
+
+.upload-box.has-file {
+    outline-color: rgba(10,132,193,0.35);
+}
+
+/* Status do arquivo (igual ao Documentos) */
+.file-status{
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,.06);
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    text-align: left;
+}
+
+.file-status__info{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.file-status__info strong{
+    font-size: 0.92rem;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 420px;
+}
+
+.file-status__info span{
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.file-status__remove{
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,.08);
+    background: rgba(0,0,0,.04);
+    color: #333;
+    cursor: pointer;
+    transition: transform .08s ease, background .2s ease, box-shadow .2s ease;
+    white-space: nowrap;
+}
+.file-status__remove:hover{
+    background: rgba(0,0,0,.06);
+    box-shadow: 0 4px 12px rgba(0,0,0,.10);
+}
+.file-status__remove:active{
+    transform: scale(0.98);
+}
+
+/* ==========================
    CAMPO CHECKBOX
    ========================== */
 
@@ -168,7 +371,7 @@ main.conteudo h1::after {
     flex-direction: row;
     align-items: flex-start;
     gap: 1rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.6rem;
     margin-top: 1rem;
     padding: 1.5rem;
     background-color: #f0f8fc;
@@ -195,6 +398,13 @@ main.conteudo h1::after {
     color: #666;
     cursor: pointer;
     line-height: 1.6;
+}
+
+/* ==========================
+   AÇÕES DO FORM (novo)
+   ========================== */
+.form-actions {
+    margin-top: 0.6rem;
 }
 
 /* ==========================
@@ -247,6 +457,16 @@ main.conteudo h1::after {
     transform: translateY(-2px);
 }
 
+/* ✅ Estado desabilitado (profissional) */
+#form-cadastro .btn:disabled,
+#form-cadastro .btn.is-disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+    filter: grayscale(15%);
+}
+
 /* ==========================
    MENSAGENS
    ========================== */
@@ -260,18 +480,12 @@ main.conteudo h1::after {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    font-weight: 500;
+    font-weight: 650;
 }
 
 @keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 .mensagem.sucesso {
@@ -287,7 +501,7 @@ main.conteudo h1::after {
 }
 
 /* ==========================
-   HISTÓRICO DE CANDIDATURAS
+   HISTÓRICO DE CANDIDATURAS (mantido)
    ========================== */
 
 #historico-candidaturas {
@@ -437,6 +651,16 @@ main.conteudo h1::after {
         width: 18px;
         height: 18px;
     }
+
+    .file-status {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .file-status__info strong {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 600px) {
@@ -559,3 +783,4 @@ main.conteudo h1::after {
     #lista-candidaturas li {
         padding: 1rem;
     }
+}

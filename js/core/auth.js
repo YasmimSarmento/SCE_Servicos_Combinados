@@ -1,27 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
   const session = getSession();
-  const pageRole = document.body.dataset.page;
+  const pageRole = document.body?.dataset?.page || null;
 
-  // 🔒 Proteção global
-  if (!session) {
-    redirectToLogin();
+  // ✅ Protege SOMENTE páginas que declaram data-page
+  // (assim páginas públicas não são forçadas pro login)
+  if (pageRole && !session) {
+    redirectToLogin(pageRole);
     return;
   }
 
-  // 🔁 Bloqueio por papel
-  if (pageRole && session.role !== pageRole) {
+  // 🔁 Bloqueio por papel (quando página exige role específico)
+  if (pageRole && session?.role && session.role !== pageRole) {
     redirectByRole(session.role);
     return;
   }
 
-  // 🚪 Logout
+  // 🚪 Logout (se existir botão)
   bindLogout();
 });
 
 /* =========================
    CONTROLE DE SESSÃO
 ========================= */
-
 function getSession() {
   try {
     const data = localStorage.getItem("session");
@@ -34,9 +34,12 @@ function getSession() {
 /* =========================
    REDIRECIONAMENTOS
 ========================= */
-
-function redirectToLogin() {
-  window.location.href = "login.html";
+function redirectToLogin(pageRole) {
+  if (pageRole === "empresa") {
+    window.location.href = "login-empresa.html";
+  } else {
+    window.location.href = "login-candidato.html";
+  }
 }
 
 function redirectByRole(role) {
@@ -51,14 +54,20 @@ function redirectByRole(role) {
 /* =========================
    LOGOUT
 ========================= */
-
 function bindLogout() {
-  const btn = document.getElementById("logout");
+  const btn =
+    document.getElementById("logout") ||
+    document.getElementById("btnLogout") ||
+    document.querySelector('[data-action="logout"]');
 
   if (!btn) return;
 
-  btn.addEventListener("click", () => {
+  btn.addEventListener("click", (e) => {
+    // ✅ se for <a>, evita navegar antes de limpar
+    if (btn.tagName?.toLowerCase() === "a") e.preventDefault();
+
     localStorage.removeItem("session");
+    localStorage.removeItem("auth"); // compatibilidade com páginas antigas
     window.location.href = "index.html";
   });
 }
