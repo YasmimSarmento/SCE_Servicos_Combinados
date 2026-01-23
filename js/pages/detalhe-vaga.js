@@ -16,12 +16,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const elLocal = document.getElementById("vagaLocal");
   const elArea = document.getElementById("vagaArea");
   const elDescricao = document.getElementById("vagaDescricao");
-  const listaRequisitos = document.getElementById("listaRequisitos");
-  const listaBeneficios = document.getElementById("listaBeneficios");
+  const listaRequisitos = document.getElementById("vagaRequisitos");   // ✅ ID correto
+  const listaBeneficios = document.getElementById("vagaBeneficios");   // ✅ ID correto
   const elSalario = document.getElementById("vagaSalario");
+  const hintEl = document.getElementById("vagaHint"); // opcional (no HTML melhorado)
 
   if (elTitulo) elTitulo.textContent = vaga.titulo || "Vaga";
-  if (elEmpresa) elEmpresa.textContent = "SCE – Banco de Talentos";
+if (elEmpresa) {
+  elEmpresa.textContent = vaga.empresa || "";
+}
   if (elTipo) elTipo.textContent = vaga.tipo || "-";
   if (elLocal) elLocal.textContent = vaga.local || "-";
   if (elArea) elArea.textContent = vaga.area || "-";
@@ -29,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (elSalario) elSalario.textContent = vaga.salario || "A combinar";
 
   if (listaRequisitos) {
-    if (vaga.requisitos && vaga.requisitos.length) {
+    if (Array.isArray(vaga.requisitos) && vaga.requisitos.length) {
       listaRequisitos.innerHTML = vaga.requisitos.map(r => `<li>${r}</li>`).join("");
     } else {
       listaRequisitos.innerHTML = "<li>Não informado</li>";
@@ -37,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (listaBeneficios) {
-    if (vaga.beneficios && vaga.beneficios.length) {
+    if (Array.isArray(vaga.beneficios) && vaga.beneficios.length) {
       listaBeneficios.innerHTML = vaga.beneficios.map(b => `<li>${b}</li>`).join("");
     } else {
       listaBeneficios.innerHTML = "<li>Não informado</li>";
@@ -62,47 +65,59 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===============================
+  // Botão "Copiar link" (opcional)
+  // ===============================
+  const btnCopiarLink = document.getElementById("btnCopiarLink");
+  if (btnCopiarLink) {
+    btnCopiarLink.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        if (hintEl) hintEl.textContent = "✅ Link copiado!";
+        setTimeout(() => { if (hintEl) hintEl.textContent = ""; }, 1800);
+      } catch {
+        // fallback simples
+        if (hintEl) hintEl.textContent = "Não foi possível copiar o link.";
+        setTimeout(() => { if (hintEl) hintEl.textContent = ""; }, 1800);
+      }
+    });
+  }
+
+  // ===============================
   // Ação: Candidatar-se
+  // ✅ Agora vai pro cadastro (como você pediu)
   // ===============================
   const btnCandidatar = document.getElementById("btnCandidatar");
   if (!btnCandidatar) return;
 
-  btnCandidatar.addEventListener("click", () => {
-    const session = getSession();
-    const role = getRole();
+  // Ajuda visual se o HTML tiver hint
+  const session = getSession();
+  const role = getRole();
 
-    // ✅ exige session (padrão oficial)
-    if (!session?.role) {
+  if (!session?.role) {
+    if (hintEl) hintEl.textContent = "Faça login como candidato para se candidatar.";
+  } else if (role !== "candidato") {
+    if (hintEl) hintEl.textContent = "Apenas candidatos podem se candidatar a vagas.";
+  } else {
+    if (hintEl) hintEl.textContent = "Você pode se candidatar normalmente.";
+  }
+
+  btnCandidatar.addEventListener("click", () => {
+    const sessionNow = getSession();
+    const roleNow = getRole();
+
+    if (!sessionNow?.role) {
       alert("Faça login como candidato para se candidatar.");
       window.location.href = "login-candidato.html";
       return;
     }
 
-    if (role !== "candidato") {
+    if (roleNow !== "candidato") {
       alert("Apenas candidatos podem se candidatar a vagas.");
       return;
     }
 
-    const email = session.email || "anon";
-    const candidaturas = JSON.parse(localStorage.getItem("candidaturas") || "[]");
-
-    const jaExiste = candidaturas.some(c => c.vagaId === vaga.id && c.email === email);
-    if (jaExiste) {
-      alert("Você já se candidatou a esta vaga.");
-      return;
-    }
-
-    candidaturas.push({
-      vagaId: vaga.id,
-      titulo: vaga.titulo,
-      local: vaga.local,
-      tipo: vaga.tipo,
-      area: vaga.area,
-      data: new Date().toISOString(),
-      email
-    });
-
-    localStorage.setItem("candidaturas", JSON.stringify(candidaturas));
-    alert("Candidatura enviada com sucesso!");
+    // ✅ garante que a vaga está salva e manda pro cadastro
+    localStorage.setItem("vagaSelecionada", JSON.stringify(vaga));
+    window.location.href = "cadastro.html";
   });
 });
