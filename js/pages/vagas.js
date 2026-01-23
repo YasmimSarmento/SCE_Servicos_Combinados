@@ -24,70 +24,72 @@
             local: "Belém - PA",
             tipo: "CLT",
             area: "Atendimento",
-            descricao: "Registro de demandas, orientação ao público e acompanhamento de solicitações.",
-            salario: "R$ 1.500,00"
+            descricao: "Atendimento ao público, registro de manifestações e encaminhamentos.",
+            salario: "R$ 1.550,00"
         },
         {
             id: 3,
-            titulo: "Auxiliar de Serviços Gerais",
+            titulo: "Jovem Aprendiz",
             local: "Ananindeua - PA",
-            tipo: "Temporário",
-            area: "Serviços Gerais",
-            descricao: "Limpeza e manutenção de ambientes internos.",
-            salario: "R$ 1.320,00"
+            tipo: "Aprendiz",
+            area: "Geral",
+            descricao: "Auxílio em rotinas administrativas e atendimento.",
+            salario: "R$ 850,00"
         },
         {
             id: 4,
-            titulo: "Estagiário de Administração",
-            local: "Marituba - PA",
-            tipo: "Estágio",
-            area: "Administrativo",
-            descricao: "Suporte às rotinas administrativas e controle de documentos.",
-            salario: "Bolsa estágio"
+            titulo: "Auxiliar de Serviços Gerais",
+            local: "Belém - PA",
+            tipo: "CLT",
+            area: "Serviços Gerais",
+            descricao: "Limpeza e organização do ambiente, suporte operacional.",
+            salario: "R$ 1.412,00"
         }
     ];
 
-    const lista = document.getElementById("lista-vagas");
-
     /* -----------------------------------------------------------------
-       AUTENTICAÇÃO
+       HELPERS
     ----------------------------------------------------------------- */
     function getAuth() {
-        return localStorage.getItem("auth");
+        // Mantém compatibilidade: alguns lugares usam "session", outros "auth"
+        const session = JSON.parse(localStorage.getItem("session") || "null");
+        if (session && session.role) return session.role;
+        return localStorage.getItem("auth"); // "candidato" ou "empresa"
     }
 
-    /* -----------------------------------------------------------------
-       RENDERIZAÇÃO
-    ----------------------------------------------------------------- */
-    function renderizarVagas(vagas) {
+    function renderizarVagas(listaVagas) {
+        const lista = document.getElementById("lista-vagas");
+        if (!lista) return;
+
         lista.innerHTML = "";
 
-        if (!vagas.length) {
-            lista.innerHTML = "<p>Nenhuma vaga encontrada.</p>";
+        if (!listaVagas.length) {
+            lista.innerHTML = `<p class="empty">Nenhuma vaga encontrada.</p>`;
             return;
         }
 
-        vagas.forEach(vaga => {
-            const card = document.createElement("article");
+        listaVagas.forEach(vaga => {
+            const card = document.createElement("div");
             card.className = "card-vaga";
 
             card.innerHTML = `
-                <h2>${vaga.titulo}</h2>
-                <p><strong>Área:</strong> ${vaga.area}</p>
+                <h3>${vaga.titulo}</h3>
                 <p><strong>Local:</strong> ${vaga.local}</p>
                 <p><strong>Tipo:</strong> ${vaga.tipo}</p>
+                <p><strong>Área:</strong> ${vaga.area}</p>
                 <p class="descricao">${vaga.descricao}</p>
 
                 <div class="acoes">
-                    <button class="btn btn-secundario">Ver detalhes</button>
-                    <button class="btn">Candidatar-se</button>
+                    <button class="btn-sec" data-action="detalhes">Ver detalhes</button>
+                    <button class="btn-pri" data-action="candidatar">Candidatar-se</button>
                 </div>
             `;
 
-            const [btnDetalhes, btnCandidatar] = card.querySelectorAll("button");
+            const btnDetalhes = card.querySelector('[data-action="detalhes"]');
+            const btnCandidatar = card.querySelector('[data-action="candidatar"]');
 
-            btnDetalhes.addEventListener("click", () => abrirDetalhes(vaga));
-            btnCandidatar.addEventListener("click", () => candidatar(vaga));
+            if (btnDetalhes) btnDetalhes.addEventListener("click", () => abrirDetalhes(vaga));
+            if (btnCandidatar) btnCandidatar.addEventListener("click", () => candidatar(vaga));
 
             lista.appendChild(card);
         });
@@ -105,7 +107,7 @@
         const auth = getAuth();
 
         if (!auth) {
-            alert("Para se candidatar, faça login como candidato.");
+            alert("Faça login como candidato para se candidatar.");
             window.location.href = "login-candidato.html";
             return;
         }
@@ -115,17 +117,43 @@
             return;
         }
 
-        localStorage.setItem("vagaSelecionada", JSON.stringify(vaga));
-        window.location.href = "cadastro.html";
+        const session = JSON.parse(localStorage.getItem("session") || "null");
+        const email = session?.email || "anon";
+
+        const candidaturas = JSON.parse(localStorage.getItem("candidaturas") || "[]");
+
+        // evita candidatura duplicada do mesmo usuário na mesma vaga
+        const jaExiste = candidaturas.some(c => c.vagaId === vaga.id && c.email === email);
+        if (jaExiste) {
+            alert("Você já se candidatou a esta vaga.");
+            return;
+        }
+
+        candidaturas.push({
+            vagaId: vaga.id,
+            titulo: vaga.titulo,
+            local: vaga.local,
+            tipo: vaga.tipo,
+            area: vaga.area,
+            data: new Date().toISOString(),
+            email
+        });
+
+        localStorage.setItem("candidaturas", JSON.stringify(candidaturas));
+        alert("Candidatura enviada com sucesso!");
     }
 
     /* -----------------------------------------------------------------
        FILTROS
     ----------------------------------------------------------------- */
+    const filtroPalavraEl = document.getElementById("filtro-palavra");
+    const filtroLocalEl = document.getElementById("filtro-local");
+    const filtroTipoEl = document.getElementById("filtro-tipo");
+
     function aplicarFiltros() {
-        const palavra = document.getElementById("filtro-palavra").value.toLowerCase();
-        const local = document.getElementById("filtro-local").value;
-        const tipo = document.getElementById("filtro-tipo").value;
+        const palavra = (filtroPalavraEl?.value || "").toLowerCase();
+        const local = filtroLocalEl?.value || "";
+        const tipo = filtroTipoEl?.value || "";
 
         const filtradas = VAGAS.filter(v =>
             (v.titulo.toLowerCase().includes(palavra) ||
@@ -137,9 +165,10 @@
         renderizarVagas(filtradas);
     }
 
-    document.getElementById("filtro-palavra").addEventListener("input", aplicarFiltros);
-    document.getElementById("filtro-local").addEventListener("change", aplicarFiltros);
-    document.getElementById("filtro-tipo").addEventListener("change", aplicarFiltros);
+    // Se os filtros não existirem (script incluído em outra página), não quebra.
+    if (filtroPalavraEl) filtroPalavraEl.addEventListener("input", aplicarFiltros);
+    if (filtroLocalEl) filtroLocalEl.addEventListener("change", aplicarFiltros);
+    if (filtroTipoEl) filtroTipoEl.addEventListener("change", aplicarFiltros);
 
     /* -----------------------------------------------------------------
        INIT

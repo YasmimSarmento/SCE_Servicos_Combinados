@@ -14,36 +14,28 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("vagaEmpresa").textContent = "SCE – Banco de Talentos";
 
     document.getElementById("vagaTipo").textContent = vaga.tipo || "-";
-    document.getElementById("vagaNivel").textContent = vaga.area || "-";
     document.getElementById("vagaLocal").textContent = vaga.local || "-";
+    document.getElementById("vagaArea").textContent = vaga.area || "-";
 
     document.getElementById("vagaDescricao").textContent =
-        vaga.descricao || "Descrição não informada.";
+        vaga.descricao || "Sem descrição.";
 
     // Requisitos
-    const listaRequisitos = document.getElementById("vagaRequisitos");
-    listaRequisitos.innerHTML = "";
-
+    const listaRequisitos = document.getElementById("listaRequisitos");
     if (vaga.requisitos && vaga.requisitos.length) {
-        vaga.requisitos.forEach(req => {
-            const li = document.createElement("li");
-            li.textContent = req;
-            listaRequisitos.appendChild(li);
-        });
+        listaRequisitos.innerHTML = vaga.requisitos
+            .map(r => `<li>${r}</li>`)
+            .join("");
     } else {
         listaRequisitos.innerHTML = "<li>Não informado</li>";
     }
 
     // Benefícios
-    const listaBeneficios = document.getElementById("vagaBeneficios");
-    listaBeneficios.innerHTML = "";
-
+    const listaBeneficios = document.getElementById("listaBeneficios");
     if (vaga.beneficios && vaga.beneficios.length) {
-        vaga.beneficios.forEach(ben => {
-            const li = document.createElement("li");
-            li.textContent = ben;
-            listaBeneficios.appendChild(li);
-        });
+        listaBeneficios.innerHTML = vaga.beneficios
+            .map(b => `<li>${b}</li>`)
+            .join("");
     } else {
         listaBeneficios.innerHTML = "<li>Não informado</li>";
     }
@@ -56,6 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Ação: Candidatar-se
     // ===============================
     const btnCandidatar = document.getElementById("btnCandidatar");
+
+    if (!btnCandidatar) return;
 
     btnCandidatar.addEventListener("click", () => {
 const session = JSON.parse(localStorage.getItem("session") || "null");
@@ -74,14 +68,33 @@ if (session && session.role !== "candidato") {
   return;
 }
 
-// fallback: se não tem session mas tem auth, valida por auth
+// se não tiver session mas tiver auth, valida por auth
 if (!session && auth !== "candidato") {
   alert("Apenas candidatos podem se candidatar a vagas.");
   return;
 }
 
+const email = session?.email || "anon";
 
-        // segue fluxo normal
-        window.location.href = "cadastro.html";
+const candidaturas = JSON.parse(localStorage.getItem("candidaturas") || "[]");
+
+const jaExiste = candidaturas.some(c => c.vagaId === vaga.id && c.email === email);
+if (jaExiste) {
+  alert("Você já se candidatou a esta vaga.");
+  return;
+}
+
+candidaturas.push({
+  vagaId: vaga.id,
+  titulo: vaga.titulo,
+  local: vaga.local,
+  tipo: vaga.tipo,
+  area: vaga.area,
+  data: new Date().toISOString(),
+  email
+});
+
+localStorage.setItem("candidaturas", JSON.stringify(candidaturas));
+alert("Candidatura enviada com sucesso!");
     });
 });
