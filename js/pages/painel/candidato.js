@@ -44,17 +44,57 @@ function renderWelcome(name) {
 ========================= */
 function loadDashboardData(session) {
   const candidaturas = JSON.parse(localStorage.getItem("candidaturas")) || [];
-  const documentos = JSON.parse(localStorage.getItem("documentos")) || [];
   const vagasSalvas = JSON.parse(localStorage.getItem("vagasSalvas")) || [];
 
   const minhasCandidaturas = filtrarMinhasCandidaturas(candidaturas, session);
 
-  const meusDocumentos = documentos.filter((d) => d.userId === session.id);
-  const minhasSalvas = vagasSalvas.filter((v) => v.userId === session.id);
+  // 🔧 Documentos: normaliza (id/userId) e filtra pro usuário
+  const meusDocumentos = normalizeDocumentos(session);
+
+  const minhasSalvas = (vagasSalvas || []).filter((v) => v.userId === session.id);
 
   setValue("total-candidaturas", minhasCandidaturas.length);
   setValue("total-documentos", meusDocumentos.length);
   setValue("total-salvas", minhasSalvas.length);
+}
+
+/* =========================
+   DOCUMENTOS (NORMALIZA + COMPATIBILIDADE)
+========================= */
+function normalizeDocumentos(session) {
+  let documentos = JSON.parse(localStorage.getItem("documentos")) || [];
+  let changed = false;
+
+  // Garante array
+  if (!Array.isArray(documentos)) documentos = [];
+
+  documentos = documentos.map((d) => {
+    if (!d || typeof d !== "object") return d;
+
+    const novo = { ...d };
+
+    // Garante id
+    if (!novo.id) {
+      novo.id = crypto?.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random());
+      changed = true;
+    }
+
+    // Compatibilidade: se veio sem userId, atribui ao usuário atual
+    // (isso casa com o comportamento do documentos.js)
+    if (novo.userId == null && session?.id != null) {
+      novo.userId = session.id;
+      changed = true;
+    }
+
+    return novo;
+  });
+
+  if (changed) {
+    localStorage.setItem("documentos", JSON.stringify(documentos));
+  }
+
+  // Retorna só os documentos do usuário logado
+  return (documentos || []).filter((d) => d && d.userId === session.id);
 }
 
 /* =========================
