@@ -24,179 +24,120 @@
       ...d,
       userId: d.userId ?? userId,
       // garante id (pra poder excluir/baixar/preview sem depender de índice)
-      id: d.id ?? (crypto?.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()))
+      id: d.id ?? (crypto?.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random())),
     }));
 
-    // Junta sem perder o que já existe no novo formato
-    documentos = [...documentos, ...migrados];
+    // Mescla evitando duplicados (por id)
+    const byId = new Map(documentos.map((d) => [d.id, d]));
+    migrados.forEach((d) => byId.set(d.id, d));
+    documentos = Array.from(byId.values());
 
-    // Salva no novo padrão e remove o antigo
     localStorage.setItem(STORAGE_KEY, JSON.stringify(documentos));
     localStorage.removeItem("documentosCandidato");
   }
 
-  // ===== SALVAR NO LOCALSTORAGE =====
-  function salvarDocumentos() {
+  function setMsg(texto, tipo = "info") {
+    if (!msg) return;
+    msg.textContent = texto;
+    msg.className = `msg ${tipo}`;
+  }
+
+  function getDocsDoUsuario() {
+    const userId = session?.id ?? null;
+    // se não tem sessão, mostra nada (proteção extra)
+    if (!userId) return [];
+    return documentos.filter((d) => d.userId === userId);
+  }
+
+  function salvar() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(documentos));
   }
 
-  // ===== CLASSE BADGE =====
-  function statusClass(status) {
-    switch ((status || "").toLowerCase()) {
-      case "aprovado":
-        return "aprovado";
-      case "em análise":
-        return "pendente";
-      case "rejeitado":
-        return "rejeitado";
-      default:
-        return "pendente";
+  function formatarData(iso) {
+    try {
+      const dt = new Date(iso);
+      return dt.toLocaleString("pt-BR");
+    } catch {
+      return iso;
     }
   }
 
-  // ===== CARREGAR DOCUMENTOS =====
-  function carregarDocumentos() {
+  function renderizar() {
     if (!listaDocumentos) return;
+    const docs = getDocsDoUsuario();
 
-    listaDocumentos.innerHTML = "";
-
-    const meusDocs = session?.id
-      ? documentos.filter((d) => d.userId === session.id)
-      : documentos;
-
-    if (meusDocs.length === 0) {
-      listaDocumentos.innerHTML = `<li class="status-item">Nenhum documento enviado até o momento.</li>`;
+    if (!docs.length) {
+      listaDocumentos.innerHTML = `<p class="vazio">Nenhum documento enviado ainda.</p>`;
       return;
     }
 
-    meusDocs.forEach((doc) => {
-      const li = document.createElement("li");
-      li.className = "documento-item";
-
-      const ext = (doc.nome || "").split(".").pop().toLowerCase();
-      let icon = "fa-file";
-      if (ext === "pdf") icon = "fa-file-pdf";
-      else if (["jpg", "jpeg", "png", "gif"].includes(ext)) icon = "fa-file-image";
-      else if (["doc", "docx"].includes(ext)) icon = "fa-file-word";
-      else if (["xls", "xlsx"].includes(ext)) icon = "fa-file-excel";
-
-      // ID único (não depende de índice)
-      const docId = doc.id ?? (crypto?.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()));
-      doc.id = docId; // garante que fica persistido
-
-      li.innerHTML = `
-        <div class="documento-info">
-          <i class="fa-solid ${icon}"></i>
-          <div>
-            <strong>${doc.tipo || "Documento"}</strong>
-            <span>${doc.nome || "Arquivo"} • ${doc.data || ""}</span>
+    listaDocumentos.innerHTML = docs
+      .map(
+        (d) => `
+        <div class="doc-card" data-id="${d.id}">
+          <div class="doc-info">
+            <strong>${d.tipo}</strong>
+            <span>${d.nome}</span>
+            <small>${formatarData(d.data)}</small>
+          </div>
+          <div class="doc-acoes">
+            <button class="btn-acao btn-preview" type="button">Visualizar</button>
+            <button class="btn-acao btn-download" type="button">Baixar</button>
+            <button class="btn-acao btn-excluir" type="button">Excluir</button>
           </div>
         </div>
-        <div class="documento-actions">
-          <span class="badge ${statusClass(doc.status)}">${doc.status || "Em análise"}</span>
-          <button class="btn-preview" title="Visualizar" onclick="visualizarDocumento('${docId}')">
-            <i class="fa-solid fa-eye"></i>
-          </button>
-          <button class="btn-download" title="Download" onclick="downloadDocumento('${docId}')">
-            <i class="fa-solid fa-download"></i>
-          </button>
-          <button class="btn-excluir" title="Excluir" onclick="excluirDocumento('${docId}')">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </div>
-      `;
-      listaDocumentos.appendChild(li);
-    });
+      `
+      )
+      .join("");
 
-    // Se criamos ids durante a renderização, persistimos pra evitar inconsistência
-    salvarDocumentos();
-  }
+    // ações
+    listaDocumentos.querySelectorAll(".doc-card").forEach((card) => {
+      const id = card.getAttribute("data-id");
+      const doc = documentos.find((x) => x.id === id);
+      if (!doc) return;
 
-  // ===== ENVIAR DOCUMENTO =====
-  async function enviarDocumento(files) {
-    if (!msg) return;
+      const btnPreview = card.querySelector(".btn-preview");
+      const btnDownload = card.querySelector(".btn-download");
+      const btnExcluir = card.querySelector(".btn-excluir");
 
-    msg.textContent = "";
-    msg.className = "msg-sucesso";
-
-    const arquivos = files || (uploadInput ? uploadInput.files : null);
-
-    if (!tipoSelect?.value || !arquivos || arquivos.length === 0) {
-      msg.textContent = "Preencha todos os campos antes de enviar.";
-      msg.classList.add("error");
-      return;
-    }
-
-    for (const file of arquivos) {
-      const base64 = await lerArquivoBase64(file);
-
-      documentos.push({
-        id: crypto?.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
-        userId: session?.id ?? null,
-        tipo: tipoSelect.value,
-        nome: file.name,
-        data: new Date().toLocaleDateString("pt-BR"),
-        status: "Em análise",
-        base64: base64
-      });
-    }
-
-    salvarDocumentos();
-    carregarDocumentos();
-
-    msg.textContent = "Documento(s) enviado(s) com sucesso!";
-    msg.classList.add("success");
-
-    if (tipoSelect) tipoSelect.value = "";
-    if (uploadInput) uploadInput.value = "";
-  }
-
-  // ===== FUNÇÃO AUXILIAR PARA LER ARQUIVO =====
-  function lerArquivoBase64(file) {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e) => resolve(e.target.result);
-      reader.readAsDataURL(file);
+      if (btnPreview) btnPreview.addEventListener("click", () => visualizarDocumento(doc));
+      if (btnDownload) btnDownload.addEventListener("click", () => baixarDocumento(doc));
+      if (btnExcluir) btnExcluir.addEventListener("click", () => excluirDocumento(doc));
     });
   }
 
-  // ===== DOWNLOAD REAL =====
-  window.downloadDocumento = function (id) {
-    const doc = documentos.find((d) => d.id === id);
-    if (!doc) return;
-
+  function baixarDocumento(doc) {
     const link = document.createElement("a");
     link.href = doc.base64;
-    link.download = doc.nome;
+    link.download = doc.nome || "documento";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
+  }
 
-  // ===== EXCLUIR DOCUMENTO =====
-  window.excluirDocumento = function (id) {
-    const idx = documentos.findIndex((d) => d.id === id);
-    if (idx === -1) return;
+  function excluirDocumento(doc) {
+    if (!confirm("Deseja realmente excluir este documento?")) return;
+    documentos = documentos.filter((d) => d.id !== doc.id);
+    salvar();
+    renderizar();
+    setMsg("Documento excluído.", "success");
+  }
 
-    if (confirm(`Deseja realmente excluir "${documentos[idx].nome}"?`)) {
-      documentos.splice(idx, 1);
-      salvarDocumentos();
-      carregarDocumentos();
-    }
-  };
+  function visualizarDocumento(doc) {
+    if (!modal || !modalContent) return;
 
-  // ===== VISUALIZAR DOCUMENTO =====
-  window.visualizarDocumento = function (id) {
-    const doc = documentos.find((d) => d.id === id);
-    if (!doc || !modal || !modalContent) return;
+    const isPdf = doc.tipoArquivo?.includes("pdf");
+    const isImage = doc.tipoArquivo?.startsWith("image/");
 
-    const ext = (doc.nome || "").split(".").pop().toLowerCase();
     let previewHTML = "";
-    if (ext === "pdf")
-      previewHTML = `<iframe src="${doc.base64}" style="width:100%;height:70vh;border:none;"></iframe>`;
-    else if (["jpg", "jpeg", "png", "gif"].includes(ext))
-      previewHTML = `<img src="${doc.base64}" alt="${doc.nome}" style="max-height:70vh;">`;
-    else previewHTML = `<p>Não é possível visualizar este tipo de arquivo.</p>`;
+
+    if (isPdf) {
+      previewHTML = `<iframe src="${doc.base64}" frameborder="0" style="width:100%;height:70vh;border-radius:12px;"></iframe>`;
+    } else if (isImage) {
+      previewHTML = `<img src="${doc.base64}" alt="${doc.nome}" style="max-width:100%;max-height:70vh;border-radius:12px;" />`;
+    } else {
+      previewHTML = `<p>Pré-visualização indisponível para este tipo de arquivo.</p>`;
+    }
 
     modalContent.innerHTML = `
       <button class="modal-close">&times;</button>
@@ -206,20 +147,17 @@
     modal.style.display = "flex";
 
     const closeBtn = modalContent.querySelector(".modal-close");
-    closeBtn.addEventListener("click", fecharModal);
+    if (closeBtn) closeBtn.addEventListener("click", () => window.fecharModal && window.fecharModal());
   };
 
   window.fecharModal = function () {
     if (modal) modal.style.display = "none";
   };
 
-  // ===== DRAG & DROP =====
+  // Drag & Drop + Clique
   if (dragDrop) {
-    // Permite clicar na área para escolher arquivos (input está hidden no CSS)
     dragDrop.addEventListener("click", () => uploadInput && uploadInput.click());
 
-    // Acessibilidade básica: Enter/Espaço também abre o seletor
-    dragDrop.setAttribute("tabindex", "0");
     dragDrop.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -229,26 +167,91 @@
 
     dragDrop.addEventListener("dragover", (e) => {
       e.preventDefault();
-      dragDrop.classList.add("drag-over");
+      dragDrop.classList.add("ativo");
     });
 
     dragDrop.addEventListener("dragleave", (e) => {
       e.preventDefault();
-      dragDrop.classList.remove("drag-over");
+      dragDrop.classList.remove("ativo");
     });
 
     dragDrop.addEventListener("drop", (e) => {
       e.preventDefault();
-      dragDrop.classList.remove("drag-over");
-      enviarDocumento(e.dataTransfer.files);
+      dragDrop.classList.remove("ativo");
+      const file = e.dataTransfer?.files?.[0];
+      if (file && uploadInput) {
+        uploadInput.files = e.dataTransfer.files;
+        setMsg(`Arquivo selecionado: ${file.name}`, "info");
+      }
     });
   }
 
-  // ===== BOTÃO ENVIAR =====
-  if (uploadInput) {
-    const btnEnviar = document.querySelector(".btn-full");
-    if (btnEnviar) btnEnviar.addEventListener("click", () => enviarDocumento());
+  function enviarDocumento() {
+    const file = uploadInput?.files?.[0];
+    const tipo = tipoSelect?.value;
+
+    if (!file) {
+      setMsg("Selecione um arquivo para enviar.", "error");
+      return;
+    }
+    if (!tipo) {
+      setMsg("Selecione o tipo de documento.", "error");
+      return;
+    }
+
+    const userId = session?.id ?? null;
+    if (!userId) {
+      setMsg("Você precisa estar logado para enviar documentos.", "error");
+      return;
+    }
+
+    const max = 4 * 1024 * 1024; // 4MB
+    if (file.size > max) {
+      setMsg("Arquivo muito grande. Use até 4MB.", "error");
+      uploadInput.value = "";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = String(reader.result || "");
+      const novo = {
+        id: crypto?.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        userId,
+        tipo,
+        nome: file.name,
+        data: new Date().toISOString(),
+        tipoArquivo: file.type,
+        base64,
+      };
+
+      documentos.push(novo);
+      salvar();
+      renderizar();
+
+      setMsg("Documento enviado com sucesso!", "success");
+      if (uploadInput) uploadInput.value = "";
+      if (tipoSelect) tipoSelect.value = "";
+    };
+
+    reader.onerror = () => {
+      setMsg("Erro ao ler o arquivo. Tente novamente.", "error");
+    };
+
+    reader.readAsDataURL(file);
   }
 
-  carregarDocumentos();
+  // Botão enviar
+  const btnEnviar = document.getElementById("btnEnviarDocumento");
+  if (btnEnviar) btnEnviar.addEventListener("click", () => enviarDocumento());
+
+  // Fecha modal clicando fora
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) window.fecharModal();
+    });
+  }
+
+  // Init
+  renderizar();
 })();
