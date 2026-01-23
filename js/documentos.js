@@ -160,6 +160,18 @@
 
   // ===== DRAG & DROP =====
   if(dragDrop){
+    // Permite clicar na área para escolher arquivos (input está hidden no CSS)
+    dragDrop.addEventListener("click", () => uploadInput && uploadInput.click());
+
+    // Acessibilidade básica: Enter/Espaço também abre o seletor
+    dragDrop.setAttribute("tabindex", "0");
+    dragDrop.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        uploadInput && uploadInput.click();
+      }
+    });
+
     dragDrop.addEventListener("dragover", e => {
       e.preventDefault();
       dragDrop.classList.add("drag-over");
