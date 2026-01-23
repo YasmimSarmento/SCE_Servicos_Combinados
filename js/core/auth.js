@@ -36,7 +36,14 @@ function getSession() {
 ========================= */
 
 function redirectToLogin() {
-  window.location.href = "login.html";
+  const pageRole = document.body.dataset.page;
+
+  if (pageRole === "empresa") {
+    window.location.href = "login-empresa.html";
+  } else {
+    // padrão: candidato (e também páginas públicas que você decidir proteger depois)
+    window.location.href = "login-candidato.html";
+  }
 }
 
 function redirectByRole(role) {
