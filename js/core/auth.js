@@ -60,12 +60,16 @@ function redirectByRole(role) {
 ========================= */
 
 function bindLogout() {
-  const btn = document.getElementById("logout");
+  const btn =
+    document.getElementById("logout") ||
+    document.getElementById("btnLogout") ||
+    document.querySelector('[data-action="logout"]');
 
   if (!btn) return;
 
   btn.addEventListener("click", () => {
     localStorage.removeItem("session");
+    localStorage.removeItem("auth");
     window.location.href = "index.html";
   });
 }
