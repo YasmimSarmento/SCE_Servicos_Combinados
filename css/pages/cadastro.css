@@ -556,6 +556,7 @@ main.conteudo h1::after {
         font-size: 0.8rem;
     }
 
-    #lista-candidaturas li {
-        padding: 1rem;
+        #lista-candidaturas li {
+            padding: 1rem;
+        }
     }
