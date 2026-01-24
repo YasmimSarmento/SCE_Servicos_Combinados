@@ -1,4 +1,195 @@
 /* ==========================
+   TOPO (HOME) - MINIMALISTA
+   ========================== */
+
+.topo.topo--minimal {
+    display: block;
+    height: auto;
+    padding: 0.9rem 1.2rem;
+    background: #0A8ED8;
+}
+
+.topo--minimal .topo__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.topo--minimal .topo__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: #ffffff;
+    min-width: 180px;
+}
+
+.topo--minimal .topo__brand img {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+}
+
+.topo--minimal .topo__brand-text strong {
+    display: block;
+    font-size: 1.05rem;
+    line-height: 1.1;
+    letter-spacing: 0.2px;
+}
+
+.topo--minimal .topo__brand-text small {
+    display: block;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-top: 2px;
+}
+
+.topo--minimal .topo__nav {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+.topo--minimal .topo__nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    position: relative;
+    padding: 0.25rem 0;
+}
+
+.topo--minimal .topo__nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: #ffffff;
+    transition: width 0.25s ease;
+}
+
+.topo--minimal .topo__nav a.ativo::after,
+.topo--minimal .topo__nav a:hover::after {
+    width: 100%;
+}
+
+.topo--minimal .topo__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.topo--minimal .topo__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.topo--minimal .topo__cta:hover {
+    background: rgba(255, 255, 255, 0.20);
+    transform: translateY(-1px);
+}
+
+/* Perfil (ícone + dropdown) */
+.perfil-menu {
+    position: relative;
+}
+
+.perfil-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.10);
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.perfil-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+}
+
+.perfil-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: #ffffff;
+}
+
+.perfil-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    width: 240px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+    padding: 0.5rem;
+    display: none;
+    z-index: 50;
+}
+
+.perfil-dropdown.is-open {
+    display: block;
+    animation: fadeInUpMini 0.18s ease both;
+}
+
+.perfil-dropdown a {
+    display: block;
+    padding: 0.7rem 0.75rem;
+    border-radius: 10px;
+    color: #0b2a3a;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.92rem;
+}
+
+.perfil-dropdown a:hover {
+    background: rgba(10, 142, 216, 0.10);
+}
+
+.perfil-sep {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.08);
+    margin: 0.35rem 0.25rem;
+}
+
+/* Responsivo do topo minimalista */
+@media (max-width: 860px) {
+    .topo--minimal .topo__nav {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .topo--minimal .topo__cta {
+        display: none;
+    }
+}
+
+@keyframes fadeInUpMini {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================
    HOME / HERO
    ========================== */
 
