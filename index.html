@@ -14,17 +14,47 @@
     <!-- =====================================================
          HEADER
     ===================================================== -->
-    <header class="topo">
-        <img src="imagem/logo c&s.png" alt="Logotipo da C&S">
+    <header class="topo topo--minimal">
+        <div class="topo__inner">
+            <a class="topo__brand" href="index.html" aria-label="Ir para a página inicial">
+                <img src="imagem/logo c&s.png" alt="Logotipo da C&S">
+                <span class="topo__brand-text">
+                    <strong>SCE</strong>
+                    <small>Banco de Talentos</small>
+                </span>
+            </a>
 
-        <nav>
-            <a href="index.html" class="ativo">INÍCIO</a>
-            <a href="vagas.html">VAGAS</a>
-            <a href="cadastro.html">CADASTRO</a>
-            <a href="login-candidato.html">LOGIN CANDIDATO</a>
-            <a href="login-empresa.html">LOGIN EMPRESA</a>
-        </nav>
+            <nav class="topo__nav" aria-label="Navegação principal">
+                <a href="index.html" class="ativo">Início</a>
+                <a href="vagas.html">Vagas</a>
+                <a href="cadastro.html">Cadastro</a>
+            </nav>
 
+            <div class="topo__actions">
+                <a class="topo__cta" href="cadastro.html">Cadastrar currículo</a>
+
+                <div class="perfil-menu">
+                    <button class="perfil-btn" id="btnPerfil" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Abrir menu do perfil">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2-8 4.5A1.5 1.5 0 0 0 5.5 20h13A1.5 1.5 0 0 0 20 18.5C20 16 16.42 14 12 14Z"/>
+                        </svg>
+                    </button>
+
+                    <div class="perfil-dropdown" id="perfilDropdown" role="menu" aria-label="Menu do perfil">
+                        <a role="menuitem" href="login-candidato.html">Entrar como candidato</a>
+                        <a role="menuitem" href="login-empresa.html">Entrar como empresa</a>
+                        <a role="menuitem" href="recuperar-senha.html">Recuperar senha</a>
+
+                        <div class="perfil-sep" role="separator"></div>
+
+                        <a role="menuitem" class="only-auth" data-only-role="candidato" href="painel-candidato.html">Meu painel</a>
+                        <a role="menuitem" class="only-auth" data-only-role="empresa" href="painel-empresa.html">Painel da empresa</a>
+                        <a role="menuitem" class="only-auth" href="perfil.html">Meu perfil</a>
+                        <a role="menuitem" class="only-auth" href="#" data-action="logout">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main class="conteudo">
@@ -78,6 +108,10 @@
     <footer>
         © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
     </footer>
+
+
+    <script src="js/core/auth.js" defer></script>
+    <script src="js/pages/home.js" defer></script>
 
 </body>
 
