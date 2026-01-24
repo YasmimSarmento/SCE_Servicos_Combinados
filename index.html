@@ -14,17 +14,47 @@
     <!-- =====================================================
          HEADER
     ===================================================== -->
-    <header class="topo">
-        <img src="imagem/logo c&s.png" alt="Logotipo da C&S">
+    <header class="topo topo--minimal">
+        <div class="topo__inner">
+            <a class="topo__brand" href="index.html" aria-label="Ir para a página inicial">
+                <img src="imagem/logo c&s.png" alt="Logotipo da C&S">
+<span class="topo__brand-text"></span>
+            </a>
 
-        <nav>
-            <a href="index.html" class="ativo">INÍCIO</a>
-            <a href="vagas.html">VAGAS</a>
-            <a href="cadastro.html">CADASTRO</a>
-            <a href="login-candidato.html">LOGIN CANDIDATO</a>
-            <a href="login-empresa.html">LOGIN EMPRESA</a>
-        </nav>
+            <nav class="topo__nav" aria-label="Navegação principal">
+                <a href="index.html" class="ativo">Início</a>
+                <a href="vagas.html">Vagas</a>
+            </nav>
 
+            <div class="topo__actions">
+                <!-- Botões do topo -->
+                <a class="topo__cta topo__cta--ghost" href="cadastro.html">Cadastrar currículo</a>
+                <a class="topo__cta topo__cta--primary" href="login-candidato.html">Entrar</a>
+
+                <div class="perfil-menu">
+                    <button class="perfil-btn" id="btnPerfil" type="button" aria-haspopup="menu" aria-expanded="false"
+                        aria-label="Abrir menu do perfil">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2-8 4.5A1.5 1.5 0 0 0 5.5 20h13A1.5 1.5 0 0 0 20 18.5C20 16 16.42 14 12 14Z" />
+                        </svg>
+                    </button>
+
+                    <div class="perfil-dropdown" id="perfilDropdown" role="menu" aria-label="Menu do perfil">
+                        <a role="menuitem" href="login-candidato.html">Entrar como candidato</a>
+                        <a role="menuitem" href="login-empresa.html">Entrar como empresa</a>
+                        <a role="menuitem" href="recuperar-senha.html">Recuperar senha</a>
+
+                        <div class="perfil-sep" role="separator"></div>
+
+                        <a role="menuitem" class="only-auth" data-only-role="candidato" href="painel-candidato.html">Meu painel</a>
+                        <a role="menuitem" class="only-auth" data-only-role="empresa" href="painel-empresa.html">Painel da empresa</a>
+                        <a role="menuitem" class="only-auth" href="perfil.html">Meu perfil</a>
+                        <a role="menuitem" class="only-auth" href="#" data-action="logout">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main class="conteudo">
@@ -32,16 +62,15 @@
         <section class="hero">
             <div class="hero-box">
 
-                <h1>Banco de Talentos SCE</h1>
+                <h1>Banco de Talentos C&S</h1>
 
                 <p>
-                    O SCE Banco de Talentos facilita a conexão entre candidatos qualificados e a busca
+                    O C&S Banco de Talentos facilita a conexão entre candidatos qualificados e a busca
                     por novos profissionais. Cadastre seu currículo em nosso Banco de Talentos e faça parte do
                     processo de seleção.
                 </p>
 
                 <div class="hero-actions">
-                    <a href="cadastro.html" class="btn">Cadastrar Currículo</a>
                     <a href="vagas.html" class="btn btn-secundario">Vagas Abertas</a>
                 </div>
 
@@ -53,19 +82,19 @@
 
             <div class="passos">
 
-                <div class="passo">
-                    <h3>1. Cadastro do Currículo</h3>
+                <div class="passo"  data-number="1">
+                    <h3>Cadastro do Currículo</h3>
                     <p>Preencha o formulário com suas informações e envie seu currículo em PDF.</p>
                 </div>
 
-                <div class="passo">
-                    <h3>2. Banco de Talentos</h3>
+                <div class="passo"  data-number="2">
+                    <h3>Banco de Talentos</h3>
                     <p>Suas informações ficam registradas em nosso Banco de Talentos e
                         serão analisadas pela equipe SCE para oportunidades atuais ou futuras.</p>
                 </div>
 
-                <div class="passo">
-                    <h3>3. Oportunidades</h3>
+                <div class="passo"  data-number="3">
+                    <h3>Oportunidades</h3>
                     <p>Caso seu perfil seja compatível com alguma vaga, a nossa equipe
                         poderá entrar em contato para dar continuidade ao processo.</p>
                 </div>
@@ -78,6 +107,9 @@
     <footer>
         © 2025 Serviços Combinados de Escritório. Todos os direitos reservados.
     </footer>
+
+    <script src="js/core/auth.js" defer></script>
+    <script src="js/pages/home.js" defer></script>
 
 </body>
 

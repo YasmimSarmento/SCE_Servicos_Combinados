@@ -3,19 +3,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const pageRole = document.body?.dataset?.page || null;
 
   // ✅ Protege SOMENTE páginas que declaram data-page
-  // (assim páginas públicas não são forçadas pro login)
+  // (páginas públicas como index.html ficam livres)
   if (pageRole && !session) {
     redirectToLogin(pageRole);
     return;
   }
 
-  // 🔁 Bloqueio por papel (quando página exige role específico)
+  // 🔁 Bloqueio por papel (role)
+  // Ex: candidato tentando acessar painel de empresa
   if (pageRole && session?.role && session.role !== pageRole) {
     redirectByRole(session.role);
     return;
   }
 
-  // 🚪 Logout (se existir botão)
+  // 🚪 Ativa logout, se existir botão na página
   bindLogout();
 });
 
@@ -26,7 +27,8 @@ function getSession() {
   try {
     const data = localStorage.getItem("session");
     return data ? JSON.parse(data) : null;
-  } catch {
+  } catch (error) {
+    console.warn("Erro ao ler sessão:", error);
     return null;
   }
 }
@@ -38,6 +40,7 @@ function redirectToLogin(pageRole) {
   if (pageRole === "empresa") {
     window.location.href = "login-empresa.html";
   } else {
+    // padrão: candidato
     window.location.href = "login-candidato.html";
   }
 }
@@ -63,11 +66,14 @@ function bindLogout() {
   if (!btn) return;
 
   btn.addEventListener("click", (e) => {
-    // ✅ se for <a>, evita navegar antes de limpar
-    if (btn.tagName?.toLowerCase() === "a") e.preventDefault();
+    // ✅ Se for <a>, impede navegação antes de limpar sessão
+    if (btn.tagName?.toLowerCase() === "a") {
+      e.preventDefault();
+    }
 
     localStorage.removeItem("session");
-    localStorage.removeItem("auth"); // compatibilidade com páginas antigas
+    localStorage.removeItem("auth"); // compatibilidade com versões antigas
+
     window.location.href = "index.html";
   });
 }
