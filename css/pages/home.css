@@ -315,6 +315,7 @@ main.conteudo{
 /* efeito bonito (overlay) */
 .hero h1{
   background: linear-gradient(180deg, #ffffff, #e6f3fb);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow:
