@@ -5,12 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!btn || !menu) return;
 
   // sessão (compatível com auth.js)
-  const session = (typeof getSession === "function") ? getSession() : (() => {
-    try {
-      const data = localStorage.getItem("session") || localStorage.getItem("auth");
-      return data ? JSON.parse(data) : null;
-    } catch { return null; }
-  })();
+  const session =
+    typeof getSession === "function"
+      ? getSession()
+      : (() => {
+          try {
+            const data =
+              localStorage.getItem("session") || localStorage.getItem("auth");
+            return data ? JSON.parse(data) : null;
+          } catch {
+            return null;
+          }
+        })();
 
   const openMenu = () => {
     menu.classList.add("is-open");
@@ -29,8 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("click", (e) => {
     if (!menu.classList.contains("is-open")) return;
+
     const target = e.target;
-    if (target instanceof Node && (menu.contains(target) || btn.contains(target))) return;
+    if (target instanceof Node && (menu.contains(target) || btn.contains(target)))
+      return;
+
     closeMenu();
   });
 
@@ -40,7 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Ajusta opções conforme login
   const onlyAuth = menu.querySelectorAll(".only-auth");
-  const loginItems = Array.from(menu.querySelectorAll('a[href*="login-"], a[href*="recuperar-senha"]'));
+  const loginItems = Array.from(
+    menu.querySelectorAll('a[href^="login-"], a[href^="recuperar-senha"]')
+  );
 
   if (!session) {
     onlyAuth.forEach((el) => (el.style.display = "none"));
@@ -58,7 +69,39 @@ document.addEventListener("DOMContentLoaded", () => {
   onlyAuth.forEach((el) => {
     const required = el.getAttribute("data-only-role");
     if (!required) return;
+
     if (!role) return; // se não tem role, deixa aparecer (não quebra)
+
     el.style.display = required === role ? "" : "none";
   });
+
+  // Logout (usa auth.js se existir; fallback para localStorage)
+  const logoutLink = menu.querySelector('[data-action="logout"]');
+  if (logoutLink) {
+    logoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // tenta chamar uma função de logout do auth.js, se existir
+      const candidates = ["logout", "doLogout", "signOut"];
+      for (const fnName of candidates) {
+        if (typeof window[fnName] === "function") {
+          try {
+            window[fnName]();
+          } catch {}
+          closeMenu();
+          window.location.href = "index.html";
+          return;
+        }
+      }
+
+      // fallback caso auth.js não exponha função
+      try {
+        localStorage.removeItem("session");
+        localStorage.removeItem("auth");
+      } catch {}
+
+      closeMenu();
+      window.location.href = "index.html";
+    });
+  }
 });
