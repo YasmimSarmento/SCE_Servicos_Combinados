@@ -98,21 +98,39 @@
      THEME TOGGLE (DARK MODE)
   ========================= */
   function setupThemeToggle() {
-    const body = document.querySelector(".dash-body");
     const btn = document.getElementById("btnTema");
-    if (!body || !btn) return;
+    if (!btn) return;
 
-    const saved = localStorage.getItem("dashboardTheme");
-    if (saved === "dark") body.classList.add("dark");
+    // Prefer the global theme controller (html.theme-dark + appTheme_v1),
+    // but keep legacy support for older CSS that might rely on .dash-body.dark.
+    const body = document.querySelector(".dash-body");
+
+    // Ensure the initial visual state follows the global theme (if present)
+    try {
+      const isDark = document.documentElement.classList.contains("theme-dark");
+      if (body) body.classList.toggle("dark", isDark);
+    } catch (e) {}
 
     btn.addEventListener("click", () => {
-      body.classList.toggle("dark");
-      localStorage.setItem(
-        "dashboardTheme",
-        body.classList.contains("dark") ? "dark" : "light"
-      );
+      // 1) Use global API when available
+      if (window.__theme && typeof window.__theme.toggle === "function") {
+        window.__theme.toggle();
+      } else {
+        // 2) Fallback: toggle html class + persist
+        const html = document.documentElement;
+        html.classList.toggle("theme-dark");
+        try {
+          localStorage.setItem("appTheme_v1", html.classList.contains("theme-dark") ? "dark" : "light");
+        } catch (e) {}
+      }
+
+      // Mirror to legacy dashboard class + key (safe, lightweight)
+      const isDarkNow = document.documentElement.classList.contains("theme-dark");
+      if (body) body.classList.toggle("dark", isDarkNow);
+      try { localStorage.setItem("dashboardTheme", isDarkNow ? "dark" : "light"); } catch (e) {}
     });
   }
+
 
   /* =========================
      DADOS REAIS

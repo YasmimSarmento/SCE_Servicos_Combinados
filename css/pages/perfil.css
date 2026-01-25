@@ -74,7 +74,25 @@
   border: var(--border);
 }
 
-.card-glass{ backdrop-filter: blur(10px); }
+/*
+  PERFORMANCE:
+  backdrop-filter (blur) é bonito, mas pode pesar e causar sensação de "lag"
+  na rolagem em algumas máquinas/navegadores.
+  Mantemos o visual com fundo translúcido e só ativamos o blur quando faz sentido.
+*/
+.card-glass{
+  background: rgba(255,255,255,.92);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  /* aplica blur apenas em telas maiores (onde costuma renderizar melhor) */
+  @media (min-width: 901px) {
+    .card-glass{
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+    }
+  }
+}
 
 .card-head{
   padding: 14px 16px;

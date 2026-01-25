@@ -16,16 +16,41 @@
   // ✅ Botão enviar
   const btnEnviar = document.getElementById("btnEnviarDocumento");
 
-  const session = JSON.parse(localStorage.getItem("session")) || null;
+  const session = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("session")) || null;
+    } catch {
+      return null;
+    }
+  })();
 
-  const STORAGE_KEY = "documentos";
+  // ================================
+  // PERFORMANCE (principal gargalo):
+  //  - Antes: um único JSON gigante em localStorage contendo base64.
+  //           JSON.parse ficava pesado e afetava a rolagem/performance.
+  //  - Agora: salvamos APENAS metadados no array (leve) e guardamos o base64
+  //           em chaves separadas por documento.
+  //           Isso deixa o carregamento e a renderização MUITO mais rápidos.
+  // ================================
+  const STORAGE_KEY = "documentos"; // continua igual, mas agora só guarda metadados
+  const LEGACY_KEY = "documentosCandidato";
+  const BLOB_PREFIX = "documento_blob_";
 
-  // 1) Carrega do padrão novo
-  let documentos = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  function safeParse(key, fallback) {
+    try {
+      const v = localStorage.getItem(key);
+      return v ? JSON.parse(v) : fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  // 1) Carrega do padrão novo (leve)
+  let documentos = safeParse(STORAGE_KEY, []);
 
   // 2) Migra do padrão antigo (documentosCandidato -> documentos)
-  const antigos = JSON.parse(localStorage.getItem("documentosCandidato")) || [];
-  if (antigos.length) {
+  const antigos = safeParse(LEGACY_KEY, []);
+  if (Array.isArray(antigos) && antigos.length) {
     const userId = session?.id ?? null;
 
     const migrados = antigos.map((d) => ({
@@ -34,13 +59,53 @@
       id: d.id ?? (crypto?.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random())),
     }));
 
-    const byId = new Map(documentos.map((d) => [d.id, d]));
+    const byId = new Map((Array.isArray(documentos) ? documentos : []).map((d) => [d.id, d]));
     migrados.forEach((d) => byId.set(d.id, d));
     documentos = Array.from(byId.values());
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(documentos));
-    localStorage.removeItem("documentosCandidato");
+    localStorage.removeItem(LEGACY_KEY);
   }
+
+  // 3) Migração do padrão pesado: se algum doc ainda tiver base64 dentro do array,
+  //    empurra o base64 para chaves separadas e deixa o array leve.
+  (function migrateHeavyDocs() {
+    if (!Array.isArray(documentos) || !documentos.length) return;
+
+    let changed = false;
+
+    documentos = documentos.map((d) => {
+      if (!d || typeof d !== "object") return d;
+
+      const id = String(d.id ?? "");
+      const base64 = d.base64;
+
+      if (id && base64 && typeof base64 === "string") {
+        try {
+          // só grava se ainda não existir (evita reescrever uma chave gigante)
+          const k = BLOB_PREFIX + id;
+          if (!localStorage.getItem(k)) localStorage.setItem(k, base64);
+          changed = true;
+        } catch {
+          // localStorage cheio? mantém no objeto para não perder documento
+          return d;
+        }
+
+        // remove do objeto para aliviar JSON
+        const { base64: _omit, ...rest } = d;
+        return rest;
+      }
+      return d;
+    });
+
+    if (changed) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(documentos));
+      } catch {
+        // se falhar (quota), não quebra a página
+      }
+    }
+  })();
 
   function setMsg(texto, tipo = "info") {
     if (!msg) return;
@@ -89,10 +154,16 @@
     return session?.id ?? null;
   }
 
+  function getDocsDoUsuario() {
+    const userId = getCurrentUserId();
+    if (!userId) return [];
+    return (Array.isArray(documentos) ? documentos : []).filter((d) => d.userId === userId);
+  }
+
   function userHasTipo(tipo) {
     const userId = getCurrentUserId();
     if (!userId || !tipo) return false;
-    return documentos.some((d) => d.userId === userId && d.tipo === tipo);
+    return (Array.isArray(documentos) ? documentos : []).some((d) => d.userId === userId && d.tipo === tipo);
   }
 
   function applyTipoLock() {
@@ -132,17 +203,14 @@
     btnEnviar.disabled = !ready;
     btnEnviar.classList.toggle("is-disabled", !ready);
 
-    // Mensagens mais elegantes e úteis
     if (ready) {
       setMsg("✅ Pronto para enviar.", "success");
       return;
     }
 
-    // Só mostra dica quando o usuário já interagiu (pra não poluir)
     const hasFile = Boolean(uploadInput?.files?.[0]);
     const hasTipo = Boolean(tipoSelect?.value);
     const tipoLocked = Boolean(tipoSelect?.value && userHasTipo(tipoSelect.value));
-
 
     if (tipoLocked) {
       setMsg("ℹ️ Este tipo de documento já foi enviado. Exclua o anterior na lista para enviar outro.", "info");
@@ -155,14 +223,39 @@
     }
   }
 
-  function getDocsDoUsuario() {
-    const userId = session?.id ?? null;
-    if (!userId) return [];
-    return documentos.filter((d) => d.userId === userId);
+  function salvarMeta() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(documentos));
+    } catch {
+      // quota cheia? evita travar a página
+    }
   }
 
-  function salvar() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(documentos));
+  function blobKey(id) {
+    return BLOB_PREFIX + String(id);
+  }
+
+  function getBase64ById(id, fallbackBase64) {
+    const k = blobKey(id);
+    const v = localStorage.getItem(k);
+    return v || fallbackBase64 || "";
+  }
+
+  function setBase64ById(id, base64) {
+    try {
+      localStorage.setItem(blobKey(id), base64);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function removeBase64ById(id) {
+    try {
+      localStorage.removeItem(blobKey(id));
+    } catch {
+      // ignore
+    }
   }
 
   function formatarData(iso) {
@@ -174,15 +267,23 @@
     }
   }
 
+  // Map em memória (evita recriar Map a cada clique)
+  let docMap = new Map();
+
+  function rebuildMap() {
+    docMap = new Map((Array.isArray(documentos) ? documentos : []).map((d) => [String(d.id), d]));
+  }
+
   function renderizar() {
     if (!listaDocumentos) return;
-    const docs = getDocsDoUsuario();
 
+    const docs = getDocsDoUsuario();
     if (!docs.length) {
       listaDocumentos.innerHTML = `<p class="vazio">Nenhum documento enviado ainda.</p>`;
       return;
     }
 
+    // Render rápido (1 único innerHTML)
     listaDocumentos.innerHTML = docs
       .map(
         (d) => `
@@ -193,33 +294,47 @@
             <small>${formatarData(d.data)}</small>
           </div>
           <div class="doc-acoes">
-            <button class="btn-acao btn-preview" type="button">Visualizar</button>
-            <button class="btn-acao btn-download" type="button">Baixar</button>
-            <button class="btn-acao btn-excluir" type="button">Excluir</button>
+            <button class="btn-acao" data-action="preview" type="button">Visualizar</button>
+            <button class="btn-acao" data-action="download" type="button">Baixar</button>
+            <button class="btn-acao" data-action="delete" type="button">Excluir</button>
           </div>
         </div>
       `
       )
       .join("");
+  }
 
-    listaDocumentos.querySelectorAll(".doc-card").forEach((card) => {
-      const id = card.getAttribute("data-id");
-      const doc = documentos.find((x) => x.id === id);
+  // Delegação de eventos (evita criar dezenas de listeners e deixa a página mais leve)
+  if (listaDocumentos && !listaDocumentos.__delegatedDocs) {
+    listaDocumentos.__delegatedDocs = true;
+
+    listaDocumentos.addEventListener("click", (e) => {
+      const btn = e.target?.closest?.("button[data-action]");
+      if (!btn) return;
+
+      const card = btn.closest(".doc-card");
+      const id = card?.getAttribute?.("data-id");
+      if (!id) return;
+
+      const doc = docMap.get(String(id));
       if (!doc) return;
 
-      const btnPreview = card.querySelector(".btn-preview");
-      const btnDownload = card.querySelector(".btn-download");
-      const btnExcluir = card.querySelector(".btn-excluir");
-
-      if (btnPreview) btnPreview.addEventListener("click", () => visualizarDocumento(doc));
-      if (btnDownload) btnDownload.addEventListener("click", () => baixarDocumento(doc));
-      if (btnExcluir) btnExcluir.addEventListener("click", () => excluirDocumento(doc));
+      const action = btn.getAttribute("data-action");
+      if (action === "preview") visualizarDocumento(doc);
+      else if (action === "download") baixarDocumento(doc);
+      else if (action === "delete") excluirDocumento(doc);
     });
   }
 
   function baixarDocumento(doc) {
+    const base64 = getBase64ById(doc.id, doc.base64);
+    if (!base64) {
+      setMsg("Não foi possível localizar o arquivo deste documento.", "error");
+      return;
+    }
+
     const link = document.createElement("a");
-    link.href = doc.base64;
+    link.href = base64;
     link.download = doc.nome || "documento";
     document.body.appendChild(link);
     link.click();
@@ -228,9 +343,14 @@
 
   function excluirDocumento(doc) {
     if (!confirm("Deseja realmente excluir este documento?")) return;
-    documentos = documentos.filter((d) => d.id !== doc.id);
-    salvar();
-    renderizar();
+
+    documentos = (Array.isArray(documentos) ? documentos : []).filter((d) => d.id !== doc.id);
+    removeBase64ById(doc.id);
+    salvarMeta();
+
+    rebuildMap();
+    requestAnimationFrame(renderizar);
+
     setMsg("Documento excluído.", "success");
     applyTipoLock(); // se estava travado por tipo, libera quando necessário
   }
@@ -238,15 +358,21 @@
   function visualizarDocumento(doc) {
     if (!modal || !modalContent) return;
 
-    const isPdf = doc.tipoArquivo?.includes("pdf");
-    const isImage = doc.tipoArquivo?.startsWith("image/");
+    const base64 = getBase64ById(doc.id, doc.base64);
+    if (!base64) {
+      setMsg("Não foi possível localizar o arquivo deste documento.", "error");
+      return;
+    }
+
+    const isPdf = (doc.tipoArquivo || "").includes("pdf");
+    const isImage = (doc.tipoArquivo || "").startsWith("image/");
 
     let previewHTML = "";
 
     if (isPdf) {
-      previewHTML = `<iframe src="${doc.base64}" frameborder="0" style="width:100%;height:70vh;border-radius:12px;"></iframe>`;
+      previewHTML = `<iframe src="${base64}" frameborder="0" style="width:100%;height:70vh;border-radius:12px;"></iframe>`;
     } else if (isImage) {
-      previewHTML = `<img src="${doc.base64}" alt="${doc.nome}" style="max-width:100%;max-height:70vh;border-radius:12px;" />`;
+      previewHTML = `<img src="${base64}" alt="${doc.nome}" style="max-width:100%;max-height:70vh;border-radius:12px;" />`;
     } else {
       previewHTML = `<p>Pré-visualização indisponível para este tipo de arquivo.</p>`;
     }
@@ -270,11 +396,9 @@
   if (uploadInput) {
     uploadInput.addEventListener("change", () => {
       const file = uploadInput.files?.[0];
-      if (file) {
-        setSelectedFileUI(file);
-      } else {
-        clearSelectedFileUI();
-      }
+      if (file) setSelectedFileUI(file);
+      else clearSelectedFileUI();
+
       updateSendButtonState();
     });
   }
@@ -367,19 +491,34 @@
     const reader = new FileReader();
     reader.onload = () => {
       const base64 = String(reader.result || "");
+      const id = crypto?.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random());
+
+      const ok = setBase64ById(id, base64);
+      if (!ok) {
+        setMsg("Armazenamento cheio. Exclua algum documento antigo e tente novamente.", "error");
+        if (btnEnviar) {
+          btnEnviar.textContent = "Enviar Documento";
+          updateSendButtonState();
+        }
+        return;
+      }
+
       const novo = {
-        id: crypto?.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        id,
         userId,
         tipo,
         nome: file.name,
         data: new Date().toISOString(),
         tipoArquivo: file.type,
-        base64,
+        // base64 propositalmente NÃO fica aqui (performance)
       };
 
+      documentos = Array.isArray(documentos) ? documentos : [];
       documentos.push(novo);
-      salvar();
-      renderizar();
+
+      salvarMeta();
+      rebuildMap();
+      requestAnimationFrame(renderizar);
 
       setMsg("✅ Documento enviado com sucesso!", "success");
 
@@ -412,7 +551,8 @@
   }
 
   // Init
+  rebuildMap();
   renderizar();
   applyTipoLock();
-  updateSendButtonState(); // ✅ já inicia com botão travado e dica
+  updateSendButtonState();
 })();
