@@ -323,3 +323,36 @@ html, body {
   max-width: 100%;
 }
 
+
+
+/* ==============================
+   PATCH RESPONSIVO v4
+   ============================== */
+
+/* === PATCH v4: no mobile, conteúdo não deve ficar deslocado pela sidebar === */
+@media (max-width: 1024px){
+  body.com-sidebar main,
+  body.sidebar-collapsed.com-sidebar main{
+    margin-left: 0 !important;
+  }
+
+  .main-content{
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+
+
+/* ==============================
+   PATCH RESPONSIVO v5
+   ============================== */
+
+/* === PATCH v5: espaço inferior para não sobrepor botão flutuante === */
+@media (max-width: 1024px){
+  main,
+  .main-content{
+    padding-bottom: 96px !important; /* espaço para o botão flutuante */
+  }
+}
+

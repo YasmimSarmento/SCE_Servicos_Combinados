@@ -387,3 +387,94 @@ html, body {
   }
 }
 
+
+
+/* ==============================
+   PATCH RESPONSIVO v2
+   ============================== */
+
+/* === FIX MOBILE (iPhone/Android) - evitar corte lateral e melhorar encaixe === */
+@media (max-width: 480px){
+  .main-content{
+    padding: 1rem !important;
+  }
+
+  .card-glass{
+    padding: 1rem !important;
+  }
+
+  .notify-item{
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .notify-item .txt{
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .notify-item .tag{
+    margin-left: auto;
+    margin-top: 6px;
+    white-space: nowrap;
+  }
+}
+
+/* Extra: telas bem estreitas (ex: Galaxy S20 em modo compacto) */
+@media (max-width: 360px){
+  .main-content{ padding: .85rem !important; }
+  .card-glass{ padding: .9rem !important; }
+}
+
+
+
+/* ==============================
+   PATCH RESPONSIVO v3
+   ============================== */
+
+/* === PATCH v3: quebra de palavras e prevenção de overflow no mobile === */
+@media (max-width: 520px){
+  .notify-item{
+    flex-wrap: wrap !important;
+    min-width: 0;
+  }
+
+  .notify-item .txt{
+    min-width: 0;
+    flex: 1 1 100%;
+    overflow-wrap: anywhere;   /* permite quebrar em / e tokens longos */
+    word-break: break-word;
+  }
+
+  .notify-item .txt strong,
+  .notify-item .txt span{
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .notify-item .tag{
+    flex: 0 0 auto;
+    margin-left: 0 !important;
+    align-self: flex-end;
+  }
+}
+
+
+
+
+/* ==============================
+   PATCH RESPONSIVO v6
+   Resumo das candidaturas (status-resumo) não pode ter 3 colunas no mobile
+   ============================== */
+@media (max-width: 520px){
+  .status-resumo{
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 360px){
+  .status-resumo{
+    grid-template-columns: 1fr !important;
+  }
+}
+
