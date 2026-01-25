@@ -361,3 +361,29 @@ html, body {
   border: 1px solid rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.92);
 }
+
+
+/* === FIX RESPONSIVO PAINEL CANDIDATO (MOBILE) === */
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .card,
+  .dashboard-card {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .painel-container {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .painel-container {
+    padding: 12px !important;
+  }
+}
+

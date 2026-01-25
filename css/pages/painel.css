@@ -301,3 +301,29 @@ html.theme-dark :where(.painel, .painel-box, .painel-card, .bloco, .bloco-card, 
 html.theme-dark :where(.painel p, .painel .muted, .painel .hint) {
   color: var(--app-text-muted) !important;
 }
+
+
+/* === FIX RESPONSIVO PAINEL CANDIDATO (MOBILE) === */
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .card,
+  .dashboard-card {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .painel-container {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .painel-container {
+    padding: 12px !important;
+  }
+}
+
