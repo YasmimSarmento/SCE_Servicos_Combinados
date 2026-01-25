@@ -1,456 +1,601 @@
-/* ============================
-   PERFIL - CSS COMPLETO (COMPLEMENTA dashboard.css)
-   - Layout compacto
-   - Avatar clicável com menu (Carregar / Remover)
-   - Barra "Salvar" fixa (sticky)
-============================ */
+:root{
+  --sidebar-w: 260px;
+  --perfil-max: 1180px;
+  --radius: 16px;
+  --shadow: 0 10px 25px rgba(0,0,0,.08);
+  --border: 1px solid rgba(0,0,0,.06);
+  --txt: #141414;
+  --muted: rgba(0,0,0,.65);
+  --primary: #6E00FF;
 
-/* Container principal do perfil */
-.main-content {
+  /* tema topbar (pra ficar parecido com o lateral) */
+  --topbar-bg-1: rgba(18,34,116,.95);
+  --topbar-bg-2: rgba(12,22,78,.95);
+
+  /* pílulas na barra */
+  --pill-bg: rgba(255,255,255,.08);
+  --pill-border: rgba(255,255,255,.12);
+  --pill-bg-active: rgba(255,255,255,.14);
+  --pill-border-active: rgba(255,255,255,.22);
+
+  /* sair vermelho */
+  --danger-bg: rgba(244,67,54,.16);
+  --danger-border: rgba(244,67,54,.30);
+}
+
+/* =======================
+   Layout base (desktop)
+======================= */
+.main-content.perfil-wrap{
+  max-width: var(--perfil-max);
+  margin-left: var(--sidebar-w);
+  padding: clamp(12px, 2vw, 22px);
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding-bottom: 90px; /* espaço pro sticky salvar */
 }
 
-/* ============================
-   TOPO DO PERFIL (compacto)
-============================ */
-.perfil-topo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
+.perfil-layout{
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 14px;
+  align-items: start;
 }
 
-.perfil-topo .info {
+.perfil-main{
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  flex: 1;
-  min-width: 0;
+  gap: 14px;
 }
 
-.perfil-topo .info h2 {
+@media (max-width: 900px){
+  .main-content.perfil.wrap,
+  .main-content.perfil-wrap{
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* =======================
+   Cards
+======================= */
+.perfil-card{
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow);
+  border: var(--border);
+}
+
+.card-glass{ backdrop-filter: blur(10px); }
+
+.card-head{
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+
+.card-body{ padding: 14px 16px; }
+
+.card-head h3{
   margin: 0;
-  font-size: 1.08rem;
-  font-weight: 850;
-  color: var(--azul-escuro);
-  letter-spacing: 0.2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 15px;
+  color: var(--txt);
 }
 
-.perfil-topo .info span {
-  font-size: 0.92rem;
-  color: var(--cinza-escuro);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* =========================
-   AVATAR PROFISSIONAL (compacto)
-========================= */
-.avatar-wrap {
+/* =======================
+   Header
+======================= */
+.perfil-header{
   position: relative;
-  width: 64px;
-  height: 64px;
-  flex-shrink: 0;
+  z-index: 5;
 }
 
-.avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 999px;
-  object-fit: cover;
-  border: 2px solid rgba(110, 0, 255, 0.35);
-  background: #fff;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.10);
-  display: block;
-  cursor: pointer;
-}
-
-/* botãozinho de câmera */
-.avatar-edit {
-  position: absolute;
-  right: -6px;
-  bottom: -6px;
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,0.10);
-  background: rgba(0,0,0,0.04);
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
-}
-
-.avatar-edit:hover {
-  transform: translateY(-1px);
-  background: rgba(110, 0, 255, 0.10);
-  border-color: rgba(110, 0, 255, 0.25);
-  box-shadow: 0 10px 18px rgba(0,0,0,0.10);
-}
-
-.avatar-menu {
-  position: absolute;
-  top: 70px;
-  left: 0;
-  width: 160px;
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.10);
-  box-shadow: 0 14px 26px rgba(0,0,0,0.12);
-  padding: 6px;
-  display: none;
-  z-index: 999;
-}
-
-.avatar-menu.open {
-  display: grid;
-  gap: 6px;
-}
-
-.avatar-menu-item {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 10px;
-  border: 0;
-  border-radius: 10px;
-  background: rgba(0,0,0,0.03);
-  cursor: pointer;
-  font-weight: 750;
-  text-align: left;
-  transition: background .18s ease, transform .18s ease;
-}
-
-.avatar-menu-item:hover {
-  background: rgba(110, 0, 255, 0.10);
-  transform: translateY(-1px);
-}
-
-.avatar-menu-item.danger {
-  background: rgba(229, 57, 53, 0.08);
-  color: #b32624;
-}
-
-.avatar-menu-item.danger:hover {
-  background: rgba(229, 57, 53, 0.14);
-}
-
-/* ============================
-   PROGRESSO DO PERFIL
-============================ */
-.progresso-container {
-  background: rgba(0,0,0,0.08);
-  border-radius: 999px;
-  height: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.08);
-}
-
-#barraProgresso {
-  height: 100%;
-  width: 0%;
-  background: var(--roxo-tecnologia);
-  border-radius: 999px;
-  transition: width .3s ease;
-}
-
-#percentualProgresso {
-  margin-top: 8px;
-  text-align: right;
-  font-size: 0.9rem;
-  font-weight: 750;
-  color: rgba(0,0,0,0.65);
-}
-
-/* ============================
-   CARDS MAIS COMPACTOS
-============================ */
-.perfil-card.card-glass {
-  padding: 14px;
-}
-
-.card-head {
-  padding-bottom: .7rem;
-  margin-bottom: .8rem;
-}
-
-.card-head h3 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* ============================
-   FORM (GRID)
-============================ */
-.card-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-/* botões/mensagem ocupam tudo */
-#btnSalvar,
-#msgPerfil {
-  grid-column: 1 / -1;
-}
-
-/* textareas ocupam linha toda */
-#habilidades,
-#resumoProfissional {
-  grid-column: 1 / -1;
-}
-
-.campo {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.campo label {
-  font-size: 0.88rem;
-  font-weight: 750;
-  color: rgba(0,0,0,0.75);
-}
-
-.input-pro {
-  border-radius: 12px;
-  padding: 10px 12px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: #fff;
-  transition: border-color .2s ease, box-shadow .2s ease;
-  font-size: 0.95rem;
-}
-
-.input-pro:focus {
-  outline: none;
-  border-color: rgba(110, 0, 255, 0.55);
-  box-shadow: 0 0 0 4px rgba(110, 0, 255, 0.12);
-}
-
-textarea.input-pro {
-  resize: vertical;
-  min-height: 80px;
-}
-
-/* Mensagens */
-.msg-sucesso {
-  margin-top: 6px;
-  padding: 12px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.10);
-  background: rgba(0,0,0,0.03);
-  font-weight: 750;
-}
-
-.msg-sucesso.success {
-  border-color: rgba(76, 175, 80, 0.25);
-  background: rgba(76, 175, 80, 0.10);
-  color: #1f7a3a;
-}
-
-.msg-sucesso.error {
-  border-color: rgba(229, 57, 53, 0.25);
-  background: rgba(229, 57, 53, 0.10);
-  color: #b32624;
-}
-
-/* Sidebar button como link */
-.side-nav button.nav-link {
-  width: 100%;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  font: inherit;
-}
-
-/* ============================
-   BARRA STICKY DE SALVAR (rodapé)
-   Você só precisa colocar um container no HTML (eu te passo depois)
-============================ */
-.perfil-sticky {
-  position: fixed;
-  left: 260px; /* acompanha sidebar desktop */
-  right: 0;
-  bottom: 0;
-  padding: 12px 16px;
-  background: rgba(240, 242, 245, 0.92);
-  border-top: 1px solid rgba(0,0,0,0.10);
-  backdrop-filter: blur(10px);
-  z-index: 50;
+.perfil-topo{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 14px;
+  padding: 16px;
 }
 
-.perfil-sticky .hint {
-  color: rgba(0,0,0,0.65);
-  font-weight: 650;
-  font-size: 0.92rem;
+.avatar-area{
+  display:flex;
+  align-items:center;
+  gap: 14px;
 }
 
-.perfil-sticky .actions {
+/* Wrapper livre (não recorta menu) */
+.avatar-wrap{
+  position: relative;
+  width: 86px;
+  height: 86px;
+}
+
+/* ✅ círculo interno que SEMPRE recorta a imagem */
+.avatar-circle{
+  width: 86px;
+  height: 86px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 2px solid rgba(110,0,255,.25);
+  background: rgba(0,0,0,.04);
+}
+
+.avatar{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Botão câmera */
+.avatar-edit{
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(110,0,255,.95);
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 18px rgba(0,0,0,.18);
+  z-index: 9999;
+}
+
+/* Menu padrão (desktop): abre pra baixo */
+.avatar-menu{
+  position: absolute;
+  top: 92px;
+  left: 0;
+  width: 230px;
+  background: rgba(255,255,255,.98);
+  border: 1px solid rgba(0,0,0,.10);
+  border-radius: 14px;
+  box-shadow: 0 18px 28px rgba(0,0,0,.16);
+  padding: 8px;
+  display: none;
+  z-index: 10000;
+}
+
+.avatar-menu.open{ display: grid; gap: 6px; }
+
+.avatar-menu-item{
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(0,0,0,.02);
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.perfil-sticky .btn-save {
-  height: 44px;
-  padding: 0 16px;
+.avatar-menu-item.danger{
+  border-color: rgba(211,47,47,.18);
+  background: rgba(211,47,47,.06);
+  color: #b71c1c;
+}
+
+.info h2{ margin: 0; font-size: 18px; }
+
+.mini-row{
+  margin-top: 6px;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--muted);
+}
+
+.chip{
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(0,0,0,.02);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Botões topo */
+.perfil-actions{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-pro{
+  border: none;
   border-radius: 14px;
-  border: 0;
+  padding: 12px 14px;
   cursor: pointer;
-  font-weight: 850;
-  background: var(--roxo-tecnologia);
+  background: rgba(110,0,255,.95);
   color: #fff;
-  box-shadow: 0 12px 22px rgba(110,0,255,0.18);
-  transition: transform .18s ease, filter .18s ease;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform .08s ease, filter .2s ease;
 }
 
-.perfil-sticky .btn-save:hover {
-  transform: translateY(-1px);
-  filter: brightness(0.98);
+.btn-pro:active{ transform: translateY(1px); }
+
+.btn-ghost{
+  background: rgba(0,0,0,.04);
+  color: #111;
+  border: 1px solid rgba(0,0,0,.10);
 }
 
-.perfil-sticky .btn-secondary {
-  height: 44px;
-  padding: 0 14px;
+.btn-icon{
+  padding: 10px;
+  min-width: 46px;
+  justify-content: center;
+}
+.btn-icon i{ margin: 0 !important; }
+
+.btn-saved{ background: rgba(46,125,50,.92) !important; }
+
+/* Progresso */
+.progresso-container{
+  width: 100%;
+  height: 10px;
+  background: rgba(0,0,0,.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+#barraProgresso{
+  width: 0%;
+  height: 100%;
+  background: rgba(110,0,255,.95);
+  border-radius: 999px;
+  transition: width .35s ease;
+}
+
+.progresso-meta{
+  margin-top: 10px;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#percentualProgresso{ font-weight: 900; color: var(--txt); }
+#progressoTexto{ color: var(--muted); }
+
+/* Tabs */
+.perfil-tabs{
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+}
+
+.perfil-tab{
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(0,0,0,.02);
   border-radius: 14px;
-  border: 1px solid rgba(0,0,0,0.12);
-  background: rgba(0,0,0,0.03);
+  padding: 12px 12px;
   cursor: pointer;
-  font-weight: 750;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap: 10px;
+  font-weight: 900;
+  color: rgba(0,0,0,.78);
 }
 
-/* ============================
-   RESPONSIVO
-============================ */
-@media (max-width: 1024px) {
-  .card-body {
-    grid-template-columns: 1fr;
+.perfil-tab.active{
+  border-color: rgba(110,0,255,.25);
+  background: rgba(110,0,255,.10);
+  color: rgba(0,0,0,.90);
+}
+
+/* Status */
+.status-line{ display:flex; align-items:center; gap: 10px; }
+.status-dot{
+  width: 10px; height: 10px; border-radius: 999px;
+  background: rgba(46,125,50,.85);
+  box-shadow: 0 0 0 4px rgba(46,125,50,.12);
+}
+#statusSalvo{ color: var(--muted); font-size: 14px; }
+
+/* Accordion */
+.section-toggle{
+  width:100%;
+  border:0;
+  background: transparent;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor:pointer;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--txt);
+}
+
+.perfil-section[data-collapsed="true"] .card-body{ display:none; }
+
+.section-toggle i{ transition: transform .18s ease; }
+.perfil-section[data-collapsed="true"] .section-toggle i{ transform: rotate(-90deg); }
+
+/* Form */
+.grid-2{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.campo{ display:flex; flex-direction: column; gap: 8px; }
+.campo-full{ grid-column: 1 / -1; }
+
+label{
+  font-size: 13px;
+  color: rgba(0,0,0,.72);
+  font-weight: 900;
+}
+
+.input-pro{
+  border: 1px solid rgba(0,0,0,.12);
+  background: rgba(255,255,255,.95);
+  border-radius: 14px;
+  padding: 12px 12px;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.input-pro:focus{
+  border-color: rgba(110,0,255,.45);
+  box-shadow: 0 0 0 4px rgba(110,0,255,.12);
+}
+
+textarea.input-pro{ min-height: 130px; resize: vertical; }
+
+.help{
+  display:block;
+  margin-top: 6px;
+  color: rgba(0,0,0,.60);
+  font-size: 12.5px;
+}
+
+.perfil-footer{ display:flex; justify-content:flex-end; }
+
+/* Responsivo geral */
+@media (max-width: 980px){
+  .perfil-layout{ grid-template-columns: 1fr; }
+  .perfil-tabs{ flex-direction: row; flex-wrap: wrap; }
+  .perfil-tab{ flex: 1; justify-content: center; }
+  .grid-2{ grid-template-columns: 1fr; }
+}
+
+/* ==========================================================
+   ✅ TOPBAR (tablet + mobile) — BONITA + Sair Vermelho
+========================================================== */
+@media (max-width: 1024px){
+
+  .page-perfil .sidebar-pro{
+    width: 100% !important;
+    height: 76px !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+
+    padding: 10px 12px !important;
+    z-index: 9999 !important;
+
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.22);
+
+    background: linear-gradient(180deg, var(--topbar-bg-1), var(--topbar-bg-2)) !important;
+    border-bottom: 1px solid rgba(255,255,255,.10) !important;
+    backdrop-filter: blur(12px) !important;
+
+    justify-content: center !important;
   }
 
-  #habilidades,
-  #resumoProfissional {
-    grid-column: auto;
+  .page-perfil .side-logo{
+    padding: 0 !important;
+    margin: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
   }
 
-  .perfil-sticky {
-    left: 80px; /* sidebar reduz */
+  .page-perfil .side-logo img{
+    height: 34px !important;
+    width: auto !important;
+    object-fit: contain;
+    display: block;
+  }
+
+  .page-perfil .side-nav{
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    justify-content: center !important;
+
+    scroll-padding-left: 12px;
+    scroll-padding-right: 12px;
+  }
+  .page-perfil .side-nav::-webkit-scrollbar{ display:none; }
+
+  .page-perfil .nav-divider{ display:none !important; }
+
+  .page-perfil .side-nav .nav-link{
+    flex: 0 0 auto !important;
+    min-width: 86px;
+
+    display: grid !important;
+    place-items: center !important;
+    gap: 4px;
+
+    padding: 10px 10px !important;
+    margin: 0 !important;
+
+    border-radius: 14px !important;
+    text-decoration: none;
+    line-height: 1.1;
+
+    background: var(--pill-bg) !important;
+    border: 1px solid var(--pill-border) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.10) !important;
+
+    color: rgba(255,255,255,.94) !important;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    transition: transform .08s ease, filter .18s ease, background .18s ease, border-color .18s ease;
+  }
+
+  .page-perfil .side-nav .nav-link i{
+    font-size: 18px;
+    min-width: 0 !important;
+  }
+
+  .page-perfil .side-nav .nav-link:hover{ filter: brightness(1.06); }
+  .page-perfil .side-nav .nav-link:active{ transform: translateY(1px); }
+
+  .page-perfil .side-nav .nav-link.active{
+    background: var(--pill-bg-active) !important;
+    border-color: var(--pill-border-active) !important;
+    box-shadow: 0 12px 20px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.10) !important;
+  }
+
+  .page-perfil .side-nav .nav-link.logout{
+    background: var(--danger-bg) !important;
+    border: 1px solid var(--danger-border) !important;
+    color: #fff !important;
+  }
+  .page-perfil .side-nav .nav-link.logout i{ color: #fff !important; }
+
+  .page-perfil .main-content.perfil-wrap{
+    margin-left: 0 !important;
+    padding-top: 98px !important;
+  }
+
+  .perfil-topo{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .perfil-actions{
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .page-perfil .avatar-menu{ z-index: 10050 !important; }
+}
+
+/* ==========================================================
+   ✅ MOBILE (<=520px): Topbar 2 linhas
+========================================================== */
+@media (max-width: 520px){
+
+  .page-perfil .sidebar-pro{
+    height: auto !important;
+
+    display: grid !important;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center !important;
+
+    padding: 10px 10px 8px !important;
+    gap: 8px !important;
+
+    justify-content: initial !important;
+  }
+
+  .page-perfil .side-logo{
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    justify-self: start;
+  }
+
+  .page-perfil .side-nav{
+    grid-column: 1 / -1;
+    grid-row: 2 / 3;
+
+    justify-content: flex-start !important;
+    padding: 2px 2px 0 !important;
+
+    scroll-snap-type: x mandatory;
+  }
+
+  .page-perfil .side-nav .nav-link{
+    min-width: 96px !important;
+    padding: 9px 10px !important;
+    font-size: 10.5px !important;
+    border-radius: 16px !important;
+
+    scroll-snap-align: start;
+  }
+
+  .page-perfil .side-nav .nav-link i{ font-size: 16px !important; }
+
+  .page-perfil .side-nav .nav-link.logout{ min-width: 88px !important; }
+
+  .page-perfil .main-content.perfil-wrap{ padding-top: 120px !important; }
+}
+
+/* celular bem pequeno */
+@media (max-width: 380px){
+  .page-perfil .side-nav .nav-link{
+    min-width: 88px !important;
+    padding: 8px 9px !important;
+    font-size: 10px !important;
   }
 }
 
-@media (max-width: 520px) {
-  .perfil-topo {
-    align-items: flex-start;
+/* ==========================================================
+   ✅ SPLIT SCREEN (650px–1024px): igual ao lateral compacto
+   - só ícones (sem texto)
+   - tooltip via title
+========================================================== */
+@media (min-width: 650px) and (max-width: 1024px){
+
+  /* não centraliza, vira estilo lateral compacto */
+  .page-perfil .sidebar-pro{ justify-content: flex-start !important; }
+  .page-perfil .side-nav{ justify-content: flex-start !important; }
+
+  /* pílulas menores */
+  .page-perfil .side-nav .nav-link{
+    min-width: 54px !important;
+    width: 54px !important;
+    padding: 10px 0 !important;
+    font-size: 0 !important; /* esconde o texto */
+    border-radius: 14px !important;
   }
 
-  .avatar-wrap {
-    width: 56px;
-    height: 56px;
+  /* mantém o ícone */
+  .page-perfil .side-nav .nav-link i{
+    font-size: 18px !important;
   }
-
-  .avatar {
-    width: 56px;
-    height: 56px;
-  }
-
-  .avatar-menu {
-    top: 62px;
-  }
-
-  .perfil-sticky {
-    left: 0; /* mobile: sidebar some/colapsa */
-    padding: 10px 12px;
-  }
-
-  .perfil-sticky .hint {
-    display: none;
-  }
-}
-
-/* ============================
-   DARK MODE (se usar .dash-body.dark)
-============================ */
-.dash-body.dark .perfil-topo .info h2 {
-  color: rgba(255,255,255,0.92);
-}
-
-.dash-body.dark .perfil-topo .info span {
-  color: rgba(255,255,255,0.72);
-}
-
-.dash-body.dark .campo label {
-  color: rgba(255,255,255,0.80);
-}
-
-.dash-body.dark .input-pro {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.92);
-}
-
-.dash-body.dark .msg-sucesso {
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.85);
-}
-
-.dash-body.dark #percentualProgresso {
-  color: rgba(255,255,255,0.75);
-}
-
-.dash-body.dark .progresso-container {
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-.dash-body.dark .avatar {
-  background: rgba(255,255,255,0.06);
-}
-
-.dash-body.dark .avatar-edit {
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.92);
-}
-
-.dash-body.dark .avatar-menu {
-  background: rgba(20, 24, 40, 0.98);
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-.dash-body.dark .avatar-menu-item {
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.90);
-}
-
-.dash-body.dark .avatar-menu-item:hover {
-  background: rgba(110, 0, 255, 0.16);
-}
-
-.dash-body.dark .perfil-sticky {
-  background: rgba(15, 18, 32, 0.92);
-  border-top: 1px solid rgba(255,255,255,0.10);
-}
-
-.dash-body.dark .perfil-sticky .hint {
-  color: rgba(255,255,255,0.70);
-}
-
-.dash-body.dark .perfil-sticky .btn-secondary {
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.92);
 }

@@ -1,419 +1,335 @@
 (() => {
-  /* =========================
-     SESSÃO / PROTEÇÃO
-  ========================= */
-  function getSession() {
-    try {
-      return JSON.parse(localStorage.getItem("session"));
-    } catch {
-      return null;
-    }
-  }
-
-  const session = getSession();
-  if (!session) {
-    window.location.href = "login-candidato.html";
-    return;
-  }
-
-  if (session.role && session.role !== "candidato") {
-    window.location.href = "index.html";
-    return;
-  }
-
-  /* =========================
-     HELPERS
-  ========================= */
   const $ = (id) => document.getElementById(id);
 
-  function getList(key) {
+  const PERFIL_KEY = "perfil_candidato";
+
+  function getPerfil() {
     try {
-      return JSON.parse(localStorage.getItem(key) || "[]");
+      return JSON.parse(localStorage.getItem(PERFIL_KEY)) || {};
     } catch {
-      return [];
+      return {};
     }
   }
 
-  function setList(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+  function setPerfil(p) {
+    localStorage.setItem(PERFIL_KEY, JSON.stringify(p));
   }
 
-  function setMsg(texto, tipo) {
-    const box = $("msgPerfil");
-    if (!box) return;
-    box.textContent = texto || "";
-    box.className = "msg-sucesso " + (tipo || "");
-    if (texto) setTimeout(() => (box.textContent = ""), 3000);
-  }
+  function updateTopo(perfil) {
+    const nomeTopo = $("userNome");
+    const resumoMini = $("resumoMini");
+    const chip = $("chipCompleto");
 
-  /* =========================
-     STICKY STATUS (SALVO / NÃO SALVO)
-  ========================= */
-  let dirty = false;
-
-  function setStickyStatus(texto) {
-    const el = $("stickyStatus");
-    if (el) el.textContent = texto;
-  }
-
-  function markDirty() {
-    if (dirty) return;
-    dirty = true;
-    setStickyStatus("Alterações não salvas.");
-  }
-
-  function markSaved() {
-    dirty = false;
-    setStickyStatus("Tudo salvo.");
-  }
-
-  /* =========================
-     PERFIL BASE
-  ========================= */
-  function novoPerfilBase() {
-    return {
-      id: Date.now(),
-      userId: session.id ?? null,
-      nome: session.name || "",
-      email: session.email || "",
-      telefone: "",
-      dataNascimento: "",
-      documento: "",
-      foto: "", // base64
-      endereco: {
-        rua: "",
-        numero: "",
-        bairro: "",
-        cidade: "",
-        estado: "",
-        cep: ""
-      },
-      areaInteresse: "",
-      cargoDesejado: "",
-      nivelExperiencia: "",
-      habilidades: "",
-      resumo: "",
-      linkedin: "",
-      documentos: [],
-      arquivos: [] // compatível com cadastro.js
-    };
-  }
-
-  function encontrarOuCriarPerfil() {
-    const banco = getList("bancoTalentos");
-
-    let idx = -1;
-
-    // Prioridade 1: email
-    if (session.email) {
-      idx = banco.findIndex(
-        (c) => (c?.email || "").toLowerCase() === session.email.toLowerCase()
-      );
-    }
-
-    // Prioridade 2: userId
-    if (idx < 0 && session.id != null) {
-      idx = banco.findIndex((c) => c?.userId === session.id);
-    }
-
-    if (idx >= 0) return { banco, idx, perfil: banco[idx] };
-
-    const perfil = novoPerfilBase();
-    banco.push(perfil);
-    setList("bancoTalentos", banco);
-    return { banco, idx: banco.length - 1, perfil };
-  }
-
-  /* =========================
-     PROGRESSO DO PERFIL
-  ========================= */
-  function calcularProgresso(perfil) {
-    let pontos = 0;
-
-    if (perfil.nome) pontos += 15;
-    if (perfil.email) pontos += 10;
-    if (perfil.telefone) pontos += 10;
-
-    if (perfil.dataNascimento) pontos += 10;
-    if (perfil.documento) pontos += 10;
-
-    if (perfil.endereco?.cidade) pontos += 10;
-    if (perfil.endereco?.estado) pontos += 5;
-    if (perfil.endereco?.cep) pontos += 5;
-
-    if (perfil.areaInteresse) pontos += 10;
-    if (perfil.cargoDesejado) pontos += 5;
-    if (perfil.nivelExperiencia) pontos += 5;
-    if (perfil.habilidades) pontos += 5;
-    if (perfil.resumo) pontos += 5;
-
-    if (Array.isArray(perfil.arquivos) && perfil.arquivos.length) pontos += 5;
-
-    if (pontos > 100) pontos = 100;
-    return pontos;
-  }
-
-  function atualizarProgresso(perfil) {
-    const pct = calcularProgresso(perfil);
-
-    const bar = $("barraProgresso");
-    const txt = $("percentualProgresso");
-
-    if (bar) bar.style.width = pct + "%";
-    if (txt) txt.textContent = pct + "%";
-  }
-
-  /* =========================
-     UI (TOPO + FORM)
-  ========================= */
-  function atualizarTopo(perfil) {
-    if ($("userNome")) $("userNome").textContent = perfil.nome || session.name || "Candidato";
-
-    if ($("resumoMini")) {
-      const a = perfil.areaInteresse || "Área";
-      const c = perfil.cargoDesejado || "Cargo";
-      $("resumoMini").textContent = `${a} • ${c}`;
-    }
-
-    const img = $("fotoUsuario");
-    if (img) img.src = perfil.foto || "https://via.placeholder.com/80";
+    if (nomeTopo) nomeTopo.textContent = perfil.nomeCompleto || "Candidato";
+    if (resumoMini) resumoMini.textContent = `${perfil.area || "Área"} • ${perfil.cargo || "Cargo"}`;
+    if (chip) chip.textContent = "Perfil";
   }
 
   function preencherCampos(perfil) {
-    if ($("userNomeCompleto")) $("userNomeCompleto").value = perfil.nome || "";
-    if ($("userEmail")) $("userEmail").value = perfil.email || "";
-    if ($("userTelefone")) $("userTelefone").value = perfil.telefone || "";
-    if ($("userDataNascimento")) $("userDataNascimento").value = perfil.dataNascimento || "";
-    if ($("userDocumento")) $("userDocumento").value = perfil.documento || "";
+    const map = {
+      userNomeCompleto: "nomeCompleto",
+      userEmail: "email",
+      userTelefone: "telefone",
+      userDataNascimento: "dataNascimento",
+      userRua: "rua",
+      userNumero: "numero",
+      userBairro: "bairro",
+      userCidade: "cidade",
+      userEstado: "estado",
+      userCep: "cep",
+      userCargo: "cargo",
+      userArea: "area",
+      userEscolaridade: "escolaridade",
+      userExperiencia: "experiencia",
+    };
 
-    if ($("userRua")) $("userRua").value = perfil.endereco?.rua || "";
-    if ($("userNumero")) $("userNumero").value = perfil.endereco?.numero || "";
-    if ($("userBairro")) $("userBairro").value = perfil.endereco?.bairro || "";
-    if ($("userCidade")) $("userCidade").value = perfil.endereco?.cidade || "";
-    if ($("userEstado")) $("userEstado").value = perfil.endereco?.estado || "";
-    if ($("userCEP")) $("userCEP").value = perfil.endereco?.cep || "";
-
-    if ($("areaInteresse")) $("areaInteresse").value = perfil.areaInteresse || "";
-    if ($("cargoDesejado")) $("cargoDesejado").value = perfil.cargoDesejado || "";
-    if ($("nivelExperiencia")) $("nivelExperiencia").value = perfil.nivelExperiencia || "";
-    if ($("habilidades")) $("habilidades").value = perfil.habilidades || "";
-    if ($("resumoProfissional")) $("resumoProfissional").value = perfil.resumo || "";
-
-    atualizarTopo(perfil);
-    atualizarProgresso(perfil);
-  }
-
-  function lerCampos(perfilAntigo) {
-    const perfil = JSON.parse(JSON.stringify(perfilAntigo));
-
-    perfil.nome = ($("userNomeCompleto")?.value || "").trim();
-    perfil.email = ($("userEmail")?.value || "").trim();
-    perfil.telefone = ($("userTelefone")?.value || "").trim();
-    perfil.dataNascimento = $("userDataNascimento")?.value || "";
-    perfil.documento = ($("userDocumento")?.value || "").trim();
-
-    perfil.endereco = perfil.endereco || {};
-    perfil.endereco.rua = ($("userRua")?.value || "").trim();
-    perfil.endereco.numero = ($("userNumero")?.value || "").trim();
-    perfil.endereco.bairro = ($("userBairro")?.value || "").trim();
-    perfil.endereco.cidade = ($("userCidade")?.value || "").trim();
-    perfil.endereco.estado = ($("userEstado")?.value || "").trim().toUpperCase();
-    perfil.endereco.cep = ($("userCEP")?.value || "").trim();
-
-    perfil.areaInteresse = ($("areaInteresse")?.value || "").trim();
-    perfil.cargoDesejado = ($("cargoDesejado")?.value || "").trim();
-    perfil.nivelExperiencia = $("nivelExperiencia")?.value || "";
-    perfil.habilidades = ($("habilidades")?.value || "").trim();
-    perfil.resumo = ($("resumoProfissional")?.value || "").trim();
-
-    return perfil;
-  }
-
-  /* =========================
-     SALVAR (FUNÇÃO ÚNICA - USADA PELOS 2 BOTÕES)
-  ========================= */
-  function salvarPerfil(ctx) {
-    const atualizado = lerCampos(ctx.perfil);
-
-    if (!atualizado.nome) {
-      setMsg("Informe seu nome completo.", "error");
-      return false;
-    }
-    if (!atualizado.email || !atualizado.email.includes("@")) {
-      setMsg("Informe um e-mail válido.", "error");
-      return false;
-    }
-
-    ctx.banco[ctx.idx] = atualizado;
-    setList("bancoTalentos", ctx.banco);
-
-    // Mantém a sessão coerente
-    const novaSession = { ...session, name: atualizado.nome, email: atualizado.email };
-    localStorage.setItem("session", JSON.stringify(novaSession));
-
-    ctx.perfil = atualizado;
-    preencherCampos(atualizado);
-
-    setMsg("Perfil atualizado com sucesso!", "success");
-    markSaved();
-    return true;
-  }
-
-  function setupSalvar(ctx) {
-    const btnForm = $("btnSalvar");
-    const btnSticky = $("btnSalvarSticky");
-    const btnTopo = $("btnTopo");
-
-    if (btnForm) btnForm.addEventListener("click", () => salvarPerfil(ctx));
-    if (btnSticky) btnSticky.addEventListener("click", () => salvarPerfil(ctx));
-
-    if (btnTopo) {
-      btnTopo.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    }
-
-    // progresso + marcação "não salvo" em tempo real
-    const ids = [
-      "userNomeCompleto","userEmail","userTelefone","userDataNascimento","userDocumento",
-      "userRua","userNumero","userBairro","userCidade","userEstado","userCEP",
-      "areaInteresse","cargoDesejado","nivelExperiencia","habilidades","resumoProfissional"
-    ];
-
-    ids.forEach((id) => {
+    Object.keys(map).forEach((id) => {
       const el = $(id);
       if (!el) return;
-
-      const handle = () => {
-        markDirty();
-        const preview = lerCampos(ctx.perfil);
-        atualizarTopo(preview);
-        atualizarProgresso(preview);
-      };
-
-      el.addEventListener("input", handle);
-      el.addEventListener("change", handle);
+      const key = map[id];
+      el.value = perfil[key] || "";
     });
   }
 
-  /* =========================
-     FOTO DE PERFIL (MENU)
-  ========================= */
-  function setupFoto(ctx) {
-    const input = $("uploadFoto");
-    const img = $("fotoUsuario");
-    const menu = $("avatarMenu");
+  function renderProgresso(perfil) {
+    const campos = [
+      perfil.nomeCompleto,
+      perfil.email,
+      perfil.telefone,
+      perfil.dataNascimento,
+      perfil.cidade,
+      perfil.estado,
+      perfil.cep,
+      perfil.cargo,
+      perfil.area,
+      perfil.escolaridade,
+      perfil.experiencia
+    ];
+
+    const total = campos.length;
+    const filled = campos.filter(v => (v || "").toString().trim().length > 0).length;
+    const pct = Math.round((filled / total) * 100);
+
+    const barra = $("barraProgresso");
+    const pctEl = $("percentualProgresso");
+    if (barra) barra.style.width = `${pct}%`;
+    if (pctEl) pctEl.textContent = `${pct}%`;
+  }
+
+  function setStatus(texto, tipo = "ok") {
+    const s = $("statusSalvo");
+    const dot = $("statusDot");
+    if (s) s.textContent = texto || "";
+
+    if (dot) {
+      if (tipo === "warn") dot.style.background = "rgba(245,124,0,.95)";
+      else if (tipo === "error") dot.style.background = "rgba(211,47,47,.95)";
+      else dot.style.background = "rgba(46,125,50,.85)";
+    }
+  }
+
+  function setSaveButtonSavedState(saved) {
+    const btnSalvar = $("btnSalvar");
+    if (!btnSalvar) return;
+
+    if (saved) {
+      btnSalvar.classList.add("btn-saved");
+      btnSalvar.innerHTML = `<i class="fa-solid fa-check"></i> Salvo`;
+    } else {
+      btnSalvar.classList.remove("btn-saved");
+      btnSalvar.innerHTML = `<i class="fa-solid fa-floppy-disk"></i> Salvar alterações`;
+    }
+  }
+
+  function setEditingMode(isEditing) {
+    const inputs = document.querySelectorAll(".input-pro");
+    inputs.forEach((el) => {
+      el.disabled = !isEditing;
+    });
+
+    const btnSalvar = $("btnSalvar");
+    if (btnSalvar) btnSalvar.disabled = !isEditing;
+
+    const btnEditar = $("btnEditar");
+    if (btnEditar) {
+      btnEditar.innerHTML = isEditing
+        ? `<i class="fa-solid fa-pen"></i> Editando`
+        : `<i class="fa-solid fa-pen"></i> Editar`;
+    }
+
+    if (!isEditing) {
+      setSaveButtonSavedState(true);
+      setStatus("Tudo salvo.", "ok");
+    } else {
+      setSaveButtonSavedState(false);
+      setStatus("Em edição", "warn");
+    }
+  }
+
+  /* ===== Foto ===== */
+  function initFoto() {
     const btnMenu = $("btnAvatarMenu");
+    const menu = $("avatarMenu");
     const btnUpload = $("btnUploadFoto");
     const btnRemover = $("btnRemoverFoto");
+    const inputFoto = $("inputFoto");
+    const img = $("fotoUsuario");
 
-    if (!input || !img || !menu || !btnMenu || !btnUpload || !btnRemover) return;
+    if (!btnMenu || !menu) return;
 
-    function abrirFecharMenu(force) {
-      if (typeof force === "boolean") {
-        menu.classList.toggle("open", force);
-        return;
-      }
-      menu.classList.toggle("open");
+    function openMenu() {
+      menu.classList.add("open");
+      menu.setAttribute("aria-hidden", "false");
+    }
+    function closeMenu() {
+      menu.classList.remove("open");
+      menu.setAttribute("aria-hidden", "true");
     }
 
     btnMenu.addEventListener("click", (e) => {
       e.stopPropagation();
-      abrirFecharMenu();
+      if (menu.classList.contains("open")) closeMenu();
+      else openMenu();
     });
 
-    img.addEventListener("click", (e) => {
-      e.stopPropagation();
-      abrirFecharMenu();
+    document.addEventListener("click", () => closeMenu());
+
+    btnUpload?.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeMenu();
+      inputFoto?.click();
     });
 
-    document.addEventListener("click", () => abrirFecharMenu(false));
-    menu.addEventListener("click", (e) => e.stopPropagation());
-
-    btnUpload.addEventListener("click", () => {
-      abrirFecharMenu(false);
-      input.click();
-    });
-
-    input.addEventListener("change", (e) => {
-      const file = e.target.files?.[0];
+    inputFoto?.addEventListener("change", () => {
+      const file = inputFoto.files?.[0];
       if (!file) return;
-
-      if (!file.type.startsWith("image/")) {
-        setMsg("Envie uma imagem válida (JPG/PNG).", "error");
-        input.value = "";
-        return;
-      }
-
-      const max = 2 * 1024 * 1024; // 2MB
-      if (file.size > max) {
-        setMsg("Imagem muito grande. Use até 2MB.", "error");
-        input.value = "";
-        return;
-      }
-
-      markDirty();
 
       const reader = new FileReader();
       reader.onload = () => {
-        const base64 = String(reader.result || "");
+        const perfil = getPerfil();
+        perfil.foto = String(reader.result || "");
+        setPerfil(perfil);
 
-        ctx.perfil.foto = base64;
-        ctx.banco[ctx.idx] = ctx.perfil;
-        setList("bancoTalentos", ctx.banco);
-
-        img.src = base64;
-        setMsg("Foto atualizada!", "success");
-        input.value = "";
-        markSaved();
+        if (img) img.src = perfil.foto;
+        setStatus("Foto atualizada.", "ok");
+        setSaveButtonSavedState(true);
       };
-
       reader.readAsDataURL(file);
     });
 
-    btnRemover.addEventListener("click", () => {
-      abrirFecharMenu(false);
-      markDirty();
+    btnRemover?.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeMenu();
 
-      ctx.perfil.foto = "";
-      ctx.banco[ctx.idx] = ctx.perfil;
-      setList("bancoTalentos", ctx.banco);
+      const perfil = getPerfil();
+      delete perfil.foto;
+      setPerfil(perfil);
 
-      img.src = "https://via.placeholder.com/80";
-      setMsg("Foto removida.", "success");
-      markSaved();
+      if (img) img.src = "https://via.placeholder.com/80";
+      setStatus("Foto removida.", "ok");
+      setSaveButtonSavedState(true);
+    });
+
+    // carrega foto salva
+    const perfil = getPerfil();
+    if (perfil.foto && img) img.src = perfil.foto;
+  }
+
+  /* ===== Tabs + Accordion + Expand/Recolher ===== */
+  function initTabsAccordion() {
+    const tabs = Array.from(document.querySelectorAll(".perfil-tab"));
+    const sections = Array.from(document.querySelectorAll(".perfil-section"));
+
+    if (!tabs.length || !sections.length) return;
+
+    function setCollapsed(sec, collapsed) {
+      sec.setAttribute("data-collapsed", collapsed ? "true" : "false");
+      const toggle = sec.querySelector(".section-toggle");
+      if (toggle) toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    }
+
+    function showSection(target) {
+      sections.forEach(sec => {
+        const isTarget = sec.getAttribute("data-section") === target;
+        sec.style.display = isTarget ? "" : "none";
+      });
+
+      tabs.forEach(t => {
+        const on = t.dataset.target === target;
+        t.classList.toggle("active", on);
+        t.setAttribute("aria-selected", on ? "true" : "false");
+      });
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        showSection(tab.dataset.target);
+      });
+    });
+
+    // toggles do accordion
+    sections.forEach(sec => {
+      const toggle = sec.querySelector(".section-toggle");
+      if (!toggle) return;
+
+      toggle.addEventListener("click", () => {
+        const collapsed = sec.getAttribute("data-collapsed") === "true";
+        setCollapsed(sec, !collapsed);
+      });
+    });
+
+    // expandir / recolher
+    $("btnExpandirTudo")?.addEventListener("click", () => {
+      sections.forEach(sec => setCollapsed(sec, false));
+    });
+
+    $("btnRecolherTudo")?.addEventListener("click", () => {
+      sections.forEach(sec => setCollapsed(sec, true));
+    });
+
+    // inicia na primeira aba visível
+    showSection(tabs.find(t => t.classList.contains("active"))?.dataset.target || "pessoais");
+  }
+
+  /* ===== Data digitável dd/mm/aaaa ===== */
+  function initDateTyping() {
+    const input = $("userDataNascimento");
+    if (!input) return;
+
+    input.addEventListener("input", () => {
+      let v = input.value.replace(/\D/g, "").slice(0, 8);
+      if (v.length >= 5) v = v.replace(/^(\d{2})(\d{2})(\d{1,4}).*/, "$1/$2/$3");
+      else if (v.length >= 3) v = v.replace(/^(\d{2})(\d{1,2}).*/, "$1/$2");
+      input.value = v;
     });
   }
 
-  /* =========================
-     LOGOUT
-  ========================= */
-  function setupLogout() {
-    const btn = $("btnLogout");
-    if (!btn) return;
+  /* ===== Editar / Salvar ===== */
+  function initEditarSalvar() {
+    const btnEditar = $("btnEditar");
+    const btnSalvar = $("btnSalvar");
 
-    btn.addEventListener("click", () => {
+    let editing = false;
+
+    btnEditar?.addEventListener("click", () => {
+      editing = !editing;
+      setEditingMode(editing);
+    });
+
+    btnSalvar?.addEventListener("click", () => {
+      const perfil = getPerfil();
+
+      const map = {
+        userNomeCompleto: "nomeCompleto",
+        userEmail: "email",
+        userTelefone: "telefone",
+        userDataNascimento: "dataNascimento",
+        userRua: "rua",
+        userNumero: "numero",
+        userBairro: "bairro",
+        userCidade: "cidade",
+        userEstado: "estado",
+        userCep: "cep",
+        userCargo: "cargo",
+        userArea: "area",
+        userEscolaridade: "escolaridade",
+        userExperiencia: "experiencia",
+      };
+
+      Object.keys(map).forEach((id) => {
+        const el = $(id);
+        if (!el) return;
+        perfil[map[id]] = (el.value || "").trim();
+      });
+
+      setPerfil(perfil);
+      updateTopo(perfil);
+      renderProgresso(perfil);
+
+      editing = false;
+      setEditingMode(false);
+    });
+  }
+
+  function initLogout() {
+    const logout = $("logout");
+    logout?.addEventListener("click", () => {
       localStorage.removeItem("session");
-      localStorage.removeItem("auth");
-      window.location.href = "index.html";
     });
   }
 
-  /* =========================
-     INIT
-  ========================= */
-  function init() {
-    setupLogout();
+  /* ===== BOOT ===== */
+  const perfil = getPerfil();
+  updateTopo(perfil);
+  preencherCampos(perfil);
+  renderProgresso(perfil);
 
-    const ctx = encontrarOuCriarPerfil();
-    preencherCampos(ctx.perfil);
+  initFoto();
+  initTabsAccordion();
+  initDateTyping();
+  initEditarSalvar();
+  initLogout();
 
-    // estado inicial do sticky
-    markSaved();
-
-    setupSalvar(ctx);
-    setupFoto(ctx);
-  }
-
-  init();
+  setEditingMode(false);
+  setStatus("Tudo salvo.", "ok");
 })();

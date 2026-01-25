@@ -1,208 +1,267 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>Meu Perfil | SCE</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Meu Perfil | SCE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="css/pages/dashboard-candidato.css">
-<link rel="stylesheet" href="css/pages/perfil.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/pages/dashboard-candidato.css">
+  <link rel="stylesheet" href="css/pages/perfil.css">
 </head>
-<body class="dash-body" data-page="candidato">
 
-<aside class="sidebar-pro">
+<body class="dash-body page-perfil" data-page="candidato">
+
+  <aside class="sidebar-pro">
     <div class="side-logo">
-        <img src="imagem/logo c&s.png" alt="Logo da C&S">
+      <img src="imagem/logo c&s.png" alt="Logo da C&S">
     </div>
+
     <nav class="side-nav">
-        <a href="painel-candidato.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Início</a>
-        <a href="perfil.html" class="nav-link active"><i class="fa-solid fa-user-tie"></i> Meu Perfil</a>
-        <a href="documentos.html" class="nav-link"><i class="fa-solid fa-file-arrow-up"></i> Documentos</a>
-        <a href="vagas.html" class="nav-link"><i class="fa-solid fa-briefcase"></i> Vagas</a>
-        <div class="nav-divider"></div>
-<button type="button" class="nav-link logout" id="btnLogout">
-<a href="index.html" class="nav-link logout" id="logout">
-  <i class="fa-solid fa-right-from-bracket"></i> Sair
-</a>
-</button>
+      <a href="painel-candidato.html" class="nav-link" title="Início">
+        <i class="fa-solid fa-chart-line"></i> Início
+      </a>
 
+      <a href="perfil.html" class="nav-link active" title="Meu Perfil">
+        <i class="fa-solid fa-user-tie"></i> Meu Perfil
+      </a>
+
+      <a href="documentos.html" class="nav-link" title="Documentos">
+        <i class="fa-solid fa-file-arrow-up"></i> Documentos
+      </a>
+
+      <a href="vagas.html" class="nav-link" title="Vagas">
+        <i class="fa-solid fa-briefcase"></i> Vagas
+      </a>
+
+      <div class="nav-divider" aria-hidden="true"></div>
+
+      <a href="index.html" class="nav-link logout" id="logout" title="Sair">
+        <i class="fa-solid fa-right-from-bracket"></i> Sair
+      </a>
     </nav>
-</aside>
+  </aside>
 
-<div class="main-content">
+  <div class="main-content perfil-wrap" id="perfilRoot">
 
-  <!-- TOPO DO PERFIL -->
-<div class="avatar-wrap compact">
-  <img id="fotoUsuario" class="avatar" src="https://via.placeholder.com/80" alt="Foto do usuário">
+    <section class="perfil-card card-glass perfil-header">
+      <div class="perfil-topo">
+        <div class="avatar-area">
+          <div class="avatar-wrap">
 
-  <button type="button" class="avatar-edit" id="btnAvatarMenu" aria-label="Editar foto">
-    <i class="fa-solid fa-camera"></i>
-  </button>
+            <div class="avatar-circle">
+              <img id="fotoUsuario" class="avatar" src="https://via.placeholder.com/160" alt="Foto do usuário">
+            </div>
 
-  <div class="avatar-menu" id="avatarMenu">
-    <button type="button" class="avatar-menu-item" id="btnUploadFoto">
-      <i class="fa-solid fa-upload"></i> Carregar
-    </button>
-    <button type="button" class="avatar-menu-item danger" id="btnRemoverFoto">
-      <i class="fa-solid fa-trash"></i> Remover
-    </button>
-  </div>
+            <button type="button" class="avatar-edit" id="btnAvatarMenu" aria-label="Editar foto">
+              <i class="fa-solid fa-camera"></i>
+            </button>
 
-  <input type="file" id="uploadFoto" accept="image/*" hidden>
-</div>
+            <div class="avatar-menu" id="avatarMenu" aria-hidden="true">
+              <button type="button" class="avatar-menu-item" id="btnUploadFoto">
+                <i class="fa-solid fa-upload"></i> Carregar
+              </button>
+              <button type="button" class="avatar-menu-item danger" id="btnRemoverFoto">
+                <i class="fa-solid fa-trash"></i> Remover
+              </button>
+            </div>
 
+            <input id="inputFoto" type="file" accept="image/*" hidden>
+          </div>
 
+          <div class="info">
+            <h2 id="userNome">Candidato</h2>
+            <div class="mini-row">
+              <span id="resumoMini">Área • Cargo</span>
+              <span class="chip" id="chipCompleto">Perfil</span>
+            </div>
+          </div>
+        </div>
 
-    <div class="info">
-      <h2 id="userNome">Candidato</h2>
-      <span id="resumoMini">Área e Cargo</span>
+        <div class="perfil-actions">
+          <button class="btn-pro btn-ghost" type="button" id="btnEditar" title="Editar" aria-label="Editar">
+            <i class="fa-solid fa-pen"></i> Editar
+          </button>
+
+          <button class="btn-pro btn-ghost btn-icon" type="button" id="btnExpandirTudo" title="Expandir tudo" aria-label="Expandir tudo">
+            <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+          </button>
+
+          <button class="btn-pro btn-ghost btn-icon" type="button" id="btnRecolherTudo" title="Recolher tudo" aria-label="Recolher tudo">
+            <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="perfil-layout">
+
+      <aside class="perfil-side">
+
+        <div class="perfil-card card-glass">
+          <div class="card-head">
+            <h3>Progresso do Perfil</h3>
+          </div>
+          <div class="card-body">
+            <div class="progresso-container">
+              <div id="barraProgresso"></div>
+            </div>
+            <div class="progresso-meta">
+              <div id="percentualProgresso">0%</div>
+              <small id="progressoTexto">Complete para melhorar suas chances</small>
+            </div>
+          </div>
+        </div>
+
+        <nav class="perfil-tabs perfil-card card-glass" aria-label="Seções do perfil">
+          <button class="perfil-tab active" type="button" data-target="pessoais" aria-selected="true">
+            <i class="fa-solid fa-id-card"></i> Pessoal
+          </button>
+          <button class="perfil-tab" type="button" data-target="endereco" aria-selected="false">
+            <i class="fa-solid fa-location-dot"></i> Endereço
+          </button>
+          <button class="perfil-tab" type="button" data-target="profissional" aria-selected="false">
+            <i class="fa-solid fa-briefcase"></i> Profissional
+          </button>
+        </nav>
+
+        <div class="perfil-card card-glass">
+          <div class="card-head">
+            <h3>Status</h3>
+          </div>
+          <div class="card-body">
+            <div class="status-line">
+              <span class="status-dot" id="statusDot"></span>
+              <span id="statusSalvo">Em edição</span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+      <main class="perfil-main">
+
+        <section class="perfil-card card-glass perfil-section" data-section="pessoais" id="sec-pessoais" data-collapsed="false">
+          <div class="card-head">
+            <button class="section-toggle" type="button" aria-controls="sec-body-pessoais" aria-expanded="true">
+              <span>Informações Pessoais</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+          </div>
+
+          <div class="card-body" id="sec-body-pessoais">
+            <div class="grid-2">
+              <div class="campo">
+                <label for="userNomeCompleto">Nome completo</label>
+                <input class="input-pro" id="userNomeCompleto" type="text" placeholder="Ex: Luan Silva">
+              </div>
+
+              <div class="campo">
+                <label for="userEmail">Email</label>
+                <input class="input-pro" id="userEmail" type="email" placeholder="exemplo@email.com">
+              </div>
+
+              <div class="campo">
+                <label for="userTelefone">Telefone</label>
+                <input class="input-pro" id="userTelefone" type="tel" placeholder="(xx) xxxxx-xxxx">
+              </div>
+
+              <div class="campo">
+                <label for="userDataNascimento">Data de Nascimento</label>
+                <input class="input-pro" id="userDataNascimento" type="text" inputmode="numeric" placeholder="dd/mm/aaaa" maxlength="10">
+                <small class="help">Pode digitar direto: <b>dd/mm/aaaa</b>.</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="perfil-card card-glass perfil-section" data-section="endereco" id="sec-endereco" data-collapsed="false">
+          <div class="card-head">
+            <button class="section-toggle" type="button" aria-controls="sec-body-endereco" aria-expanded="true">
+              <span>Endereço</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+          </div>
+
+          <div class="card-body" id="sec-body-endereco">
+            <div class="grid-2">
+              <div class="campo">
+                <label for="userRua">Rua</label>
+                <input class="input-pro" id="userRua" type="text" placeholder="Nome da rua">
+              </div>
+
+              <div class="campo">
+                <label for="userNumero">Número</label>
+                <input class="input-pro" id="userNumero" type="text" placeholder="Ex: 123">
+              </div>
+
+              <div class="campo">
+                <label for="userBairro">Bairro</label>
+                <input class="input-pro" id="userBairro" type="text" placeholder="Seu bairro">
+              </div>
+
+              <div class="campo">
+                <label for="userCidade">Cidade</label>
+                <input class="input-pro" id="userCidade" type="text" placeholder="Sua cidade">
+              </div>
+
+              <div class="campo">
+                <label for="userEstado">Estado</label>
+                <input class="input-pro" id="userEstado" type="text" placeholder="UF">
+              </div>
+
+              <div class="campo">
+                <label for="userCep">CEP</label>
+                <input class="input-pro" id="userCep" type="text" placeholder="00000-000">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="perfil-card card-glass perfil-section" data-section="profissional" id="sec-profissional" data-collapsed="false">
+          <div class="card-head">
+            <button class="section-toggle" type="button" aria-controls="sec-body-profissional" aria-expanded="true">
+              <span>Profissional</span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+          </div>
+
+          <div class="card-body" id="sec-body-profissional">
+            <div class="grid-2">
+              <div class="campo">
+                <label for="userCargo">Cargo desejado</label>
+                <input class="input-pro" id="userCargo" type="text" placeholder="Ex: Assistente de Logística">
+              </div>
+
+              <div class="campo">
+                <label for="userArea">Área</label>
+                <input class="input-pro" id="userArea" type="text" placeholder="Ex: Logística">
+              </div>
+
+              <div class="campo">
+                <label for="userEscolaridade">Escolaridade</label>
+                <input class="input-pro" id="userEscolaridade" type="text" placeholder="Ex: Ensino Médio Completo">
+              </div>
+
+              <div class="campo campo-full">
+                <label for="userExperiencia">Experiência (resumo)</label>
+                <textarea class="input-pro" id="userExperiencia" placeholder="Tempo + função + atividades principais."></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="perfil-footer">
+          <button class="btn-pro" id="btnSalvar" type="button">
+            <i class="fa-solid fa-floppy-disk"></i> Salvar alterações
+          </button>
+        </div>
+
+      </main>
     </div>
   </div>
 
-  <!-- BARRA DE PROGRESSO DO PERFIL -->
-  <div class="perfil-card card-glass">
-    <div class="card-head">
-      <h3>Progresso do Perfil</h3>
-    </div>
-    <div class="card-body">
-      <div class="progresso-container">
-        <div id="barraProgresso"></div>
-      </div>
-      <div id="percentualProgresso">0%</div>
-    </div>
-  </div>
-
-  <!-- FORMULÁRIO DO PERFIL -->
-  <div class="perfil-card card-glass">
-    <div class="card-head">
-      <h3>Informações Pessoais</h3>
-    </div>
-    <div class="card-body">
-
-      <div class="campo">
-        <label for="userNomeCompleto">Nome completo</label>
-        <input type="text" id="userNomeCompleto" class="input-pro">
-      </div>
-
-      <div class="campo">
-        <label for="userEmail">Email</label>
-        <input type="email" id="userEmail" class="input-pro">
-      </div>
-
-      <div class="campo">
-        <label for="userTelefone">Telefone</label>
-        <input type="text" id="userTelefone" class="input-pro">
-      </div>
-
-      <div class="campo">
-        <label for="userDataNascimento">Data de Nascimento</label>
-        <input type="date" id="userDataNascimento" class="input-pro">
-      </div>
-
-      <div class="campo">
-        <label for="userDocumento">Documento</label>
-        <input type="text" id="userDocumento" class="input-pro">
-      </div>
-    </div>
-  </div>
-
-  <!-- ENDEREÇO -->
-  <div class="perfil-card card-glass">
-    <div class="card-head">
-      <h3>Endereço</h3>
-    </div>
-    <div class="card-body">
-      <div class="campo">
-        <label for="userRua">Rua</label>
-        <input type="text" id="userRua" class="input-pro">
-      </div>
-      <div class="campo">
-        <label for="userNumero">Número</label>
-        <input type="text" id="userNumero" class="input-pro">
-      </div>
-      <div class="campo">
-        <label for="userBairro">Bairro</label>
-        <input type="text" id="userBairro" class="input-pro">
-      </div>
-      <div class="campo">
-        <label for="userCidade">Cidade</label>
-        <input type="text" id="userCidade" class="input-pro">
-      </div>
-      <div class="campo">
-        <label for="userEstado">Estado</label>
-        <input type="text" id="userEstado" class="input-pro">
-      </div>
-      <div class="campo">
-        <label for="userCEP">CEP</label>
-        <input type="text" id="userCEP" class="input-pro">
-      </div>
-    </div>
-  </div>
-
-  <!-- INFORMAÇÕES PROFISSIONAIS -->
-  <div class="perfil-card card-glass">
-    <div class="card-head">
-      <h3>Informações Profissionais</h3>
-    </div>
-    <div class="card-body">
-      <div class="campo">
-        <label for="areaInteresse">Área de Interesse</label>
-        <input type="text" id="areaInteresse" class="input-pro">
-      </div>
-
-      <div class="campo">
-        <label for="cargoDesejado">Cargo Desejado</label>
-        <input type="text" id="cargoDesejado" class="input-pro">
-      </div>
-
-      <div class="campo">
-        <label for="nivelExperiencia">Nível de Experiência</label>
-        <select id="nivelExperiencia" class="input-pro">
-          <option value="">Selecione</option>
-          <option value="Júnior">Júnior</option>
-          <option value="Pleno">Pleno</option>
-          <option value="Sênior">Sênior</option>
-          <option value="Especialista">Especialista</option>
-        </select>
-      </div>
-
-      <div class="campo">
-        <label for="habilidades">Habilidades</label>
-        <textarea id="habilidades" class="input-pro" rows="3"></textarea>
-      </div>
-
-      <div class="campo">
-        <label for="resumoProfissional">Resumo Profissional</label>
-        <textarea id="resumoProfissional" class="input-pro" rows="4"></textarea>
-      </div>
-
-      <button id="btnSalvar" class="btn-full">Salvar Perfil</button>
-      <div id="msgPerfil" class="msg-sucesso"></div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Barra fixa (sticky) de salvar -->
-<div class="perfil-sticky" id="perfilSticky">
-  <div class="hint">
-    <span id="stickyStatus">Tudo salvo.</span>
-  </div>
-
-  <div class="actions">
-    <button type="button" class="btn-secondary" id="btnTopo">
-      Voltar ao topo
-    </button>
-
-    <button type="button" class="btn-save" id="btnSalvarSticky">
-      Salvar alterações
-    </button>
-  </div>
-</div>
-
-<script src="js/core/auth.js"></script>
-<script src="js/perfil.js"></script>
-
+  <script src="js/core/auth.js"></script>
+  <script src="js/perfil.js"></script>
 </body>
 </html>
