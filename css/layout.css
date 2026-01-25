@@ -4,9 +4,9 @@
 
 main.conteudo,
 main {
-    max-width: 1100px;
+    max-width: var(--container-max);
     margin: 0 auto;
-    padding: 2.5rem 1rem;
+    padding: clamp(1.5rem, 3vw, 3rem) var(--container-pad);
 }
 
 /* ==========================
@@ -18,12 +18,13 @@ main {
     align-items: center;         /* centraliza horizontalmente */
     justify-content: center;     /* centraliza verticalmente */
 
-    height: 88px; /* mesmo tamanho visual do site oficial */
-    padding: 0 2rem;
+    min-height: 88px; /* mantém o visual, mas permite quebrar linha */
+    height: auto;
+    padding: 0 var(--container-pad);
 
     background-color: #0A8ED8; /* AZUL DO SITE DELES */
     color: #ffffff;
-    gap: 8rem; /* DISTÂNCIA MAIOR entre logo e menu */
+    gap: clamp(1rem, 3vw, 4rem); /* DISTÂNCIA MAIOR entre logo e menu */
 
 }
 
@@ -44,6 +45,7 @@ main {
 
 /* Menu */
 .topo nav {
+    flex-wrap: wrap;
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -53,6 +55,7 @@ main {
     color: #ffffff;
     text-decoration: none;
     font-size: 0.95rem;
+    line-height: 1.2;
     font-weight: 700;
     position: relative;
 }
@@ -102,6 +105,7 @@ footer {
     }
 
     .topo nav {
+    flex-wrap: wrap;
         flex-wrap: wrap;
         justify-content: center;
     }

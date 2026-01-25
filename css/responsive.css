@@ -216,3 +216,21 @@
         font-size: 1rem;
     }
 }
+
+/* =====================================
+   ULTRA-WIDE (TVs / monitores 4K+)
+   ===================================== */
+@media (min-width: 2000px){
+  /* aumenta levemente áreas clicáveis sem exagerar */
+  .btn{ padding: 0.95rem 2.1rem; }
+  .card-vaga{ border-radius: 14px; }
+}
+
+/* =====================================
+   TABLETS / LANDSCAPE
+   ===================================== */
+@media (max-width: 1024px){
+  main.conteudo, main{
+    padding: clamp(1.25rem, 3vw, 2.2rem) var(--container-pad);
+  }
+}

@@ -11,7 +11,7 @@
 /* Container do conteúdo (compatível) */
 .conteudo.pagina-cadastro,
 .conteudo.cadastro-page,
-main.conteudo {
+.pagina-cadastro main.conteudo {
     max-width: 750px;
     margin: 0 auto;
 }
@@ -20,7 +20,7 @@ main.conteudo {
    TÍTULO PRINCIPAL
    ========================== */
 
-main.conteudo h1 {
+.pagina-cadastro main.conteudo h1 {
     font-size: 2.8rem;
     font-weight: 800;
     color: var(--azul-primario);
@@ -36,7 +36,7 @@ main.conteudo h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-main.conteudo h1::after {
+.pagina-cadastro main.conteudo h1::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -616,7 +616,7 @@ main.conteudo h1::after {
 }
 
 @media (max-width: 768px) {
-    main.conteudo h1 {
+    .pagina-cadastro main.conteudo h1 {
         font-size: 2.2rem;
         margin-bottom: 1rem;
     }
@@ -664,7 +664,7 @@ main.conteudo h1::after {
 }
 
 @media (max-width: 600px) {
-    main.conteudo h1 {
+    .pagina-cadastro main.conteudo h1 {
         font-size: 1.8rem;
     }
 
@@ -721,12 +721,12 @@ main.conteudo h1::after {
 }
 
 @media (max-width: 480px) {
-    main.conteudo h1 {
+    .pagina-cadastro main.conteudo h1 {
         font-size: 1.5rem;
         padding-bottom: 1rem;
     }
 
-    main.conteudo h1::after {
+    .pagina-cadastro main.conteudo h1::after {
         width: 60px;
     }
 
@@ -783,4 +783,17 @@ main.conteudo h1::after {
     #lista-candidaturas li {
         padding: 1rem;
     }
+}
+
+
+/* CADASTRO – Mais confortável em telas grandes */
+@media (min-width: 1200px){
+  .pagina-cadastro main.conteudo{
+    max-width: 980px;
+  }
+}
+@media (min-width: 1800px){
+  .pagina-cadastro main.conteudo{
+    max-width: 1100px;
+  }
 }

@@ -39,6 +39,45 @@ body {
     --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
+/* ==========================
+   AJUSTES RESPONSIVOS GLOBAIS
+   ========================== */
+
+/* Evita "estouro" horizontal em telas pequenas */
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Mídias sempre fluidas */
+img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tipografia mais fluida sem bagunçar o layout */
+h1 { font-size: clamp(1.6rem, 2.6vw, 2.8rem); line-height: 1.15; }
+h2 { font-size: clamp(1.25rem, 2.0vw, 2.0rem); line-height: 1.2; }
+h3 { font-size: clamp(1.05rem, 1.4vw, 1.45rem); line-height: 1.25; }
+
+/* Container central padrão (controla PCs, monitores ultra-wide e TVs) */
+:root{
+    --container-max: 1100px;
+    --container-pad: clamp(1rem, 3.2vw, 2.5rem);
+}
+
+/* Ajuste fino para telas bem grandes */
+@media (min-width: 1400px){
+    :root{ --container-max: 1280px; }
+}
+@media (min-width: 1800px){
+    :root{ --container-max: 1440px; }
+}
+@media (min-width: 2400px){
+    :root{ --container-max: 1600px; }
+}
+
 /* Seleção melhorada */
 ::selection {
     background-color: var(--azul-primario);
