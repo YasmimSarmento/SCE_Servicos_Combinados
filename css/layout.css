@@ -335,3 +335,39 @@ footer {
         flex-wrap: wrap;
     }
 }
+
+
+/* ==========================
+   TEMA ESCURO – LAYOUT
+   ========================== */
+html.theme-dark .topo,
+html.theme-dark header,
+html.theme-dark .header {
+  background: var(--app-surface-2) !important;
+  border-color: var(--app-border) !important;
+}
+
+html.theme-dark .sidebar,
+html.theme-dark .sidebar-pro {
+  /* mantém identidade mas melhora contraste */
+  box-shadow: 0 18px 45px rgba(0,0,0,.55);
+}
+
+html.theme-dark .sidebar-overlay,
+html.theme-dark [data-sidebar-overlay] {
+  background: rgba(0,0,0,.55) !important;
+}
+
+html.theme-dark main,
+html.theme-dark .main,
+html.theme-dark .conteudo,
+html.theme-dark .content {
+  background: transparent !important;
+}
+
+html.theme-dark .badge,
+html.theme-dark .tag {
+  background: rgba(255,255,255,.08) !important;
+  color: var(--app-text) !important;
+  border-color: var(--app-border) !important;
+}

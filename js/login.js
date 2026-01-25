@@ -102,17 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("session", JSON.stringify(normalized));
       localStorage.setItem("auth", normalized.role);
 
-      // ✅ PROFISSA: ao logar, força o reset do botão flutuante no painel
-      // (sidebar.js vai ler isso e reposicionar no "meio-esquerda")
-      try {
-        localStorage.setItem("resetMenuTogglePos_v1", "1");
-      } catch (_) {}
-
       showSuccess(
         successBox,
-        normalized.role === "empresa"
-          ? "Login realizado! Indo para o painel…"
-          : "Bem-vindo! Abrindo seu painel…"
+        normalized.role === "empresa" ? "Login realizado! Indo para o painel…" : "Bem-vindo! Abrindo seu painel…"
       );
 
       // Redireciona por papel

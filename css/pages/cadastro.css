@@ -797,3 +797,135 @@
     max-width: 1100px;
   }
 }
+
+
+/* ==========================
+   TEMA ESCURO – CADASTRO
+   ========================== */
+html.theme-dark :where(.cadastro, .cadastro-box, .form-box, .card-cadastro, .painel-cadastro) {
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+
+html.theme-dark :where(.cadastro p, .cadastro .hint, .cadastro .sub) {
+  color: var(--app-text-muted) !important;
+}
+
+
+/* ============================
+   RESPONSIVO – CADASTRO (refino)
+   ============================ */
+
+@media (max-width: 700px){
+  .cadastro-container{
+    padding: 1.1rem;
+  }
+  .cadastro-container .grupo{
+    gap: 14px;
+  }
+}
+
+/* ==========================
+   DARK PATCH v3 – CADASTRO (contraste + fundo)
+   ========================== */
+html.theme-dark body.pagina-cadastro {
+  background: var(--app-bg) !important;
+}
+
+html.theme-dark body.pagina-cadastro #form-cadastro {
+  background: linear-gradient(180deg, var(--app-surface) 0%, var(--app-surface-2) 100%) !important;
+  border-color: var(--app-border) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45) !important;
+}
+
+html.theme-dark body.pagina-cadastro .vaga-selecionada {
+  background: linear-gradient(135deg, rgba(59,182,255,.12), rgba(16,29,51,.92)) !important;
+  border-color: rgba(59,182,255,.25) !important;
+}
+
+html.theme-dark body.pagina-cadastro .descricao-form {
+  color: var(--app-text-muted) !important;
+}
+
+html.theme-dark body.pagina-cadastro .campo label,
+html.theme-dark body.pagina-cadastro .section-title,
+html.theme-dark body.pagina-cadastro .vaga-selecionada h3,
+html.theme-dark body.pagina-cadastro .vaga-selecionada__titulo {
+  color: var(--app-text) !important;
+}
+
+html.theme-dark body.pagina-cadastro .help {
+  color: var(--app-text-muted) !important;
+}
+
+/* Inputs do cadastro estavam forçando branco */
+html.theme-dark body.pagina-cadastro .campo input,
+html.theme-dark body.pagina-cadastro .campo select,
+html.theme-dark body.pagina-cadastro .campo textarea {
+  background: var(--app-input-bg) !important;
+  color: var(--app-input-text) !important;
+  border-color: var(--app-input-border) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.28) !important;
+}
+
+html.theme-dark body.pagina-cadastro .campo input:focus,
+html.theme-dark body.pagina-cadastro .campo select:focus,
+html.theme-dark body.pagina-cadastro .campo textarea:focus {
+  background: var(--app-input-bg) !important;
+  border-color: rgba(59,182,255,.55) !important;
+  box-shadow: 0 0 0 4px var(--app-focus) !important;
+}
+
+html.theme-dark body.pagina-cadastro .campo input::placeholder,
+html.theme-dark body.pagina-cadastro .campo textarea::placeholder {
+  color: var(--app-placeholder) !important;
+}
+
+/* Upload/Dropzone do currículo (estava ficando claro no dark) */
+html.theme-dark body.pagina-cadastro .upload-box{
+  background: var(--app-surface-2) !important;
+  border-color: rgba(59,182,255,.55) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45) !important;
+}
+html.theme-dark body.pagina-cadastro .upload-box strong{
+  color: var(--app-text) !important;
+}
+html.theme-dark body.pagina-cadastro .upload-box small{
+  color: var(--app-text-muted) !important;
+}
+html.theme-dark body.pagina-cadastro .upload-box.ativo{
+  background: rgba(59,182,255,.10) !important;
+  border-color: rgba(59,182,255,.85) !important;
+  box-shadow: 0 22px 60px rgba(0,0,0,.55) !important;
+}
+
+html.theme-dark body.pagina-cadastro .file-status{
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45) !important;
+}
+html.theme-dark body.pagina-cadastro :where(.file-status__info strong){
+  color: var(--app-text) !important;
+}
+html.theme-dark body.pagina-cadastro :where(.file-status__info span){
+  color: var(--app-text-muted) !important;
+}
+html.theme-dark body.pagina-cadastro .file-status__remove{
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.14) !important;
+  color: var(--app-text) !important;
+}
+
+
+/* ==========================
+   RESPONSIVO PATCH v3 – CADASTRO
+   ========================== */
+@media (max-width: 900px){
+  #form-cadastro{ padding: 2.0rem !important; }
+  .grupo{ flex-direction: column; gap: 1.2rem; }
+}
+@media (max-width: 480px){
+  #form-cadastro{ padding: 1.4rem !important; border-radius: 14px; }
+  .pagina-cadastro main.conteudo h1{ font-size: 2.1rem; }
+}

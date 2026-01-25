@@ -96,16 +96,8 @@
     });
   }
 
-  // =========================================================
-  // Floating menu button: DRAGGABLE (only fallback floating button)
-  // =========================================================
-
-  // Regra: só torna arrastável se for o botão flutuante (não o do header)
-  const floatBtn = fallbackToggle; // só existe se não houver header toggle
-
   // Clique no botão (header ou fallback)
-  // Regra: o botão flutuante NÃO usa click para toggle (pra não ativar ao arrastar)
-  if (btnToggleMenu && btnToggleMenu !== floatBtn) {
+  if (btnToggleMenu) {
     btnToggleMenu.addEventListener('click', function () {
       // Se estiver em drawer, abre/fecha. Se estiver em desktop, recolhe/expande.
       if (isSmall()) toggleDrawer();
@@ -125,8 +117,54 @@
     if (e.key === 'Escape') closeDrawer();
   });
 
+  // Ao mudar tamanho: fecha drawer, e aplica colapso só no desktop
+  function handleResize() {
+    if (isSmall()) {
+      closeDrawer();
+      // No mobile, não deixa ficar "recolhido"
+      body.classList.remove('sidebar-collapsed');
+    } else {
+      closeDrawer();
+
+      try {
+        const userSet = localStorage.getItem('sidebarUserSet') === '1';
+        const saved = localStorage.getItem('sidebarCollapsed');
+
+        if (mqForceExpand.matches) {
+          setCollapsed(false, { persist: false });
+          try { localStorage.setItem('sidebarCollapsed', '0'); } catch (e) {}
+        } else if (userSet) {
+          setCollapsed(saved === '1', { persist: false });
+        } else {
+          setCollapsed(shouldAutoCollapse(), { persist: false });
+        }
+      } catch (e) {
+        setCollapsed(shouldAutoCollapse(), { persist: false });
+      }
+    }
+
+    // Se existir botão flutuante, reposiciona dentro da tela ao redimensionar
+    clampFloatingButtonToViewport();
+  }
+
+  // matchMedia change event (compat)
+  if (mqDrawer.addEventListener) mqDrawer.addEventListener('change', handleResize);
+  else mqDrawer.addListener(handleResize);
+
+  if (mqAutoCollapse.addEventListener) mqAutoCollapse.addEventListener('change', handleResize);
+  else mqAutoCollapse.addListener(handleResize);
+
+  if (mqForceExpand.addEventListener) mqForceExpand.addEventListener('change', handleResize);
+  else mqForceExpand.addListener(handleResize);
+
+  // =========================================================
+  // Floating menu button: DRAGGABLE (only fallback floating button)
+  // =========================================================
+
+  // Regra: só torna arrastável se for o botão flutuante (não o do header)
+  const floatBtn = fallbackToggle; // só existe se não houver header toggle
+
   const POS_KEY = 'menuTogglePos_v1';
-  const RESET_KEY = 'resetMenuTogglePos_v1';
 
   function getBtnRect(btn) {
     return btn.getBoundingClientRect();
@@ -185,51 +223,20 @@
     savePosition(x, y);
   }
 
-  function shouldResetPosition() {
-    try {
-      return localStorage.getItem(RESET_KEY) === '1';
-    } catch (e) {
-      return false;
-    }
-  }
-
-  function clearResetFlag() {
-    try { localStorage.removeItem(RESET_KEY); } catch (e) {}
-  }
-
-  function setDefaultProfessionalPosition() {
-    if (!floatBtn) return;
-
-    requestAnimationFrame(() => {
-      const rect = getBtnRect(floatBtn);
-      const pad = 14;
-
-      // Posição padrão profissional: meio na vertical + esquerda
-      const x = pad;
-      const y = Math.max(pad, (window.innerHeight - rect.height) / 2);
-
-      setBtnPosition(floatBtn, x, y);
-      clampFloatingButtonToViewport();
-      savePosition(x, y);
-      clearResetFlag();
-    });
-  }
-
-  // Aplica posição salva (se houver) OU reseta após login
+  // Aplica posição salva (se houver)
   if (floatBtn) {
     // garante que seja posicionável
     floatBtn.style.position = 'fixed';
 
-    const mustReset = shouldResetPosition();
-    const saved = mustReset ? null : loadSavedPosition();
-
+    const saved = loadSavedPosition();
     if (saved) {
       setBtnPosition(floatBtn, saved.x, saved.y);
       // depois ajusta pra não ficar fora da tela
       requestAnimationFrame(clampFloatingButtonToViewport);
     } else {
-      // Se veio de login, força padrão "meio-esquerda". Senão, default inicial também.
-      setDefaultProfessionalPosition();
+      // posição padrão inicial (se quiser mudar, ajuste aqui)
+      setBtnPosition(floatBtn, 14, 14);
+      requestAnimationFrame(clampFloatingButtonToViewport);
     }
   }
 
@@ -245,8 +252,7 @@
 
     let moved = false;
 
-    // ✅ Menos sensível: precisa mover mais pra considerar arrasto
-    const MOVE_THRESHOLD = 10; // px
+    const MOVE_THRESHOLD = 6; // px (evita abrir o menu quando foi arrasto)
 
     floatBtn.addEventListener('pointerdown', function (e) {
       // Só arrasta com botão principal (mouse) ou toque
@@ -279,9 +285,6 @@
         moved = true;
       }
 
-      // Só move visualmente se realmente virou arrasto
-      if (!moved) return;
-
       const rect = getBtnRect(floatBtn);
       const vw = window.innerWidth;
       const vh = window.innerHeight;
@@ -310,68 +313,24 @@
       const rect = getBtnRect(floatBtn);
       savePosition(rect.left, rect.top);
 
-      // ✅ Clique real (sem arrasto) abre/fecha aqui — não via "click"
-      if (!moved) {
-        if (isSmall()) toggleDrawer();
-        else toggleCollapsed();
-        return;
+      // Se foi arrasto, bloqueia o "click" que abriria o menu
+      if (moved) {
+        // cancela o click subsequente
+        floatBtn.dataset.justDragged = '1';
+        setTimeout(() => { delete floatBtn.dataset.justDragged; }, 80);
       }
-
-      // Se foi arrasto, bloqueia o "click" fantasma subsequente
-      floatBtn.dataset.justDragged = '1';
-      setTimeout(() => { delete floatBtn.dataset.justDragged; }, 140);
     });
 
-    // Bloqueia click fantasma após arrasto (em CAPTURA pra garantir)
+    // Bloqueia clique após arrasto (pra não abrir/fechar sem querer)
     floatBtn.addEventListener('click', function (e) {
       if (floatBtn.dataset.justDragged === '1') {
         e.preventDefault();
-        e.stopImmediatePropagation();
         e.stopPropagation();
+        return;
       }
-    }, true);
+      // se não foi arrasto, o click normal do listener acima vai rodar
+    });
 
     window.addEventListener('resize', clampFloatingButtonToViewport);
   }
-
-  // Ao mudar tamanho: fecha drawer, e aplica colapso só no desktop
-  function handleResize() {
-    if (isSmall()) {
-      closeDrawer();
-      // No mobile, não deixa ficar "recolhido"
-      body.classList.remove('sidebar-collapsed');
-    } else {
-      closeDrawer();
-
-      try {
-        const userSet = localStorage.getItem('sidebarUserSet') === '1';
-        const saved = localStorage.getItem('sidebarCollapsed');
-
-        if (mqForceExpand.matches) {
-          setCollapsed(false, { persist: false });
-          try { localStorage.setItem('sidebarCollapsed', '0'); } catch (e) {}
-        } else if (userSet) {
-          setCollapsed(saved === '1', { persist: false });
-        } else {
-          setCollapsed(shouldAutoCollapse(), { persist: false });
-        }
-      } catch (e) {
-        setCollapsed(shouldAutoCollapse(), { persist: false });
-      }
-    }
-
-    // Se existir botão flutuante, reposiciona dentro da tela ao redimensionar
-    clampFloatingButtonToViewport();
-  }
-
-  // matchMedia change event (compat)
-  if (mqDrawer.addEventListener) mqDrawer.addEventListener('change', handleResize);
-  else mqDrawer.addListener(handleResize);
-
-  if (mqAutoCollapse.addEventListener) mqAutoCollapse.addEventListener('change', handleResize);
-  else mqAutoCollapse.addListener(handleResize);
-
-  if (mqForceExpand.addEventListener) mqForceExpand.addEventListener('change', handleResize);
-  else mqForceExpand.addListener(handleResize);
-
 })();

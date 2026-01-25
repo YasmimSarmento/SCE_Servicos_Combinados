@@ -290,3 +290,17 @@
 .auth-brand--no-logo {
     justify-content: flex-start;
 }
+
+
+/* ==========================
+   TEMA ESCURO – LOGIN
+   (evita campos invisíveis / texto sumindo)
+   ========================== */
+html.theme-dark :where(.auth, .auth-card, .login-box, .login-card, .container-login, .box-login) {
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+
+html.theme-dark :where(label, .label) { color: var(--app-text) !important; }
+html.theme-dark :where(.auth small, .auth .hint, .auth .sub) { color: var(--app-text-muted) !important; }

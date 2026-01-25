@@ -5,9 +5,21 @@
   <title>Detalhe da Vaga – SCE Banco de Talentos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!-- APLICA O TEMA SALVO ANTES DO PRIMEIRO PAINT (EVITA FLASH NO MODO ESCURO) -->
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("appTheme_v1") || localStorage.getItem("theme_v1");
+      if (t === "dark") document.documentElement.classList.add("theme-dark");
+    } catch (e) {}
+  })();
+</script>
+
+
   <!-- Estilos -->
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/pages/detalhe-vaga.css" />
+  <script src="js/core/theme.js" defer></script>
 </head>
 
 <body class="pagina-detalhe-vaga">

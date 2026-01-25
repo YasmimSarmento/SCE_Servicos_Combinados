@@ -320,3 +320,74 @@
         min-width: unset;
     }
 }
+
+
+/* ==========================
+   TEMA ESCURO – VAGAS
+   ========================== */
+html.theme-dark :where(.filtros, .filtro, .filtro-box, .barra-filtros) {
+  background: var(--app-surface-2) !important;
+  border-color: var(--app-border) !important;
+}
+
+html.theme-dark :where(.vaga-card, .vaga, .vaga-item, .card-vaga, .grid-vagas .vaga-card) {
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+
+html.theme-dark :where(.vaga-card p, .vaga p, .vaga-card .meta, .vaga-card .descricao) {
+  color: var(--app-text-muted) !important;
+}
+
+
+/* ============================
+   RESPONSIVO – VAGAS (refino)
+   ============================ */
+
+@media (max-width: 700px){
+  .pagina-vagas .card-vaga .acoes{
+    flex-wrap: wrap;
+  }
+  .pagina-vagas .card-vaga .acoes .btn{
+    flex: 1 1 180px;
+  }
+}
+@media (max-width: 420px){
+  .pagina-vagas .card-vaga .acoes{
+    flex-direction: column;
+  }
+  .pagina-vagas .card-vaga .acoes .btn{
+    width: 100%;
+  }
+}
+
+/* ==========================
+   DARK PATCH v3 – VAGAS (vence especificidade .pagina-vagas .card-vaga)
+   ========================== */
+html.theme-dark .pagina-vagas .card-vaga {
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45) !important;
+}
+
+html.theme-dark .pagina-vagas .card-vaga::after {
+  background: linear-gradient(135deg, rgba(59,182,255,.10) 0%, rgba(59,182,255,0) 100%) !important;
+}
+
+html.theme-dark .pagina-vagas .card-vaga h2,
+html.theme-dark .pagina-vagas .card-vaga h3 {
+  color: #6fd0ff !important;
+}
+
+html.theme-dark .pagina-vagas .card-vaga .local,
+html.theme-dark .pagina-vagas .card-vaga .tipo,
+html.theme-dark .pagina-vagas .card-vaga .meta,
+html.theme-dark .pagina-vagas .card-vaga p {
+  color: var(--app-text-muted) !important;
+}
+
+html.theme-dark .pagina-vagas .filtros {
+  background: var(--app-surface-2) !important;
+  border-color: var(--app-border) !important;
+}

@@ -4,6 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Painel da Empresa | SCE</title>
+
+<!-- APLICA O TEMA SALVO ANTES DO PRIMEIRO PAINT (EVITA FLASH NO MODO ESCURO) -->
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("appTheme_v1") || localStorage.getItem("theme_v1");
+      if (t === "dark") document.documentElement.classList.add("theme-dark");
+    } catch (e) {}
+  })();
+</script>
+
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +22,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/pages/painel.css">
 
+  <script src="js/core/theme.js" defer></script>
 </head>
 
 <body class="dash-body com-sidebar" data-page="empresa">

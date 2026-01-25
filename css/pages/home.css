@@ -478,3 +478,76 @@ main.conteudo{
   .passo{ min-height: auto; }
   .como-funciona{ padding: 2rem 1.2rem; }
 }
+
+/* ==========================
+   TEMA ESCURO – HOME/INDEX
+   ========================== */
+html.theme-dark {
+  --sce-texto: var(--app-text);
+  --sce-muted: var(--app-text-muted);
+  --sce-borda: var(--app-border);
+}
+
+html.theme-dark body { background: var(--app-bg); }
+
+html.theme-dark :where(.hero, .hero-card, .feature, .feature-card, .card, .cards, .box, .painel) {
+  color: var(--app-text);
+}
+
+html.theme-dark :where(.feature-card, .cards .card, .card, .card-servico, .bloco) {
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+}
+
+html.theme-dark :where(.feature-card p, .card p, .desc, .muted, .sub) {
+  color: var(--app-text-muted) !important;
+}
+
+/* ==========================
+   DARK PATCH v4 – HOME (Como Funciona + dropdown)
+   Corrige cartões brancos “estourados” e textos apagados.
+   ========================== */
+
+html.theme-dark .como-funciona{
+  background: linear-gradient(180deg, var(--app-surface) 0%, var(--app-surface-2) 100%) !important;
+  border: 1px solid var(--app-border) !important;
+  box-shadow: 0 18px 55px rgba(0,0,0,.55) !important;
+}
+
+html.theme-dark .como-funciona h2{
+  color: #d7f1ff !important;
+}
+
+html.theme-dark .como-funciona h2::after{
+  background: linear-gradient(90deg, rgba(59,182,255,.95), rgba(59,182,255,.45)) !important;
+}
+
+html.theme-dark .passo{
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45) !important;
+}
+
+html.theme-dark .passo::before{
+  border-color: var(--app-surface-2) !important;
+}
+
+html.theme-dark .passo h3{
+  color: var(--app-text) !important;
+}
+
+html.theme-dark .passo p{
+  color: var(--app-text-muted) !important;
+}
+
+/* Dropdown do perfil (no topo) */
+html.theme-dark .perfil-dropdown{
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+}
+html.theme-dark .perfil-dropdown a{
+  color: var(--app-text) !important;
+}
+html.theme-dark .perfil-dropdown a:hover{
+  background: rgba(59,182,255,.10) !important;
+}

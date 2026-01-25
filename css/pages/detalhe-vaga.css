@@ -540,3 +540,159 @@
         padding: 1.2rem;
     }
 }
+
+
+/* ==========================
+   TEMA ESCURO – DETALHE VAGA
+   ========================== */
+html.theme-dark :where(.vaga-detalhe, .detalhe, .detalhe-card, .box, .card) {
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+
+html.theme-dark :where(.vaga-detalhe p, .detalhe p, .meta, .muted) {
+  color: var(--app-text-muted) !important;
+}
+
+
+/* ============================
+   RESPONSIVO – DETALHE DA VAGA
+   ============================ */
+
+@media (max-width: 900px){
+  .vaga-detalhe .layout,
+  .vaga-detalhe .grid,
+  .vaga-detalhe .detalhe-grid{
+    grid-template-columns: 1fr !important;
+  }
+  .vaga-detalhe .acoes,
+  .vaga-detalhe .actions{
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .vaga-detalhe .acoes .btn,
+  .vaga-detalhe .actions .btn{
+    flex: 1 1 200px;
+  }
+}
+
+@media (max-width: 480px){
+  .vaga-detalhe .acoes .btn,
+  .vaga-detalhe .actions .btn{
+    width: 100%;
+  }
+}
+
+/* ==========================
+   DARK PATCH v3 – DETALHE VAGA (contraste + superfícies)
+   ========================== */
+html.theme-dark body.pagina-detalhe-vaga {
+  background: var(--app-bg) !important;
+  color: var(--app-text) !important;
+}
+
+html.theme-dark body.pagina-detalhe-vaga :where(.vaga-detalhe, .detalhe, .detalhe-card, .vaga-detalhe-card, .detalhe-vaga-card) {
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  box-shadow: 0 18px 50px rgba(0,0,0,.45) !important;
+}
+
+html.theme-dark body.pagina-detalhe-vaga :where(.vaga-detalhe h1, .vaga-detalhe h2, .vaga-detalhe h3, .detalhe h2, .detalhe h3) {
+  color: var(--app-text) !important;
+}
+
+html.theme-dark body.pagina-detalhe-vaga :where(.meta, .muted, .desc, .descricao, .vaga-detalhe p) {
+  color: var(--app-text-muted) !important;
+}
+
+html.theme-dark body.pagina-detalhe-vaga :where(.badge, .tag, .chip) {
+  background: rgba(59,182,255,.12) !important;
+  border: 1px solid rgba(59,182,255,.22) !important;
+  color: #d7f1ff !important;
+}
+
+/* Containers brancos do layout (não estavam entrando na regra anterior) */
+html.theme-dark body.pagina-detalhe-vaga .vaga-container{
+  background: var(--app-surface) !important;
+  border: 1px solid var(--app-border) !important;
+  box-shadow: 0 18px 55px rgba(0,0,0,.55) !important;
+}
+html.theme-dark body.pagina-detalhe-vaga .vaga-topbar{
+  background: var(--app-surface-2) !important;
+  border-bottom-color: var(--app-border) !important;
+}
+html.theme-dark body.pagina-detalhe-vaga .vaga-topbar :where(.voltar-inline){
+  color: var(--app-link) !important;
+}
+html.theme-dark body.pagina-detalhe-vaga .btn-ghost{
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.14) !important;
+  color: var(--app-text) !important;
+}
+html.theme-dark body.pagina-detalhe-vaga .btn-ghost:hover{
+  background: rgba(59,182,255,.12) !important;
+  box-shadow: 0 10px 22px rgba(0,0,0,.45) !important;
+}
+
+/* Seções “Descrição / Requisitos” (cards do meio) */
+html.theme-dark body.pagina-detalhe-vaga :where(.secao, .secao-card, .secao-box, .vaga-secao, .vaga-section, .descricao-box, .requisitos-box){
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+
+
+/* ==========================
+   DARK PATCH v6 – DETALHE VAGA (corrige blocos brancos)
+   ========================== */
+html.theme-dark body.pagina-detalhe-vaga .vaga-container{
+  background: var(--app-surface) !important;
+  border: 1px solid var(--app-border) !important;
+  box-shadow: 0 18px 55px rgba(0,0,0,.55) !important;
+}
+
+html.theme-dark body.pagina-detalhe-vaga .vaga-topbar{
+  background: var(--app-surface) !important;
+  border-bottom: 1px solid var(--app-border) !important;
+}
+
+html.theme-dark body.pagina-detalhe-vaga .card-sessao{
+  background: var(--app-surface-2) !important;
+  border-color: var(--app-border) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.45) !important;
+}
+
+html.theme-dark body.pagina-detalhe-vaga .card-sessao h2,
+html.theme-dark body.pagina-detalhe-vaga .card-sessao h3,
+html.theme-dark body.pagina-detalhe-vaga .vaga-header h1,
+html.theme-dark body.pagina-detalhe-vaga .vaga-header h2{
+  color: var(--app-text) !important;
+}
+
+html.theme-dark body.pagina-detalhe-vaga .card-sessao p,
+html.theme-dark body.pagina-detalhe-vaga .vaga-header p,
+html.theme-dark body.pagina-detalhe-vaga .vaga-meta,
+html.theme-dark body.pagina-detalhe-vaga .muted,
+html.theme-dark body.pagina-detalhe-vaga .meta{
+  color: var(--app-text-muted) !important;
+}
+
+/* CTA no dark: mantém “cara de destaque”, sem fundo branco */
+html.theme-dark body.pagina-detalhe-vaga .btn-candidatar{
+  background: linear-gradient(135deg, rgba(59,182,255,.22) 0%, rgba(110,0,255,.18) 100%) !important;
+  color: #eaf7ff !important;
+  border-color: rgba(59,182,255,.35) !important;
+  box-shadow: 0 18px 40px rgba(0,0,0,.55) !important;
+}
+
+html.theme-dark body.pagina-detalhe-vaga .btn-candidatar:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+html.theme-dark body.pagina-detalhe-vaga .btn-candidatar:active{
+  transform: translateY(0px);
+  filter: brightness(0.98);
+}
+

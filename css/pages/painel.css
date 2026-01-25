@@ -1,3 +1,8 @@
+@import url("../base.css");
+@import url("../layout.css");
+@import url("../components.css");
+@import url("../responsive.css");
+
 /* ===============================
    PAINEL – BASE
    =============================== */
@@ -281,4 +286,18 @@
     padding: 5px 9px;
     font-size: 0.78rem;
   }
+}
+
+
+/* ==========================
+   TEMA ESCURO – PAINEL EMPRESA
+   ========================== */
+html.theme-dark :where(.painel, .painel-box, .painel-card, .bloco, .bloco-card, .card) {
+  background: var(--app-surface) !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+
+html.theme-dark :where(.painel p, .painel .muted, .painel .hint) {
+  color: var(--app-text-muted) !important;
 }

@@ -187,3 +187,36 @@
     border-color: var(--azul-primario);
     box-shadow: 0 4px 12px rgba(10, 132, 193, 0.15);
 }
+
+/* ==========================
+   TEMA ESCURO – COMPONENTES
+   ========================== */
+html.theme-dark .btn.btn-secundario,
+html.theme-dark .btn-secundario,
+html.theme-dark .btn-outline {
+  background: rgba(255,255,255,.06) !important;
+  color: var(--app-text) !important;
+  border-color: var(--app-border) !important;
+}
+
+html.theme-dark .btn.btn-secundario:hover,
+html.theme-dark .btn-secundario:hover,
+html.theme-dark .btn-outline:hover {
+  background: rgba(255,255,255,.10) !important;
+}
+
+html.theme-dark .input,
+html.theme-dark .campo,
+html.theme-dark .field {
+  background: var(--app-input-bg) !important;
+  color: var(--app-input-text) !important;
+  border-color: var(--app-input-border) !important;
+}
+
+html.theme-dark .toast,
+html.theme-dark .alert,
+html.theme-dark .mensagem {
+  background: var(--app-surface-2) !important;
+  color: var(--app-text) !important;
+  border-color: var(--app-border) !important;
+}
