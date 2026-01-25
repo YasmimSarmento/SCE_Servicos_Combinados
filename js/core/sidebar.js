@@ -98,7 +98,10 @@
 
   // Clique no botão (header ou fallback)
   if (btnToggleMenu) {
-    btnToggleMenu.addEventListener('click', function () {
+    btnToggleMenu.addEventListener('click', function (e) {
+      // Se acabou de arrastar o botão flutuante, não trata como clique
+      if (btnToggleMenu && btnToggleMenu.dataset && btnToggleMenu.dataset.justDragged === '1') return;
+
       // Se estiver em drawer, abre/fecha. Se estiver em desktop, recolhe/expande.
       if (isSmall()) toggleDrawer();
       else toggleCollapsed();
@@ -325,7 +328,7 @@
     floatBtn.addEventListener('click', function (e) {
       if (floatBtn.dataset.justDragged === '1') {
         e.preventDefault();
-        e.stopPropagation();
+        e.stopImmediatePropagation();
         return;
       }
       // se não foi arrasto, o click normal do listener acima vai rodar
