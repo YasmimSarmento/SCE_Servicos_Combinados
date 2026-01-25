@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Painel da Empresa | SCE</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/style.css">
@@ -11,7 +13,32 @@
 
 </head>
 
-<body data-page="empresa">
+<body class="dash-body" data-page="empresa">
+
+<aside class="sidebar-pro">
+    <div class="side-logo">
+      <img src="imagem/logo c&s.png" alt="Logo da C&S">
+    </div>
+
+    <nav class="side-nav">
+      <a href="index.html" class="nav-link" title="Home">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+
+      <a href="painel-empresa.html" class="nav-link active" title="Info">
+        <i class="fa-solid fa-bell"></i> Info
+      </a>
+
+      <div class="nav-divider" aria-hidden="true"></div>
+
+      <a href="index.html" class="nav-link logout" id="logout" title="Sair">
+        <i class="fa-solid fa-right-from-bracket"></i> Sair
+      </a>
+    </nav>
+  </aside>
+
+<main class="main-content">
+
 
     <header class="topo">
         <img src="imagem/logo c&s.png" alt="Logotipo da C&S">
@@ -81,6 +108,8 @@
     <!-- JS DE AUTENTICAÇÃO -->
     <script src="js/core/auth.js"></script>
 
+
+</main>
 </body>
 
 </html>

@@ -9,6 +9,83 @@ main {
     padding: clamp(1.5rem, 3vw, 3rem) var(--container-pad);
 }
 
+
+/* ==========================
+   SIDEBAR (GLOBAL)
+   - usado em páginas com <aside class="sidebar-pro">
+   ========================== */
+
+:root{
+  --sidebar-w: 260px;
+  --topbar-h: 76px;
+}
+
+/* Sidebar padrão (desktop) */
+.sidebar-pro{
+  width: var(--sidebar-w);
+  background: #1A237E; /* azul escuro */
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 12px rgba(0,0,0,.15);
+  z-index: 10;
+}
+
+.side-logo{
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.side-logo img{
+  max-width: 100%;
+  height: 48px;
+  object-fit: contain;
+}
+
+.side-nav{
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.nav-link{
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  padding: .85rem 1rem;
+  border-radius: 12px;
+  color: rgba(255,255,255,.92);
+  text-decoration: none;
+  font-weight: 700;
+  transition: background .2s ease, transform .15s ease;
+}
+
+.nav-link i{ min-width: 20px; }
+
+.nav-link:hover,
+.nav-link.active{
+  background: rgba(255,255,255,.15);
+  color: #fff;
+}
+
+.nav-link.active{
+  border-left: 4px solid #6E00FF; /* roxo */
+}
+
+/* Conteúdo com sidebar no desktop */
+.main-content{
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+}
+
+
+
 /* ==========================
    HEADER — PADRÃO GRUPO C&S
    ========================== */

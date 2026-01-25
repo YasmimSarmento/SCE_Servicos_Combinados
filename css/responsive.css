@@ -217,6 +217,74 @@
     }
 }
 
+
+/* =====================================
+   SIDEBAR (Responsivo) — padrão do Perfil
+   ===================================== */
+@media (max-width: 1024px){
+  .sidebar-pro{
+    width: 100%;
+    height: var(--topbar-h, 76px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 10px 12px;
+    z-index: 9999;
+
+    background: linear-gradient(180deg, rgba(26,35,126,.95), rgba(18,28,96,.95));
+    border-bottom: 1px solid rgba(255,255,255,.10);
+    backdrop-filter: blur(12px);
+
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .side-logo{
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  .side-logo img{
+    height: 44px;
+  }
+
+  .side-nav{
+    padding: 0;
+    margin: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .nav-link{
+    border-left: 0;
+    border-radius: 999px;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .nav-link.active{
+    border-left: 0;
+    outline: 1px solid rgba(110,0,255,.35);
+    background: rgba(255,255,255,.14);
+  }
+
+  .main-content{
+    margin-left: 0;
+    padding-top: calc(var(--topbar-h, 76px) + 16px);
+  }
+}
+
+
 /* =====================================
    ULTRA-WIDE (TVs / monitores 4K+)
    ===================================== */
