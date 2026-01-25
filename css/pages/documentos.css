@@ -30,6 +30,21 @@
 .drag-drop.has-file {
     outline-color: rgba(110, 0, 255, 0.55);
 }
+/* ✅ Quando já tem arquivo selecionado, esconda as instruções para evitar reenvio acidental */
+.drag-drop.has-file label,
+.drag-drop.has-file small {
+    display: none;
+}
+
+.drag-drop.has-file {
+    cursor: default;
+}
+
+/* ✅ Quando o tipo já foi enviado, deixa o bloco visualmente "travado" */
+.drag-drop.tipo-locked {
+    opacity: 0.65;
+}
+
 
 .drag-drop input[type="file"] {
     display: none;

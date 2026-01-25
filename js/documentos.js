@@ -85,10 +85,42 @@
     if (dragDrop) dragDrop.classList.remove("has-file");
   }
 
+  function getCurrentUserId() {
+    return session?.id ?? null;
+  }
+
+  function userHasTipo(tipo) {
+    const userId = getCurrentUserId();
+    if (!userId || !tipo) return false;
+    return documentos.some((d) => d.userId === userId && d.tipo === tipo);
+  }
+
+  function applyTipoLock() {
+    if (!dragDrop || !tipoSelect) return;
+
+    const tipo = tipoSelect.value;
+    const locked = Boolean(tipo && userHasTipo(tipo));
+
+    dragDrop.classList.toggle("tipo-locked", locked);
+
+    // Se já existe documento desse tipo, bloqueia novo envio até excluir na lista
+    if (locked) {
+      clearSelectedFileUI();
+      if (uploadInput) uploadInput.value = "";
+      setMsg("ℹ️ Você já enviou um documento deste tipo. Se precisar trocar, exclua o anterior na lista.", "info");
+    }
+
+    updateSendButtonState();
+  }
+
   // ✅ Controle profissional do botão "Enviar"
   function isReadyToSend() {
     const file = uploadInput?.files?.[0];
     const tipo = tipoSelect?.value;
+
+    // se o tipo já foi enviado, não permite reenviar (até excluir na lista)
+    if (tipo && userHasTipo(tipo)) return false;
+
     return Boolean(file && tipo);
   }
 
@@ -109,8 +141,12 @@
     // Só mostra dica quando o usuário já interagiu (pra não poluir)
     const hasFile = Boolean(uploadInput?.files?.[0]);
     const hasTipo = Boolean(tipoSelect?.value);
+    const tipoLocked = Boolean(tipoSelect?.value && userHasTipo(tipoSelect.value));
 
-    if (!hasTipo && !hasFile) {
+
+    if (tipoLocked) {
+      setMsg("ℹ️ Este tipo de documento já foi enviado. Exclua o anterior na lista para enviar outro.", "info");
+    } else if (!hasTipo && !hasFile) {
       setMsg("Selecione o tipo e anexe um arquivo para liberar o envio.", "info");
     } else if (!hasTipo) {
       setMsg("Selecione o tipo de documento para liberar o envio.", "info");
@@ -196,6 +232,7 @@
     salvar();
     renderizar();
     setMsg("Documento excluído.", "success");
+    applyTipoLock(); // se estava travado por tipo, libera quando necessário
   }
 
   function visualizarDocumento(doc) {
@@ -245,7 +282,7 @@
   // ✅ Mudança no tipo: atualiza botão
   if (tipoSelect) {
     tipoSelect.addEventListener("change", () => {
-      updateSendButtonState();
+      applyTipoLock();
     });
   }
 
@@ -260,16 +297,21 @@
 
   // Drag & Drop + Clique
   if (dragDrop) {
-    dragDrop.addEventListener("click", () => uploadInput && uploadInput.click());
+    dragDrop.addEventListener("click", () => {
+      if (dragDrop.classList.contains("has-file") || dragDrop.classList.contains("tipo-locked")) return;
+      uploadInput && uploadInput.click();
+    });
 
     dragDrop.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
+        if (dragDrop.classList.contains("has-file") || dragDrop.classList.contains("tipo-locked")) return;
         uploadInput && uploadInput.click();
       }
     });
 
     dragDrop.addEventListener("dragover", (e) => {
+      if (dragDrop.classList.contains("has-file") || dragDrop.classList.contains("tipo-locked")) return;
       e.preventDefault();
       dragDrop.classList.add("ativo");
     });
@@ -280,6 +322,7 @@
     });
 
     dragDrop.addEventListener("drop", (e) => {
+      if (dragDrop.classList.contains("has-file") || dragDrop.classList.contains("tipo-locked")) return;
       e.preventDefault();
       dragDrop.classList.remove("ativo");
 
@@ -370,5 +413,6 @@
 
   // Init
   renderizar();
+  applyTipoLock();
   updateSendButtonState(); // ✅ já inicia com botão travado e dica
 })();
