@@ -239,6 +239,15 @@
      ===================================== */
 
   /* Preferência: botão no HEADER. Se não existir header, usa o botão flutuante. */
+  /* Mantém o botão de menu do HEADER fixo durante o scroll em telas menores */
+  .menu-toggle.menu-toggle--header{
+    position: fixed;
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    left: calc(14px + env(safe-area-inset-left, 0px));
+    transform: none;
+    z-index: 1100;
+  }
+
   body:not(.has-sidebar) .menu-toggle{ display: none !important; }
 
   /* Se existe botão no header, esconde o flutuante */
