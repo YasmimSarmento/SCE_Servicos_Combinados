@@ -9,101 +9,243 @@ main {
     padding: clamp(1.5rem, 3vw, 3rem) var(--container-pad);
 }
 
-
 /* ==========================
-   SIDEBAR (GLOBAL)
-   - usado em páginas com <aside class="sidebar-pro">
+   SIDEBAR (Global)
+   - Desktop: fixa à esquerda, com opção de recolher/expandir
+   - Mobile/Tablet: vira drawer (controlado no responsive.css)
    ========================== */
 
 :root{
-  --sidebar-w: 260px;
-  --topbar-h: 76px;
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 78px;
+  --sidebar-mobile-width: 300px;
+
+  /* Botão flutuante (arrastável) */
+  --menu-float-size: 48px; /* um pouquinho menor */
 }
 
-/* Sidebar padrão (desktop) */
+/* base (suporta .sidebar e .sidebar-pro) */
+.sidebar,
 .sidebar-pro{
-  width: var(--sidebar-w);
-  background: #1A237E; /* azul escuro */
-  color: #fff;
+  width: var(--sidebar-width);
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 4px 0 12px rgba(0,0,0,.15);
-  z-index: 10;
+  /* acima do overlay */
+  z-index: 1005;
+  transition: width .22s ease, transform .22s ease;
+}
+
+/* Aparência padrão do sidebar-pro (para páginas que usam style.css) */
+.sidebar-pro{
+  background: linear-gradient(180deg, #1A237E 0%, #0f1736 100%);
+  color: #fff;
+  box-shadow: 4px 0 14px rgba(0,0,0,.18);
+  border-right: 1px solid rgba(255,255,255,.10);
 }
 
 .side-logo{
-  padding: 2rem;
+  padding: 1.6rem 1.2rem;
   text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,.15);
+  border-bottom: 1px solid rgba(255,255,255,.14);
 }
-
 .side-logo img{
+  width: 140px;
   max-width: 100%;
-  height: 48px;
   object-fit: contain;
 }
 
 .side-nav{
-  padding: 1rem;
+  padding: 1.2rem 0.9rem;
   display: flex;
   flex-direction: column;
-  gap: .4rem;
+  gap: 10px;
 }
 
 .nav-link{
   display: flex;
   align-items: center;
-  gap: .85rem;
-  padding: .85rem 1rem;
-  border-radius: 12px;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
   color: rgba(255,255,255,.92);
   text-decoration: none;
-  font-weight: 700;
-  transition: background .2s ease, transform .15s ease;
+  font-weight: 800;
+  transition: background .15s ease, transform .15s ease;
+}
+.nav-link i{
+  width: 22px;
+  text-align: center;
+  font-size: 1.05rem;
+}
+.nav-link:hover{
+  background: rgba(255,255,255,.12);
+  transform: translateX(2px);
+}
+.nav-link.active,
+.nav-link.ativo{
+  background: rgba(10,142,216,.22);
+  outline: 1px solid rgba(10,142,216,.28);
 }
 
-.nav-link i{ min-width: 20px; }
-
-.nav-link:hover,
-.nav-link.active{
-  background: rgba(255,255,255,.15);
-  color: #fff;
+/* 🔴 BOTÃO SAIR (hover vermelho) */
+.nav-link.logout{
+  color: #ff4d4d !important;
+}
+.nav-link.logout:hover{
+  background: rgba(255, 77, 77, .15) !important;
+  color: #ff6b6b !important;
 }
 
-.nav-link.active{
-  border-left: 4px solid #6E00FF; /* roxo */
+/* botão de recolher (desktop) dentro do sidebar */
+.sidebar-toggle{
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,.92);
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 10px 0 10px;
+  transition: background .15s ease, transform .15s ease;
+}
+.sidebar-toggle:hover{ background: rgba(255,255,255,.10); transform: translateY(-1px); }
+.sidebar-toggle:active{ transform: translateY(0); }
+.sidebar-toggle i{ font-size: 1.1rem; }
+
+/* overlay do drawer (fica abaixo do sidebar e acima do conteúdo) */
+.sidebar-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 1004;
 }
 
-/* Conteúdo com sidebar no desktop */
+/* conteúdo com sidebar */
 .main-content{
-  margin-left: var(--sidebar-w);
+  margin-left: var(--sidebar-width);
   min-height: 100vh;
+  transition: margin-left .22s ease;
 }
 
+/* modo recolhido (desktop) */
+body.sidebar-collapsed .sidebar,
+body.sidebar-collapsed .sidebar-pro{
+  width: var(--sidebar-collapsed-width);
+}
+body.sidebar-collapsed .main-content{
+  margin-left: var(--sidebar-collapsed-width);
+}
 
+/* quando recolhe, esconde o texto e centraliza ícones */
+body.sidebar-collapsed .nav-link span{
+  display: none !important;
+}
+body.sidebar-collapsed .nav-link{
+  justify-content: center;
+  padding: 12px 10px;
+}
+body.sidebar-collapsed .nav-link i{
+  margin: 0 !important;
+}
+
+/* ==========================
+   AJUSTE AUTOMÁTICO
+   (páginas que não usam .main-content)
+   ========================== */
+body.com-sidebar main{
+  margin-left: var(--sidebar-width);
+  transition: margin-left .22s ease;
+}
+body.sidebar-collapsed.com-sidebar main{
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+/* ==========================
+   BOTÃO FLUTUANTE (arrastável)
+   - IMPORTANTÍSSIMO: só afeta o botão flutuante, NÃO o do header
+   ========================== */
+
+.menu-toggle{
+  position: fixed;
+  left: 14px;
+  top: 14px;
+  z-index: 1006;
+  width: var(--menu-float-size);
+  height: var(--menu-float-size);
+  border-radius: 16px;
+  border: 0;
+  cursor: grab;
+  background: linear-gradient(180deg, #0A8ED8, #056aa4);
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(0,0,0,.22);
+  display: none; /* aparece no responsive.css */
+  touch-action: none; /* melhora arrasto no mobile */
+}
+.menu-toggle:active{ cursor: grabbing; }
+.menu-toggle i{ font-size: 1.12rem; }
 
 /* ==========================
    HEADER — PADRÃO GRUPO C&S
    ========================== */
 
 .topo {
+    position: relative;
     display: flex;
-    align-items: center;         /* centraliza horizontalmente */
-    justify-content: center;     /* centraliza verticalmente */
+    align-items: center;
+    justify-content: center;
 
-    min-height: 88px; /* mantém o visual, mas permite quebrar linha */
+    min-height: 88px;
     height: auto;
     padding: 0 var(--container-pad);
 
-    background-color: #0A8ED8; /* AZUL DO SITE DELES */
+    background-color: #0A8ED8;
     color: #ffffff;
-    gap: clamp(1rem, 3vw, 4rem); /* DISTÂNCIA MAIOR entre logo e menu */
-
+    gap: clamp(1rem, 3vw, 4rem);
 }
+
+/* Botão de menu no HEADER
+   - abre drawer no mobile
+   - recolhe/expande no desktop
+   - NÃO deve herdar o estilo arrastável */
+.menu-toggle.menu-toggle--header{
+  position: absolute;
+  left: var(--container-pad);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: none;
+  touch-action: auto;
+}
+
+/* garante que o do header não fique “arrastável” */
+.menu-toggle.menu-toggle--header:active{
+  cursor: pointer;
+}
+.menu-toggle.menu-toggle--header:hover{ background: rgba(255,255,255,.18); }
+.menu-toggle.menu-toggle--header:active{ transform: translateY(-50%) scale(0.98); }
+
+/* Se a página não tem sidebar, esconde o botão do menu no header */
+body:not(.has-sidebar) .menu-toggle.menu-toggle--header{ display: none !important; }
 
 /* Logo */
 .topo img {
@@ -137,7 +279,7 @@ main {
     position: relative;
 }
 
-/* Linha branca no hover (igual deles) */
+/* Linha branca no hover */
 .topo nav a::after {
     content: "";
     position: absolute;
@@ -170,7 +312,7 @@ footer {
 }
 
 /* ==========================
-   RESPONSIVO
+   RESPONSIVO (somente header aqui)
    ========================== */
 
 @media (max-width: 768px) {
@@ -182,7 +324,6 @@ footer {
     }
 
     .topo nav {
-    flex-wrap: wrap;
         flex-wrap: wrap;
         justify-content: center;
     }

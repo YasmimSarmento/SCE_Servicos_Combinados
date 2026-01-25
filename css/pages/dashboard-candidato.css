@@ -1,3 +1,8 @@
+@import url("../base.css");
+@import url("../layout.css");
+@import url("../components.css");
+@import url("../responsive.css");
+
 /* ============================
    VARIÁVEIS DE CORES
 ============================ */
@@ -31,82 +36,13 @@ html, body {
 /* ============================
    SIDEBAR
 ============================ */
-.sidebar-pro {
-  width: 260px;
-  background: var(--azul-escuro);
-  color: #fff;
-  position: fixed;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 4px 0 12px rgba(0,0,0,.15);
-  z-index: 10;
-}
-
-.side-logo {
-  padding: 2rem;
-  text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,.15);
-}
-
-.side-logo img {
-  width: 140px;
-}
-
-.side-nav {
-  padding: 1.5rem 1rem;
-  flex: 1;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: .8rem 1rem;
-  color: rgba(255,255,255,.85);
-  border-radius: 8px;
-  margin-bottom: .4rem;
-  text-decoration: none;
-  font-weight: 500;
-  transition: .25s;
-}
-
-.nav-link i { min-width: 20px; }
-
-.nav-link:hover,
-.nav-link.active {
-  background: rgba(255,255,255,.15);
-  color: #fff;
-}
-
-.nav-link.active {
-  border-left: 4px solid var(--roxo-tecnologia);
-}
-
-.side-nav button.nav-link {
-  width: 100%;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  font: inherit;
-}
-
-.nav-link.logout:hover {
-  background: var(--vermelho);
-}
-
-.nav-divider {
-  height: 1px;
-  background: rgba(255,255,255,.25);
-  margin: 1rem 0;
-}
+/* Sidebar padronizado em css/layout.css */
 
 /* ============================
    ÁREA PRINCIPAL
 ============================ */
 .main-content {
-  margin-left: 260px;
+
   padding: 2rem;
   flex: 1;
 }
@@ -344,11 +280,7 @@ html, body {
 /* ============================
    RESPONSIVO
 ============================ */
-@media (max-width: 1024px) {
-  .sidebar-pro { width: 80px; }
-  .side-logo img { display: none; }
-  .nav-link span { display: none; }
-  .main-content { margin-left: 80px; }
+@media (max-width: 1024px){
   .stat-grid { grid-template-columns: 1fr; }
   .content-grid { grid-template-columns: 1fr; }
 }
@@ -362,6 +294,7 @@ html, body {
 }
 
 .dash-body.dark .main-content {
+
   background: transparent;
 }
 

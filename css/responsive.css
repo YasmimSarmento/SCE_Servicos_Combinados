@@ -217,74 +217,6 @@
     }
 }
 
-
-/* =====================================
-   SIDEBAR (Responsivo) — padrão do Perfil
-   ===================================== */
-@media (max-width: 1024px){
-  .sidebar-pro{
-    width: 100%;
-    height: var(--topbar-h, 76px);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: auto;
-
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    padding: 10px 12px;
-    z-index: 9999;
-
-    background: linear-gradient(180deg, rgba(26,35,126,.95), rgba(18,28,96,.95));
-    border-bottom: 1px solid rgba(255,255,255,.10);
-    backdrop-filter: blur(12px);
-
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .side-logo{
-    padding: 0;
-    margin: 0;
-    border: 0;
-  }
-
-  .side-logo img{
-    height: 44px;
-  }
-
-  .side-nav{
-    padding: 0;
-    margin: 0;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .nav-link{
-    border-left: 0;
-    border-radius: 999px;
-    padding: 10px 14px;
-    gap: 10px;
-  }
-
-  .nav-link.active{
-    border-left: 0;
-    outline: 1px solid rgba(110,0,255,.35);
-    background: rgba(255,255,255,.14);
-  }
-
-  .main-content{
-    margin-left: 0;
-    padding-top: calc(var(--topbar-h, 76px) + 16px);
-  }
-}
-
-
 /* =====================================
    ULTRA-WIDE (TVs / monitores 4K+)
    ===================================== */
@@ -300,5 +232,81 @@
 @media (max-width: 1024px){
   main.conteudo, main{
     padding: clamp(1.25rem, 3vw, 2.2rem) var(--container-pad);
+  }
+
+  /* =====================================
+     SIDEBAR (Drawer em telas menores)
+     ===================================== */
+
+  /* Preferência: botão no HEADER. Se não existir header, usa o botão flutuante. */
+  body:not(.has-sidebar) .menu-toggle{ display: none !important; }
+
+  /* Se existe botão no header, esconde o flutuante */
+  body.has-header-menu .menu-toggle:not(.menu-toggle--header){ display: none !important; }
+
+  /* Se NÃO existe botão no header, mostra o flutuante (arrastável) */
+  body:not(.has-header-menu) .menu-toggle:not(.menu-toggle--header){
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    touch-action: none; /* melhora arrasto no mobile */
+  }
+
+  /* Overlay sempre disponível no drawer (fica acima do conteúdo) */
+  .sidebar-overlay{
+    display: block !important;
+    z-index: 1004 !important;
+  }
+
+  /* Drawer fechado por padrão */
+  .sidebar, .sidebar-pro{
+    width: var(--sidebar-mobile-width, 300px) !important;
+    transform: translateX(-110%) !important;
+    box-shadow: 14px 0 40px rgba(0,0,0,.28);
+  }
+
+  /* Conteúdo não fica deslocado */
+  .main-content{ margin-left: 0 !important; }
+  body.com-sidebar main{ margin-left: 0 !important; }
+
+  /* Quando abre */
+  body.sidebar-open .sidebar,
+  body.sidebar-open .sidebar-pro{
+    transform: translateX(0) !important;
+  }
+
+  body.sidebar-open .sidebar-overlay{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ✅ Garantia: quando o drawer abre, links ficam normais e clicáveis */
+  body.sidebar-open .sidebar .nav-link,
+  body.sidebar-open .sidebar-pro .nav-link{
+    justify-content: flex-start !important;
+    padding: 12px 14px !important;
+    font-size: 0.95rem !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  body.sidebar-open .sidebar .nav-link span,
+  body.sidebar-open .sidebar-pro .nav-link span{
+    display: inline !important;
+  }
+
+  /* No mobile, “recolhido” não faz sentido */
+  body.sidebar-collapsed .sidebar,
+  body.sidebar-collapsed .sidebar-pro{
+    width: var(--sidebar-mobile-width, 300px) !important;
+  }
+
+  body.sidebar-collapsed .nav-link{
+    justify-content: flex-start !important;
+    padding: 12px 14px !important;
+  }
+
+  body.sidebar-collapsed .nav-link span{
+    display: inline !important;
   }
 }

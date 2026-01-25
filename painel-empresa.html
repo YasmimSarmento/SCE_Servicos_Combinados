@@ -13,27 +13,33 @@
 
 </head>
 
-<body class="dash-body" data-page="empresa">
+<body class="dash-body com-sidebar" data-page="empresa">
+
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>
+    <i class="fa-solid fa-bars"></i><span></span></button>
+  <div class="sidebar-overlay" data-sidebar-overlay></div>
+
 
 <aside class="sidebar-pro">
     <div class="side-logo">
       <img src="imagem/logo c&s.png" alt="Logo da C&S">
     </div>
 
+
+    <button class="sidebar-toggle" type="button" aria-label="Recolher/Expandir menu" data-sidebar-toggle>
+      <i class="fa-solid fa-bars"></i><span></span></button>
+
     <nav class="side-nav">
       <a href="index.html" class="nav-link" title="Home">
-        <i class="fa-solid fa-house"></i> Home
-      </a>
+        <i class="fa-solid fa-house"></i><span>Home</span></a>
 
       <a href="painel-empresa.html" class="nav-link active" title="Info">
-        <i class="fa-solid fa-bell"></i> Info
-      </a>
+        <i class="fa-solid fa-bell"></i><span>Info</span></a>
 
       <div class="nav-divider" aria-hidden="true"></div>
 
       <a href="index.html" class="nav-link logout" id="logout" title="Sair">
-        <i class="fa-solid fa-right-from-bracket"></i> Sair
-      </a>
+        <i class="fa-solid fa-right-from-bracket"></i><span>Sair</span></a>
     </nav>
   </aside>
 
@@ -41,6 +47,7 @@
 
 
     <header class="topo">
+      <button class="menu-toggle menu-toggle--header" type="button" aria-label="Menu" data-menu-toggle>☰</button>
         <img src="imagem/logo c&s.png" alt="Logotipo da C&S">
 
         <nav>
@@ -110,6 +117,7 @@
 
 
 </main>
+  <script src="js/core/sidebar.js"></script>
 </body>
 
 </html>

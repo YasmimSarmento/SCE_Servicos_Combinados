@@ -10,39 +10,42 @@
   <link rel="stylesheet" href="css/pages/perfil.css">
 </head>
 
-<body class="dash-body page-perfil" data-page="candidato">
+<body class="dash-body page-perfil com-sidebar" data-page="candidato">
+
+  <button class="menu-toggle" type="button" aria-label="Abrir menu" data-menu-toggle>
+    <i class="fa-solid fa-bars"></i><span></span></button>
+  <div class="sidebar-overlay" data-sidebar-overlay></div>
+
 
   <aside class="sidebar-pro">
     <div class="side-logo">
       <img src="imagem/logo c&s.png" alt="Logo da C&S">
     </div>
 
+
+    <button class="sidebar-toggle" type="button" aria-label="Recolher/Expandir menu" data-sidebar-toggle>
+      <i class="fa-solid fa-bars"></i><span></span></button>
+
     <nav class="side-nav">
       <a href="index.html" class="nav-link" title="Home">
-        <i class="fa-solid fa-house"></i> Home
-      </a>
+        <i class="fa-solid fa-house"></i><span>Home</span></a>
 
       <a href="painel-candidato.html" class="nav-link" title="Info">
-        <i class="fa-solid fa-bell"></i> Info
-      </a>
+        <i class="fa-solid fa-bell"></i><span>Info</span></a>
 
       <a href="perfil.html" class="nav-link active" title="Meu Perfil">
-        <i class="fa-solid fa-user-tie"></i> Meu Perfil
-      </a>
+        <i class="fa-solid fa-user-tie"></i><span>Meu Perfil</span></a>
 
       <a href="documentos.html" class="nav-link" title="Documentos">
-        <i class="fa-solid fa-file-arrow-up"></i> Documentos
-      </a>
+        <i class="fa-solid fa-file-arrow-up"></i><span>Documentos</span></a>
 
       <a href="vagas.html" class="nav-link" title="Vagas">
-        <i class="fa-solid fa-briefcase"></i> Vagas
-      </a>
+        <i class="fa-solid fa-briefcase"></i><span>Vagas</span></a>
 
       <div class="nav-divider" aria-hidden="true"></div>
 
       <a href="index.html" class="nav-link logout" id="logout" title="Sair">
-        <i class="fa-solid fa-right-from-bracket"></i> Sair
-      </a>
+        <i class="fa-solid fa-right-from-bracket"></i><span>Sair</span></a>
     </nav>
   </aside>
 
@@ -58,16 +61,13 @@
             </div>
 
             <button type="button" class="avatar-edit" id="btnAvatarMenu" aria-label="Editar foto">
-              <i class="fa-solid fa-camera"></i>
-            </button>
+              <i class="fa-solid fa-camera"></i><span></span></button>
 
             <div class="avatar-menu" id="avatarMenu" aria-hidden="true">
               <button type="button" class="avatar-menu-item" id="btnUploadFoto">
-                <i class="fa-solid fa-upload"></i> Carregar
-              </button>
+                <i class="fa-solid fa-upload"></i><span>Carregar</span></button>
               <button type="button" class="avatar-menu-item danger" id="btnRemoverFoto">
-                <i class="fa-solid fa-trash"></i> Remover
-              </button>
+                <i class="fa-solid fa-trash"></i><span>Remover</span></button>
             </div>
 
             <input id="inputFoto" type="file" accept="image/*" hidden>
@@ -84,16 +84,13 @@
 
         <div class="perfil-actions">
           <button class="btn-pro btn-ghost" type="button" id="btnEditar" title="Editar" aria-label="Editar">
-            <i class="fa-solid fa-pen"></i> Editar
-          </button>
+            <i class="fa-solid fa-pen"></i><span>Editar</span></button>
 
           <button class="btn-pro btn-ghost btn-icon" type="button" id="btnExpandirTudo" title="Expandir tudo" aria-label="Expandir tudo">
-            <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-          </button>
+            <i class="fa-solid fa-up-right-and-down-left-from-center"></i><span></span></button>
 
           <button class="btn-pro btn-ghost btn-icon" type="button" id="btnRecolherTudo" title="Recolher tudo" aria-label="Recolher tudo">
-            <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
-          </button>
+            <i class="fa-solid fa-down-left-and-up-right-to-center"></i><span></span></button>
         </div>
       </div>
     </section>
@@ -119,14 +116,11 @@
 
         <nav class="perfil-tabs perfil-card card-glass" aria-label="Seções do perfil">
           <button class="perfil-tab active" type="button" data-target="pessoais" aria-selected="true">
-            <i class="fa-solid fa-id-card"></i> Pessoal
-          </button>
+            <i class="fa-solid fa-id-card"></i><span>Pessoal</span></button>
           <button class="perfil-tab" type="button" data-target="endereco" aria-selected="false">
-            <i class="fa-solid fa-location-dot"></i> Endereço
-          </button>
+            <i class="fa-solid fa-location-dot"></i><span>Endereço</span></button>
           <button class="perfil-tab" type="button" data-target="profissional" aria-selected="false">
-            <i class="fa-solid fa-briefcase"></i> Profissional
-          </button>
+            <i class="fa-solid fa-briefcase"></i><span>Profissional</span></button>
         </nav>
 
         <div class="perfil-card card-glass">
@@ -149,8 +143,7 @@
           <div class="card-head">
             <button class="section-toggle" type="button" aria-controls="sec-body-pessoais" aria-expanded="true">
               <span>Informações Pessoais</span>
-              <i class="fa-solid fa-chevron-down"></i>
-            </button>
+              <i class="fa-solid fa-chevron-down"></i><span></span></button>
           </div>
 
           <div class="card-body" id="sec-body-pessoais">
@@ -183,8 +176,7 @@
           <div class="card-head">
             <button class="section-toggle" type="button" aria-controls="sec-body-endereco" aria-expanded="true">
               <span>Endereço</span>
-              <i class="fa-solid fa-chevron-down"></i>
-            </button>
+              <i class="fa-solid fa-chevron-down"></i><span></span></button>
           </div>
 
           <div class="card-body" id="sec-body-endereco">
@@ -226,8 +218,7 @@
           <div class="card-head">
             <button class="section-toggle" type="button" aria-controls="sec-body-profissional" aria-expanded="true">
               <span>Profissional</span>
-              <i class="fa-solid fa-chevron-down"></i>
-            </button>
+              <i class="fa-solid fa-chevron-down"></i><span></span></button>
           </div>
 
           <div class="card-body" id="sec-body-profissional">
@@ -257,8 +248,7 @@
 
         <div class="perfil-footer">
           <button class="btn-pro" id="btnSalvar" type="button">
-            <i class="fa-solid fa-floppy-disk"></i> Salvar alterações
-          </button>
+            <i class="fa-solid fa-floppy-disk"></i><span>Salvar alterações</span></button>
         </div>
 
       </main>
@@ -267,5 +257,6 @@
 
   <script src="js/core/auth.js"></script>
   <script src="js/perfil.js"></script>
+  <script src="js/core/sidebar.js"></script>
 </body>
 </html>
