@@ -309,6 +309,14 @@
     outline-color: rgba(10,132,193,0.35);
 }
 
+/* Quando já existe currículo anexado: bloqueia nova seleção/arrasto (remover continua disponível) */
+.upload-box.is-locked{
+    cursor: default;
+    border-style: solid;
+    border-color: rgba(10,132,193,0.38);
+    background: rgba(255,255,255,0.78);
+}
+
 /* Status do arquivo (igual ao Documentos) */
 .file-status{
     margin-top: 12px;

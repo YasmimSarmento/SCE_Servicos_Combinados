@@ -17,6 +17,9 @@
   const curriculoMeta = document.getElementById("curriculoMeta"); // opcional
   const btnRemoverCurriculo = document.getElementById("btnRemoverCurriculo"); // opcional
 
+  // Regra: após anexar 1 currículo, bloqueia trocar até o usuário remover.
+  let curriculoLocked = false;
+
   // Box da vaga (HTML já tem)
   const vagaBox = document.getElementById("vagaSelecionadaBox");
   const vagaTituloEl = document.getElementById("cadastroVagaTitulo");
@@ -74,12 +77,33 @@
     if (curriculoDrop) curriculoDrop.classList.add("has-file");
   }
 
+  function lockCurriculoUI() {
+    curriculoLocked = true;
+    if (curriculoEl) curriculoEl.disabled = true;
+    if (curriculoDrop) {
+      curriculoDrop.classList.add("is-locked");
+      curriculoDrop.setAttribute("aria-disabled", "true");
+      curriculoDrop.title = "Currículo já anexado. Clique em Remover para trocar.";
+    }
+  }
+
+  function unlockCurriculoUI() {
+    curriculoLocked = false;
+    if (curriculoEl) curriculoEl.disabled = false;
+    if (curriculoDrop) {
+      curriculoDrop.classList.remove("is-locked");
+      curriculoDrop.removeAttribute("aria-disabled");
+      curriculoDrop.removeAttribute("title");
+    }
+  }
+
   function clearCurriculoUI() {
     if (curriculoStatus) curriculoStatus.style.display = "none";
     if (curriculoNome) curriculoNome.textContent = "";
     if (curriculoMeta) curriculoMeta.textContent = "";
     if (curriculoDrop) curriculoDrop.classList.remove("has-file");
     if (curriculoEl) curriculoEl.value = "";
+    unlockCurriculoUI();
   }
 
   // =========================
@@ -316,6 +340,7 @@
       if (file) {
         setCurriculoUI(file);
         setFieldError("erro-curriculo", "");
+        lockCurriculoUI();
       } else {
         clearCurriculoUI();
       }
@@ -331,16 +356,27 @@
   }
 
   if (curriculoDrop) {
-    curriculoDrop.addEventListener("click", () => curriculoEl && curriculoEl.click());
+    curriculoDrop.addEventListener("click", () => {
+      if (curriculoLocked) {
+        setFieldError("erro-curriculo", "Você já anexou um currículo. Clique em Remover para trocar.");
+        return;
+      }
+      curriculoEl && curriculoEl.click();
+    });
     curriculoDrop.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
+        if (curriculoLocked) {
+          setFieldError("erro-curriculo", "Você já anexou um currículo. Clique em Remover para trocar.");
+          return;
+        }
         curriculoEl && curriculoEl.click();
       }
     });
 
     curriculoDrop.addEventListener("dragover", (e) => {
       e.preventDefault();
+      if (curriculoLocked) return;
       curriculoDrop.classList.add("ativo");
     });
 
@@ -352,11 +388,19 @@
     curriculoDrop.addEventListener("drop", (e) => {
       e.preventDefault();
       curriculoDrop.classList.remove("ativo");
+
+      if (curriculoLocked) {
+        setFieldError("erro-curriculo", "Você já anexou um currículo. Clique em Remover para trocar.");
+        updateSubmitState();
+        return;
+      }
+
       const file = e.dataTransfer?.files?.[0];
       if (file && curriculoEl) {
         curriculoEl.files = e.dataTransfer.files;
         setCurriculoUI(file);
         setFieldError("erro-curriculo", "");
+        lockCurriculoUI();
       }
       updateSubmitState();
     });
