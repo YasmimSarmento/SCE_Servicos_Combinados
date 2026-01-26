@@ -56,6 +56,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!session) {
     onlyAuth.forEach((el) => (el.style.display = "none"));
     loginItems.forEach((el) => (el.style.display = ""));
+
+    // Botões do topo (index.html)
+    const btnCadastrar = document.querySelector('a.topo__cta--ghost[href="cadastro.html"]');
+    const btnEntrar = document.querySelector('a.topo__cta--primary[href^="login-"]');
+    if (btnCadastrar) btnCadastrar.style.display = ""; // aparece sempre (sem login redireciona)
+    if (btnEntrar) btnEntrar.style.display = "";
+
     return;
   }
 
@@ -64,6 +71,17 @@ document.addEventListener("DOMContentLoaded", () => {
   onlyAuth.forEach((el) => (el.style.display = ""));
 
   const role = session.role || session.tipo || session.userType || null;
+
+  // Botões do topo (index.html)
+  const btnCadastrar = document.querySelector('a.topo__cta--ghost[href="cadastro.html"]');
+  const btnEntrar = document.querySelector('a.topo__cta--primary[href^="login-"]');
+
+  // Logado: some com "Entrar"
+  if (btnEntrar) btnEntrar.style.display = "none";
+
+  // Currículo só faz sentido para candidato
+  if (btnCadastrar) btnCadastrar.style.display = role === "candidato" ? "" : "none";
+
 
   // filtra por papel (se vier)
   onlyAuth.forEach((el) => {

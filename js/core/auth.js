@@ -2,16 +2,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const session = getSession();
   const pageRole = document.body?.dataset?.page || null;
 
-  // ✅ Protege SOMENTE páginas que declaram data-page
+  
+  const currentPage = (window.location.pathname.split("/").pop() || "").toLowerCase();
+  const isPublicAuthPage = ["login-candidato.html","login-empresa.html","recuperar-senha.html"].includes(currentPage);
+// ✅ Protege SOMENTE páginas que declaram data-page
   // (páginas públicas como index.html ficam livres)
-  if (pageRole && !session) {
+  if (pageRole && !session && !isPublicAuthPage) {
     redirectToLogin(pageRole);
     return;
   }
 
   // 🔁 Bloqueio por papel (role)
   // Ex: candidato tentando acessar painel de empresa
-  if (pageRole && session?.role && session.role !== pageRole) {
+  if (pageRole && session?.role && session.role !== pageRole && !isPublicAuthPage) {
     redirectByRole(session.role);
     return;
   }
