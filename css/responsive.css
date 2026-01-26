@@ -388,11 +388,34 @@ html, body {
     gap: .75rem;
   }
 
-  /* Sidebar drawer: garante rolagem em telas baixas */
-  .sidebar, .sidebar-panel, .sidebar-wrapper{
+  /* =====================================================
+     ✅ SIDEBAR: rolagem interna + trava vazamento de scroll
+     ===================================================== */
+
+  /* O drawer em si rola */
+  .sidebar, .sidebar-pro, .sidebar-panel, .sidebar-wrapper{
     max-height: 100vh;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+
+    /* impede rolagem “passar” pro body */
+    overscroll-behavior: contain;
+    overscroll-behavior-y: contain;
+    scroll-behavior: auto;
+  }
+
+  /* Se o conteúdo estiver em um container interno, ele também deve rolar */
+  .sidebar .sidebar-content,
+  .sidebar-pro .sidebar-content,
+  .sidebar .nav,
+  .sidebar-pro .nav{
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    overscroll-behavior-y: contain;
   }
 
   /* Espaço inferior menor (quando existir botão flutuante) */
@@ -410,4 +433,26 @@ html, body {
   .topo nav{ gap: 1.25rem; }
   .hero{ padding: 2.6rem 1.75rem; }
   .pagina-vagas .lista-vagas{ grid-template-columns: repeat(2, 1fr); }
+
+  /* Também aplica o trava-scroll em tablets landscape (altura menor que desktop) */
+  .sidebar, .sidebar-pro, .sidebar-panel, .sidebar-wrapper{
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    overscroll-behavior-y: contain;
+  }
+
+  .sidebar .sidebar-content,
+  .sidebar-pro .sidebar-content,
+  .sidebar .nav,
+  .sidebar-pro .nav{
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    overscroll-behavior-y: contain;
+  }
 }

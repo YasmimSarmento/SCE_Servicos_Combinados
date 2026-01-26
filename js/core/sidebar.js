@@ -30,16 +30,209 @@
     return !isSmall() && mqAutoCollapse.matches;
   }
 
+  // =========================================================
+  // 🔒 BODY SCROLL LOCK (evita scroll do fundo quando drawer abre)
+  // =========================================================
+
+  let scrollY = 0;
+
+  function lockBodyScroll() {
+    // Só trava no modo drawer (mobile/tablet)
+    if (!isSmall()) return;
+
+    // Evita repetir
+    if (body.classList.contains('scroll-locked')) return;
+
+    scrollY = window.scrollY || window.pageYOffset || 0;
+
+    body.classList.add('scroll-locked');
+
+    // Técnica estável: fixa o body na posição atual
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    body.style.width = '100%';
+  }
+
+  function unlockBodyScroll() {
+    if (!body.classList.contains('scroll-locked')) return;
+
+    body.classList.remove('scroll-locked');
+
+    // Restaura estilos
+    body.style.position = '';
+    body.style.top = '';
+    body.style.left = '';
+    body.style.right = '';
+    body.style.width = '';
+
+    // Volta para a posição anterior
+    window.scrollTo(0, scrollY);
+  }
+
+  // =========================================================
+  // ✅ Sidebar internal scroll guard (para “segurar” o scroll no drawer)
+  // =========================================================
+
+  function setupSidebarScrollGuard() {
+    if (!sidebarEl) return;
+
+    // Não altera desktop; só faz sentido no drawer.
+    if (!isSmall()) return;
+
+    sidebarEl.style.overflowY = 'auto';
+    sidebarEl.style.overflowX = 'hidden';
+    sidebarEl.style.maxHeight = '100vh';
+    sidebarEl.style.webkitOverflowScrolling = 'touch';
+
+    // Bloqueia “scroll chaining” pro body quando chegar no topo/fundo
+    sidebarEl.style.overscrollBehavior = 'contain';
+
+    // Se existir um container interno (alguns layouts usam .sidebar-content)
+    const inner =
+      sidebarEl.querySelector('.sidebar-content') ||
+      sidebarEl.querySelector('.nav') ||
+      sidebarEl;
+
+    inner.style.overflowY = 'auto';
+    inner.style.overflowX = 'hidden';
+    inner.style.maxHeight = '100%';
+    inner.style.webkitOverflowScrolling = 'touch';
+    inner.style.overscrollBehavior = 'contain';
+
+    // Extra: impede o wheel de “passar” pro fundo quando estiver no limite
+    function wheelGuard(e) {
+      // Só quando o drawer estiver aberto
+      if (!body.classList.contains('sidebar-open')) return;
+
+      const el = inner;
+      const deltaY = e.deltaY;
+
+      const atTop = el.scrollTop <= 0;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+
+      // Se o scroll vai “além” do topo/fundo, bloqueia para não vazar pro body
+      if ((deltaY < 0 && atTop) || (deltaY > 0 && atBottom)) {
+        e.preventDefault();
+      }
+    }
+
+    // Use non-passive para permitir preventDefault no wheel
+    inner.addEventListener('wheel', wheelGuard, { passive: false });
+
+    // Guarda referência para remover depois (quando necessário)
+    inner._wheelGuard = wheelGuard;
+  }
+
+  function teardownSidebarScrollGuard() {
+    if (!sidebarEl) return;
+
+    const inner =
+      sidebarEl.querySelector('.sidebar-content') ||
+      sidebarEl.querySelector('.nav') ||
+      sidebarEl;
+
+    if (inner && inner._wheelGuard) {
+      inner.removeEventListener('wheel', inner._wheelGuard, { passive: false });
+      delete inner._wheelGuard;
+    }
+
+    // Limpa overrides que só fazem sentido no drawer
+    sidebarEl.style.overflowY = '';
+    sidebarEl.style.overflowX = '';
+    sidebarEl.style.maxHeight = '';
+    sidebarEl.style.webkitOverflowScrolling = '';
+    sidebarEl.style.overscrollBehavior = '';
+
+    if (inner && inner !== sidebarEl) {
+      inner.style.overflowY = '';
+      inner.style.overflowX = '';
+      inner.style.maxHeight = '';
+      inner.style.webkitOverflowScrolling = '';
+      inner.style.overscrollBehavior = '';
+    }
+  }
+
+  // =========================================================
+  // 🔒 EXTRA: bloqueio de scroll/touch fora do sidebar (iOS/Android/Desktop)
+  // =========================================================
+
+  let touchBlockEnabled = false;
+
+  function isInsideSidebar(target) {
+    return !!(sidebarEl && target && sidebarEl.contains(target));
+  }
+
+  // Bloqueia scroll por toque fora do sidebar quando drawer está aberto
+  function onTouchMoveBlock(e) {
+    if (!body.classList.contains('sidebar-open')) return;
+
+    // Dentro do sidebar: deixa rolar
+    if (isInsideSidebar(e.target)) return;
+
+    // Fora do sidebar: trava
+    e.preventDefault();
+  }
+
+  // Bloqueia wheel/trackpad fora do sidebar quando drawer está aberto
+  function onWheelBlockOutside(e) {
+    if (!body.classList.contains('sidebar-open')) return;
+
+    if (isInsideSidebar(e.target)) return;
+
+    e.preventDefault();
+  }
+
+  function enableTouchBlock() {
+    if (!isSmall()) return;
+    if (touchBlockEnabled) return;
+
+    touchBlockEnabled = true;
+
+    // Overlay não deve deixar gestos “passarem” pro fundo
+    if (overlay) {
+      overlay.style.touchAction = 'none';
+    }
+
+    // Captura no document com {passive:false} pra poder preventDefault no iOS
+    document.addEventListener('touchmove', onTouchMoveBlock, { passive: false });
+    document.addEventListener('wheel', onWheelBlockOutside, { passive: false });
+  }
+
+  function disableTouchBlock() {
+    if (!touchBlockEnabled) return;
+    touchBlockEnabled = false;
+
+    if (overlay) {
+      overlay.style.touchAction = '';
+    }
+
+    document.removeEventListener('touchmove', onTouchMoveBlock, { passive: false });
+    document.removeEventListener('wheel', onWheelBlockOutside, { passive: false });
+  }
+
   function openDrawer() {
     body.classList.add('sidebar-open');
+
+    // 🔒 trava scroll do fundo + garante scroll do sidebar + bloqueia touch fora
+    lockBodyScroll();
+    setupSidebarScrollGuard();
+    enableTouchBlock();
   }
 
   function closeDrawer() {
     body.classList.remove('sidebar-open');
+
+    // 🔓 destrava tudo
+    disableTouchBlock();
+    teardownSidebarScrollGuard();
+    unlockBodyScroll();
   }
 
   function toggleDrawer() {
-    body.classList.toggle('sidebar-open');
+    if (body.classList.contains('sidebar-open')) closeDrawer();
+    else openDrawer();
   }
 
   function setCollapsed(next, opts) {
@@ -98,7 +291,7 @@
 
   // Clique no botão (header ou fallback)
   if (btnToggleMenu) {
-    btnToggleMenu.addEventListener('click', function (e) {
+    btnToggleMenu.addEventListener('click', function () {
       // Se acabou de arrastar o botão flutuante, não trata como clique
       if (btnToggleMenu && btnToggleMenu.dataset && btnToggleMenu.dataset.justDragged === '1') return;
 
@@ -122,6 +315,9 @@
 
   // Ao mudar tamanho: fecha drawer, e aplica colapso só no desktop
   function handleResize() {
+    // Segurança: se saiu do mobile/tablet, nunca deixa bloqueio ligado
+    if (!isSmall()) disableTouchBlock();
+
     if (isSmall()) {
       closeDrawer();
       // No mobile, não deixa ficar "recolhido"
