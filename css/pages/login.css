@@ -188,6 +188,17 @@
     text-decoration: underline;
 }
 
+/* ✅ Link desativado (ex.: "Criar conta" sem ação) */
+.auth-link--disabled,
+.auth-link.is-disabled,
+.login-footer a.is-disabled,
+.auth-footer a.is-disabled {
+    pointer-events: none;   /* não clica */
+    cursor: default;
+    opacity: 0.6;
+    text-decoration: none !important;
+}
+
 /* Messages */
 .auth-message {
     min-height: 1.25rem;
@@ -290,7 +301,6 @@
 .auth-brand--no-logo {
     justify-content: flex-start;
 }
-
 
 /* ==========================
    TEMA ESCURO – LOGIN
