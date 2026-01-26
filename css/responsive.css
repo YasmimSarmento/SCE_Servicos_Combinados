@@ -356,3 +356,58 @@ html, body {
   }
 }
 
+/* =====================================
+   LANDSCAPE (Celulares e Tablets)
+   - Ajustes para quando a tela estiver virada (altura menor)
+   ===================================== */
+
+/* Celulares em landscape (altura curta) */
+@media (max-height: 520px) and (orientation: landscape) {
+
+  /* Topo mais compacto */
+  .topo{
+    min-height: 64px;
+    padding: .35rem var(--container-pad);
+    gap: 1rem;
+  }
+  .topo nav{ gap: 1rem; }
+  .topo nav a{ font-size: .9rem; }
+  .topo .logo img{ height: 40px; }
+
+  /* Hero e seções com menos "respiro" */
+  .hero{ padding: 2rem 1.25rem; }
+  .hero h1{ font-size: 1.65rem; }
+  .hero p{ font-size: 1rem; }
+
+  /* Grids: aproveita a largura e evita cartões gigantes */
+  .pagina-vagas .lista-vagas{ gap: 1.5rem; }
+  .pagina-vagas .card-vaga{ padding: 1.4rem; }
+
+  /* Filtros/inputs: evita estourar altura */
+  .filtros, .filters, .barra-filtros{
+    gap: .75rem;
+  }
+
+  /* Sidebar drawer: garante rolagem em telas baixas */
+  .sidebar, .sidebar-panel, .sidebar-wrapper{
+    max-height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Espaço inferior menor (quando existir botão flutuante) */
+  main, .main-content{
+    padding-bottom: 72px !important;
+  }
+}
+
+/* Tablets em landscape (ex.: iPad/Android) */
+@media (min-width: 768px) and (max-width: 1180px) and (orientation: landscape) {
+  .topo{
+    min-height: 72px;
+    gap: 1.25rem;
+  }
+  .topo nav{ gap: 1.25rem; }
+  .hero{ padding: 2.6rem 1.75rem; }
+  .pagina-vagas .lista-vagas{ grid-template-columns: repeat(2, 1fr); }
+}
